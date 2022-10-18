@@ -1,0 +1,28 @@
+.bannerFilm{
+    /* flex-direction: row; */
+    background-color: #364d79;
+    /* padding-bottom: 15px; */
+    margin-bottom: 20px;
+}
+.bannerStyle{
+    height: 560px;
+    color: #fff;
+    line-height: 560px;
+    text-align: center;
+    background-color: #364d79;
+}
+.formFindFilm{
+    padding-top: 40px;
+    height: 100px;
+    display: flex;
+    justify-content: center;
+}
+.selectFilmAndDate{
+    /* margin-top: 5px; */
+    background-color: red;
+    height: 120px;
+    align-items: center;
+    width: 1200px;
+    border-radius: 20px;
+    /* margin-bottom: 40px; */
+}
