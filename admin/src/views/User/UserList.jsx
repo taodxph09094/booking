@@ -15,6 +15,7 @@ const UserList = ({ history }) => {
   const dispatch = useDispatch();
   const alert = useAlert();
   const { error, users } = useSelector((state) => state.allUsers);
+  console.log(users);
   const {
     error: deleteError,
     isDeleted,

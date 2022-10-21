@@ -18,7 +18,7 @@ const LayoutMain = () => {
             <Switch>
               <Route exact path="/" component={Home} />
               <Route exact path="/booking" component={TabsCate} />
-              {/* <Films /> */}
+              <TabsCate />
             </Switch>
           </Router>
         </Content>

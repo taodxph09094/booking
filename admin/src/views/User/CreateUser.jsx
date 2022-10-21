@@ -45,7 +45,6 @@ const CreateUser = ({ history }) => {
   const createUserSubmitHandler = (e) => {
     e.preventDefault();
     const myForm = new FormData();
-
     myForm.set("name", name);
     myForm.set("email", email);
     myForm.set("password", password);
@@ -59,7 +58,6 @@ const CreateUser = ({ history }) => {
   };
   const createUserImagesChange = (e) => {
     const files = Array.from(e.target.files);
-
     setAvatar([]);
     setImagesPreview([]);
 
