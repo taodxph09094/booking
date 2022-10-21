@@ -1,57 +1,32 @@
 import React, { useState } from "react";
 import "./banner.css";
-import { AutoComplete, Carousel, Cascader } from "antd";
+import { Select, Carousel, DatePicker, Button } from "antd";
+import { SearchOutlined } from "@ant-design/icons";
 
 const Banner = () => {
-  //   const mockVal = (str, repeat = 1) => ({
-  //     value: str.repeat(repeat),
-  //   });
-
-  //   const [value, setValue] = useState("");
-  //   const [options, setOptions] = useState([]);
-  //   const onSearch = (searchText) => {
-  //     setOptions(
-  //       !searchText
-  //         ? []
-  //         : [mockVal(searchText), mockVal(searchText, 2), mockVal(searchText, 3)]
-  //     );
-  //   };
-  //   const onSelect = (data) => {
-  //     console.log("onSelect", data);
-  //   };
-  //   const onChange = (data) => {
-  //     setValue(data);
-  //   };
-  const options = [
-    {
-      value: "zhejiang",
-      label: "Zhejiang",
-      children: [
-        {
-          value: "hangzhou",
-          label: "Hangzhou",
-        },
-      ],
-    },
-    {
-      value: "jiangsu",
-      label: "Jiangsu",
-      children: [
-        {
-          value: "nanjing",
-          label: "Nanjing",
-        },
-      ],
-    },
+  const { Option } = Select;
+  const provinceData = [
+    "Black Adam",
+    "Cô gái từ quá khứ",
+    "Bỗng dưng trúng số",
   ];
-  const onChange = (value, selectedOptions) => {
-    console.log(value, selectedOptions);
+  const cityData = {
+    "Black Adam": ["Hà Nội", "Hồ Chí Minh", "Đà Nẵng"],
+    "Cô gái từ quá khứ": ["Hà Nội", "Suzhou", "Zhenjiang"],
+    "Bỗng dưng trúng số": ["Không có"],
   };
-  const filter = (inputValue, path) =>
-    path.some(
-      (option) =>
-        option.label.toLowerCase().indexOf(inputValue.toLowerCase()) > -1
-    );
+  const [cities, setCities] = useState(cityData[provinceData[0]]);
+  const [secondCity, setSecondCity] = useState(cityData[provinceData[0]][0]);
+  const handleProvinceChange = (value) => {
+    setCities(cityData[value]);
+    setSecondCity(cityData[value][0]);
+  };
+  const onSecondCityChange = (value) => {
+    setSecondCity(value);
+  };
+  const onChange = (date, dateString) => {
+    console.log(date, dateString);
+  };
   return (
     <>
       <div className="bannerFilm">
@@ -71,24 +46,33 @@ const Banner = () => {
         </Carousel>
         <div className="formFindFilm">
           <div className="selectFilmAndDate">
-            {/* <AutoComplete
-              options={options}
+            <p className="selectAndFilter">Filter</p>
+            <Select
+              defaultValue={provinceData[0]}
               style={{
-                width: 200,
+                width: 350,
               }}
-              onSelect={onSelect}
-              onSearch={onSearch}
-              placeholder="input here"
-            /> */}
-            <Cascader
-              options={options}
-              onChange={onChange}
-              placeholder="Please select"
-              showSearch={{
-                filter,
+              onChange={handleProvinceChange}
+            >
+              {provinceData.map((province) => (
+                <Option key={province}>{province}</Option>
+              ))}
+            </Select>
+            <Select
+              style={{
+                width: 120,
               }}
-              onSearch={(value) => console.log(value)}
-            />
+              value={secondCity}
+              onChange={onSecondCityChange}
+            >
+              {cities.map((city) => (
+                <Option key={city}>{city}</Option>
+              ))}
+            </Select>
+            <DatePicker onChange={onChange} />
+            <Button type="primary" icon={<SearchOutlined />}>
+              Tìm kiếm
+            </Button>
             <br />
           </div>
         </div>

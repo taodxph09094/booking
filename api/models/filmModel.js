@@ -20,11 +20,7 @@ const filmSchema = new mongoose.Schema({
     default: 0,
     maxLength: [3, "Nhập % khuyến mãi"],
   },
-  price: {
-    type: String,
-    required: [true, "Nhập giá"],
-    maxLength: [20, "Giá tối đa 8 ký tự"],
-  },
+
   type: {
     type: String,
     required: [true, "Thể loại"],
@@ -57,22 +53,6 @@ const filmSchema = new mongoose.Schema({
     type: Number,
     default: 0,
   },
-  cinema: [
-    {
-      image: {
-        type: String,
-        required: [true, "Chọn ảnh"],
-      },
-      name: {
-        type: String,
-        required: [true, "Nhập tên rạp"],
-      },
-      address: {
-        type: String,
-        required: [true, "Nhập địa chỉ"],
-      },
-    },
-  ],
   reviews: [
     {
       user: {
@@ -94,7 +74,10 @@ const filmSchema = new mongoose.Schema({
       },
     },
   ],
-
+  released: {
+    type: String,
+    required: true,
+  },
   user: {
     type: mongoose.Schema.ObjectId,
     ref: "User",

@@ -19,10 +19,14 @@
 }
 .selectFilmAndDate{
     /* margin-top: 5px; */
-    background-color: red;
+    background-color: #DAD2B4;
     height: 120px;
     align-items: center;
     width: 1200px;
     border-radius: 20px;
+    text-align: center;
     /* margin-bottom: 40px; */
+}
+.selectAndFilter{
+    /* text-align: center; */
 }
