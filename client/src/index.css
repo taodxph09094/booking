@@ -1,17 +1,79 @@
 .ant-layout{
-  background-color: #F8F6EC;
+  background-color: #fff;
 }
 .mainContent{
   /* display: flex; */
     /* justify-content: center;
-    align-items: center; */
-    text-align: center;
-  margin-top: 100px;
+    align-items: center;
+    text-align: center; */
 }
+.tabChoose{
+  /* display: flex;
+  text-align: center;
+  justify-content: center; */
+  padding-top: 80px;
+  background-color: transparent;
+    color: black;
+    box-shadow: none;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 30px;
+    display: flex;
+    height: 80px;
+}
+.tabsChooseMain{
+  align-items: center;
+  height: 50;
+  margin: 0 auto;
+  text-transform: none;
+  display: block;
+  background-color: transparent;
+    transition: none;
+}
+.tabButton {
+  opacity: 1;
+  line-height: 24px;
+  height: 30px;
+  box-shadow: none;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.2s;
+  font-weight: 500;
+  text-transform: none;
+  border: none !important;
+  font-size: 25px;
+
+}
+.ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled) {
+  z-index: 1;
+  color: #ff7040;
+  border-color: none !;
+}
+.ant-radio-button-wrapper:hover {
+  opacity: 1;
+  line-height: 24px;
+  height: 30px;
+  box-shadow: none;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.2s;
+  font-weight: 500;
+  text-transform: none;
+  border: none !important;
+  font-size: 25px;
+  color: #ff7040;
+}
+
 .tabCate{
   background-color: #DAD2B4;
   width: 1200px;
   border-radius: 20px;
+  /* margin-top: 100px; */
+    /* color: "black";
+    box-shadow: none;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 30; */
 }
 .cinemaBorder{
   border-top: 3px solid #000;
@@ -101,103 +163,19 @@ margin: 5px;
   background-color: #000
 }
 .headerHome{
-  /* align-items: center; */
-  /* width: max-content; */
-  background: #fff;
-  display:flex;
-  justify-content:space-between
+  background-color: transparent;
+  margin-top: 100px;
+   color: #000;
+    box-shadow: none;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 30;
 }
 .buttonHeaderHome{
 margin-right: 20px;
 /* background: #000 */
 }
 
-.ant-radio-button-checked{
-  background: #231F20;
-  color: #CDC097;
-}
-/* .ant-radio-button-wrapper:first-child {
-  border: none;
-  border-radius: 2px 0 0 2px;
-}
-.ant-radio-button-wrapper:last-child {
-  border: none;
-  border-color: #fff;
-  border-radius: 2px 0 0 2px;
-  margin-bottom:5px;
-} */
-.ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled)::before {
-  background-color: #fff;
-}
-.ant-radio-button-wrapper-checked:not([class*=' ant-radio-button-wrapper-disabled']).ant-radio-button-wrapper:first-child {
-  border-right-color:none;
-}
-.ant-radio-button-wrapper-checked:not([class*=' ant-radio-button-wrapper-disabled']).ant-radio-button-wrapper:last-child {
-  border-right-color:none;
-}
-.ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled):first-child {
-  border-color: none;
-}
-.ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled):last-child {
-  border-color: none;
-}
-/* changeColorTextButton */
-.ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled) {
-  z-index: 1;
-  color: #CDC097;
-  background: #fff;
-  border-color: none !;
-}
-.ant-radio-button-wrapper-checked:not([class*=' ant-radio-button-wrapper-disabled']).ant-radio-button-wrapper:first-child {
-  border-right-color: #fff;
-}
-.ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled):hover::before {
-  background-color: #fff;
-}
-.ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled):hover {
-  color: #ff7040;
-  /* border-color: #40a9ff; */
-}
-.ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled):hover {
-  color: #ff7040;
-  /* border-color: #40a9ff; */
-}
-.ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled)::before {
-  /* background-color: #1890ff; */
-}
-.ant-radio-button-wrapper {
-  position: relative;
-  display: inline-block;
-  height: 38px;
-  margin: 0;
-  padding: 0 15px;
-  color: #6F6247;
-  font-size: 14px;
-  line-height: 30px;
-  background: #EEEBDB;
-  border: 1px solid #d9d9d9;
-  margin-right: 10px;
-  margin-right: 10px;
-  /* border-top-width: 1.02px;
-  border-left-width: 0; */
-  cursor: pointer;
-  /* transition: color 0.3s, background 0.3s, border-color 0.3s, box-shadow 0.3s; */
-}
-.ant-radio-button-wrapper:hover {
-  position: relative;
-  display: inline-block;
-  height: 38px;
-  margin: 0;
-  padding: 0 15px;
-  color: #6F6247;
-  font-size: 14px;
-  line-height: 30px;
-  background: #EEEBDB;
-  border: 1px solid #d9d9d9;
-  margin-right: 10px;
-  margin-right: 10px;
-  cursor: pointer;
-}
 .textGrBtn{
   font-size: 20px;
 }
@@ -210,7 +188,7 @@ margin-right: 20px;
   justify-content: center;
 }
 .listFilm{
-  margin-top: 50px;
+  margin-top: 20px;
   display: flex;
   justify-content: center;
 }
@@ -227,4 +205,54 @@ margin-right: 20px;
 } */
 .cardFilm:hover .buttonView {
   display: inline-block;
+}
+.tabsHome{
+  padding-top:80px;
+}
+.appBar{
+  background-color: #fff;
+    color: black;
+    box-shadow: none;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 30px;
+}
+.tabBar {
+  align-items: center;
+  height: 50px;
+  margin: 0 auto;
+  text-transform: none;
+  display: block;
+}
+.flexContainer{
+  display: block;
+}
+.indicator {
+  background-color: transparent;
+  transition: none;
+}
+.tabButton{
+  opacity: 1;
+  line-height: 24px;
+  height: 24px;
+  box-shadow: none;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.2s;
+  font-weight: 600px;
+  text-transform: none;
+  font-family: Arial, Helvetica, sans-serif;
+
+
+}
+.tabButton > span{
+  transition: all 0.2s;
+  font-size: 20px;
+}
+.tabButton > span:hover{
+  font-size: 24px;
+}
+
+.screenTest{
+  /* height:350px; */
 }

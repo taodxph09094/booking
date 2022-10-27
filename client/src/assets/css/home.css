@@ -1,0 +1,18 @@
+.MuiAppBar-colorPrimary {
+    color: #dc3545 !important;
+    background-color: #fff !important;
+}
+.MuiPaper-elevation4 {
+    box-shadow: none !important;
+}
+.PrivateTabIndicator-colorSecondary-3 {
+    background-color: #fff  !important;
+}
+.MuiTab-textColorInherit.Mui-selected {
+    opacity: 1;
+    color: #dc3545 !important;
+}
+.MuiTab-textColorInherit {
+    color: #000 !important;
+    opacity: 0.7;
+}

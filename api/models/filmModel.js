@@ -14,20 +14,17 @@ const filmSchema = new mongoose.Schema({
     type: String,
     required: [true, "Nhập thông tin phim"],
   },
-  promotion: {
+  nation: {
     type: String,
-    // required: [true, "Nhập giá"],
-    default: 0,
-    maxLength: [3, "Nhập % khuyến mãi"],
+    required: [true, "Quốc gia"],
   },
-
   type: {
     type: String,
     required: [true, "Thể loại"],
   },
   director: {
     type: String,
-    required: ["Nhập nhà phân phối"],
+    required: ["Nhập đạo diễn"],
   },
   ratings: {
     type: Number,
@@ -76,7 +73,7 @@ const filmSchema = new mongoose.Schema({
   ],
   released: {
     type: String,
-    required: true,
+    required: [true, "Nhập ngày phát hành"],
   },
   user: {
     type: mongoose.Schema.ObjectId,

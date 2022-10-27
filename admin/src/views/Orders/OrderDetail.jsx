@@ -89,7 +89,7 @@ const OrderDetail = ({ history, match }) => {
                 <div className="confirmshippingAreaBox">
                   <p
                     className={
-                      order.orderStatus && order.orderStatus === "Đã giao hàng"
+                      order.orderStatus && order.orderStatus === "Đã xong"
                         ? "greenColor"
                         : "redColor"
                     }
@@ -156,7 +156,7 @@ const OrderDetail = ({ history, match }) => {
                   <p>Tổng tiền :</p>
                   <span>
                     {formatCurrency(
-                      order.totalPrice * 23000 + "",
+                      order.totalPrice + "",
                       0,
                       3,
                       ",",
@@ -165,16 +165,12 @@ const OrderDetail = ({ history, match }) => {
                     đ
                   </span>
                 </div>
-                <div>
-                  <p>Tổng tiền sau khi quy đổi :</p>
-                  <span>$ {order.totalPrice && order.totalPrice}</span>
-                </div>
               </div>
             </div>
             <div
               style={{
                 display:
-                  order.orderStatus === "Đã giao hàng" ? "none" : "block",
+                  order.orderStatus === "Đã xong" ? "none" : "block",
               }}
             >
               <form
@@ -187,11 +183,11 @@ const OrderDetail = ({ history, match }) => {
                   <select onChange={(e) => setStatus(e.target.value)}>
                     <option value="">Chọn trạng thái</option>
                     {order.orderStatus === "Đang xử lý" && (
-                      <option value="Đang giao hàng">Đang giao hàng</option>
+                      <option value="Đang xử lý">Đang xử lý</option>
                     )}
 
-                    {order.orderStatus === "Đang giao hàng" && (
-                      <option value="Đã giao hàng">Đã giao hàng</option>
+                    {order.orderStatus === "Đang xong" && (
+                      <option value="Đã xong">Đã xong</option>
                     )}
                   </select>
                 </div>

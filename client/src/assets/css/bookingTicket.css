@@ -1,0 +1,9 @@
+.BookTicked{
+    display: flex;
+  }
+  .BookingLeft{
+    flex: 75%;
+  }
+  .BookingRight{
+    flex: 25%;
+  }

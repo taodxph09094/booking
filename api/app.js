@@ -27,7 +27,7 @@ const feedback = require("./routes/feedbackRoute");
 const newFeed = require("./routes/newFeedRoute");
 const cinema = require("./routes/cinemaRoute");
 const film = require("./routes/filmRoute");
-const time = require("./routes/timeRelease");
+const releasedTime = require("./routes/releasedTimeRoute");
 app.use("/api/v1", user);
 app.use("/api/v1", order);
 app.use("/api/v1", payment);
@@ -37,7 +37,7 @@ app.use("/api/v1", feedback);
 app.use("/api/v1", newFeed);
 app.use("/api/v1", cinema);
 app.use("/api/v1", film);
-app.use("/api/v1", time);
+app.use("/api/v1", releasedTime);
 // Middleware for Errors
 app.use(errorMiddleware);
 

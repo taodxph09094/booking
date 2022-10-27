@@ -5,6 +5,7 @@ import TabsCate from "../components/Tabs/TabsCate";
 import HeaderUtil from "./components/Header";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Home from "../pages/Home";
+import BookingTicket from "../components/Booking/BookingTicket";
 import Films from "../components/Films/Films";
 const { Header, Footer, Content } = Layout;
 const LayoutMain = () => {
@@ -18,7 +19,8 @@ const LayoutMain = () => {
             <Switch>
               <Route exact path="/" component={Home} />
               <Route exact path="/booking" component={TabsCate} />
-              <TabsCate />
+              <Route exact path="/booking-ticket" component={BookingTicket} />
+              {/* <TabsCate /> */}
             </Switch>
           </Router>
         </Content>

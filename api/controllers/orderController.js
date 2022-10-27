@@ -1,30 +1,26 @@
 const Order = require("../models/orderModel");
-// const Product = require("../models/productModel");
+const ReleasedTime = require("../models/releasedTimeModel");
 const ErrorHander = require("../utils/errorhander");
 const catchAsyncErrors = require("../middleware/catchAsyncErrors");
 
 // Create new Order
 exports.newOrder = catchAsyncErrors(async (req, res, next) => {
   const {
-    shippingInfo,
     orderItems,
     paymentInfo,
     itemsPrice,
-    taxPrice,
-    shippingPrice,
     totalPrice,
   } = req.body;
 
   const order = await Order.create({
-    shippingInfo,
+
     orderItems,
     paymentInfo,
     itemsPrice,
-    taxPrice,
-    shippingPrice,
     totalPrice,
     paidAt: Date.now(),
-    user: req.user._id,
+    userId:req.user._id,
+    userName: req.user.name,
   });
 
   res.status(201).json({
@@ -91,7 +87,7 @@ exports.updateOrder = catchAsyncErrors(async (req, res, next) => {
 
   if (req.body.status === "Đang xử lý") {
     order.orderItems.forEach(async (o) => {
-      await updateStock(o.product, o.quantity);
+      await updateStock(o.releasedTime, o.quantity);
     });
   }
   order.orderStatus = req.body.status;
@@ -107,9 +103,9 @@ exports.updateOrder = catchAsyncErrors(async (req, res, next) => {
 });
 
 async function updateStock(id, quantity) {
-  // const product = await Product.findById(id);
-  // product.Stock -= quantity;
-  // await product.save({ validateBeforeSave: false });
+  const releasedTime = await ReleasedTime.findById(id);
+  releasedTime.Stock -= quantity;
+  await releasedTime.save({ validateBeforeSave: false });
 }
 
 // delete Order -- Admin

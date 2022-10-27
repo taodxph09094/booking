@@ -2,6 +2,7 @@ import React, { useEffect, Fragment } from "react";
 import { useAlert } from "react-alert";
 import { DataGrid } from "@material-ui/data-grid";
 import { useDispatch, useSelector } from "react-redux";
+
 import { Link } from "react-router-dom";
 import { Button } from "@material-ui/core";
 import AddIcon from "@material-ui/icons/Add";
@@ -9,20 +10,22 @@ import EditIcon from "@material-ui/icons/Edit";
 import DeleteIcon from "@material-ui/icons/Delete";
 import {
   clearErrors,
-  deleteFilm,
-  getAdminFilm,
-} from "../../actions/filmAction";
-import { DELETE_FILM_RESET } from "../../constants/filmConstants";
-const Films = ({ history }) => {
+  deleteReleasedTime,
+  getAdminReleasedTime,
+} from "../../actions/releasedTimeAction";
+import { DELETE_RELEASEDTIME_RESET } from "../../constants/releasedTimeConstants";
+const ReleasedTime = ({ history }) => {
   const dispatch = useDispatch();
 
   const alert = useAlert();
 
-  const { error, films } = useSelector((state) => state.films);
+  const { error, releasedTimes } = useSelector((state) => state.releasedTimes);
 
-  const { error: deleteError, isDeleted } = useSelector((state) => state.film);
-  const deleteFilmHandler = (id) => {
-    dispatch(deleteFilm(id));
+  const { error: deleteError, isDeleted } = useSelector(
+    (state) => state.releasedTime
+  );
+  const deleteReleasedTimeHandler = (id) => {
+    dispatch(deleteReleasedTime(id));
   };
 
   useEffect(() => {
@@ -37,12 +40,12 @@ const Films = ({ history }) => {
     }
 
     if (isDeleted) {
-      alert.success("Xóa rạp phim thành công");
-      history.push("/admin/films");
-      dispatch({ type: DELETE_FILM_RESET });
+      alert.success("Xóa lịch chiếu phim thành công");
+      history.push("/admin/releasedTime");
+      dispatch({ type: DELETE_RELEASEDTIME_RESET });
     }
 
-    dispatch(getAdminFilm());
+    dispatch(getAdminReleasedTime());
   }, [dispatch, alert, error, deleteError, history, isDeleted]);
 
   const columns = [
@@ -54,36 +57,43 @@ const Films = ({ history }) => {
       align: "center",
     },
     {
-      field: "name",
+      field: "film",
       headerName: "Tên phim",
-      headerAlign: "center",
       flex: 0.5,
+      headerAlign: "center",
       align: "center",
     },
     {
-      field: "released",
+      field: "cinema",
+      headerName: "Rạp",
+      flex: 0.5,
+      headerAlign: "center",
+      align: "center",
+    },
+    {
+      field: "date",
       headerName: "Ngày chiếu",
       flex: 0.5,
       headerAlign: "center",
       align: "center",
     },
     {
-      field: "director",
-      headerName: "Đạo diễn",
+      field: "time",
+      headerName: "Thời gian chiếu",
       flex: 0.5,
       headerAlign: "center",
       align: "center",
     },
     {
-      field: "type",
-      headerName: "Thể loại",
+      field: "price",
+      headerName: "Giá",
       flex: 0.5,
       headerAlign: "center",
       align: "center",
     },
     {
-      field: "category",
-      headerName: "Danh mục",
+      field: "seat",
+      headerName: "Ghế",
       flex: 0.5,
       headerAlign: "center",
       align: "center",
@@ -99,13 +109,13 @@ const Films = ({ history }) => {
       renderCell: (params) => {
         return (
           <Fragment>
-            <Link to={`/admin/updateFilm/${params.getValue(params.id, "id")}`}>
+            {/* <Link to={`/admin/updateTime/${params.getValue(params.id, "id")}`}>
               <EditIcon />
-            </Link>
+            </Link> */}
 
             <Button
               onClick={() =>
-                deleteFilmHandler(params.getValue(params.id, "id"))
+                deleteReleasedTimeHandler(params.getValue(params.id, "id"))
               }
             >
               <DeleteIcon />
@@ -118,25 +128,25 @@ const Films = ({ history }) => {
 
   const rows = [];
 
-  films &&
-    films.forEach((item) => {
+  releasedTimes &&
+    releasedTimes.forEach((item) => {
       rows.push({
         id: item._id,
-        name: item.name,
-        released: item.released,
-        director: item.director,
-        type: item.type,
-        category: item.category,
+        film: item.film,
+        date: item.date,
+        time: item.time,
+        price: item.price,
+        seat: item.Stock +"/"+ 100,
       });
     });
   return (
     <>
-      <h1 id="productListHeading">Danh sách phim đang hoạt động</h1>
-      <Link to="/admin/addFilm">
+      <h1 id="productListHeading">Danh sách lịch chiếu phim</h1>
+      <Link to="/admin/addReleasedTime">
         <h4>
           {" "}
           <AddIcon />
-          Thêm phim
+          Thêm lịch
         </h4>
       </Link>
       <DataGrid
@@ -151,4 +161,4 @@ const Films = ({ history }) => {
   );
 };
 
-export default Films;
+export default ReleasedTime;

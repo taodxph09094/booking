@@ -50,6 +50,12 @@ import {
   filmReviewsReducer,
   reviewReducer,
 } from "./reducers/filmReducer";
+import {
+  releasedTimeDetailsReducer,
+  releasedTimeReducer,
+  releasedTimesReducer,
+  newReleasedTimeReducer,
+} from "./reducers/releasedTimeReducer";
 const reducer = combineReducers({
   user: userReducer,
   profile: profileReducer,
@@ -85,6 +91,10 @@ const reducer = combineReducers({
   newReview: newReviewReducer,
   filmReviews: filmReviewsReducer,
   review: reviewReducer,
+  newReleasedTime: newReleasedTimeReducer,
+  releasedTimeDetails: releasedTimeDetailsReducer,
+  releasedTime: releasedTimeReducer,
+  releasedTimes: releasedTimesReducer,
 });
 
 let initialState = {

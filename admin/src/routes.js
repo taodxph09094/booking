@@ -27,7 +27,7 @@ const dashboardRoutes = [
     layout: "/admin",
   },
   {
-    path: "/timeRelease",
+    path: "/releasedTime",
     name: "Thời gian chiếu",
     icon: "nc-icon nc-notes",
     layout: "/admin",

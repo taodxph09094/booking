@@ -41,6 +41,11 @@ import Films from "./views/Films/Films";
 import Cinema from "./views/Cinema/Cinema";
 import AddCinema from "./views/Cinema/AddCinema";
 import UpdateCinema from "./views/Cinema/UpdateCinema";
+import AddFilm from "./views/Films/AddFilm";
+import UpdateFilm from "./views/Films/UpdateFilm";
+import ReleasedTime from "./views/ReleasedTime/ReleasedTime";
+import NewReleasedTime from "./views/ReleasedTime/NewReleasedTime";
+import UpdateReleasedTime from "./views/ReleasedTime/UpdateReleasedTime";
 const App = () => {
   const { isAuthenticated, user } = useSelector((state) => state.user);
   const [color, setColor] = React.useState("black");
@@ -99,7 +104,7 @@ const App = () => {
               />
               <ProtectedRoute
                 exact
-                path="/admin/orders"
+                path="/admin/ticket-orders"
                 isAdmin={true}
                 component={OrderList}
               />
@@ -182,12 +187,12 @@ const App = () => {
                 path="/admin/users"
                 component={UserList}
               />
-              {/* <ProtectedRoute
+              <ProtectedRoute
                 isAdmin={true}
                 exact
-                path="/admin/users"
-                component={UserList}
-              /> */}
+                path="/admin/releasedTime"
+                component={ReleasedTime}
+              />
               <ProtectedRoute
                 isAdmin={true}
                 exact
@@ -199,6 +204,30 @@ const App = () => {
                 exact
                 path="/admin/addCinema"
                 component={AddCinema}
+              />
+              <ProtectedRoute
+                isAdmin={true}
+                exact
+                path="/admin/addFilm"
+                component={AddFilm}
+              />
+              <ProtectedRoute
+                isAdmin={true}
+                exact
+                path="/admin/addReleasedTime"
+                component={NewReleasedTime}
+              />
+              <ProtectedRoute
+                isAdmin={true}
+                exact
+                path="/admin/updateTime/:id"
+                component={UpdateReleasedTime}
+              />
+              <ProtectedRoute
+                isAdmin={true}
+                exact
+                path="/admin/updateFilm/:id"
+                component={UpdateFilm}
               />
               <ProtectedRoute
                 isAdmin={true}

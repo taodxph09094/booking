@@ -1,4 +1,4 @@
-import React, { useEffect, Fragment } from "react";
+import React, {useState, useEffect, Fragment } from "react";
 import { useAlert } from "react-alert";
 import { DataGrid } from "@material-ui/data-grid";
 import { useDispatch, useSelector } from "react-redux";
@@ -12,6 +12,7 @@ import {
   clearErrors,
   deleteOrder,
   getAllOrders,
+  getOrderDetails,
 } from "../../actions/orderAction";
 import { DELETE_ORDER_RESET } from "../../constants/orderConstants";
 
@@ -19,9 +20,8 @@ const OrderList = ({ history }) => {
   const dispatch = useDispatch();
 
   const alert = useAlert();
-
+const [saveId, setSaveId] = useState([]);
   const { error, orders } = useSelector((state) => state.allOrders);
-
   const { error: deleteError, isDeleted } = useSelector((state) => state.order);
 
   const deleteOrderHandler = (id) => {
@@ -29,6 +29,7 @@ const OrderList = ({ history }) => {
   };
 
   useEffect(() => {
+    setSaveId(orders.orderItems)
     if (error) {
       alert.error(error);
       dispatch(clearErrors());
@@ -41,7 +42,7 @@ const OrderList = ({ history }) => {
 
     if (isDeleted) {
       alert.success("Xóa thành công");
-      history.push("/admin/orders");
+      history.push("/admin/ticket-orders");
       dispatch({ type: DELETE_ORDER_RESET });
     }
 
@@ -50,13 +51,11 @@ const OrderList = ({ history }) => {
 
   const columns = [
     { field: "id", headerName: " ID", minWidth: 300, flex: 1 },
-
     {
-      field: "itemsQty",
-      headerName: "Số lượng",
-      type: "number",
+      field: "cusName",
+      headerName: "Tên khách hàng",
       minWidth: 150,
-      flex: 0.4,
+      flex: 0.5,
     },
     {
       field: "amount",
@@ -71,10 +70,17 @@ const OrderList = ({ history }) => {
       minWidth: 150,
       flex: 0.5,
       cellClassName: (params) => {
-        return params.getValue(params.id, "status") === "Đã giao hàng"
+        return params.getValue(params.id, "status") === "Đã xong"
           ? "greenColor"
           : "redColor";
       },
+    },
+    {
+      field: "date",
+      headerName: "Ngày đặt",
+      minWidth: 150,
+      flex: 0.5,
+
     },
     {
       field: "actions",
@@ -105,25 +111,24 @@ const OrderList = ({ history }) => {
 
   const rows = [];
 
+console.log(saveId)
   orders &&
     orders.forEach((item) => {
+      // setSaveId(item._id);
       rows.push({
         id: item._id,
-        itemsQty: item.orderItems.length,
-        amount: item.totalPrice * 23000,
+        cusName: item.userName,
+        amount: item.totalPrice ,
         status: item.orderStatus,
+        date: item.createdAt,
       });
     });
+
+
   return (
     <>
-      <h1 id="productListHeading">Danh sách đơn hàng thanh toán online</h1>
-      <Link to="/admin/ordersCash">
-        <h4>
-          {" "}
-          <AddIcon />
-          Danh sách đơn hàng ( tiền mặt)
-        </h4>
-      </Link>
+      <h1 id="productListHeading">Danh sách khách hàng đặt vé</h1>
+
       <DataGrid
         rows={rows}
         columns={columns}

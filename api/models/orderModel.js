@@ -1,37 +1,24 @@
 const mongoose = require("mongoose");
 
 const orderSchema = new mongoose.Schema({
-  shippingInfo: {
-    address: {
-      type: String,
-      required: true,
-    },
-    city: {
-      type: String,
-      required: true,
-    },
 
-    state: {
-      type: String,
-      required: true,
-    },
-
-    country: {
-      type: String,
-      required: true,
-    },
-    pinCode: {
-      type: Number,
-      required: true,
-    },
-    phoneNo: {
-      type: Number,
-      required: true,
-    },
-  },
   orderItems: [
     {
-      name: {
+      nameFilm: {
+        type: String,
+        required: true,
+      },
+      nameCinema: {
+        type: String,
+        required: true,
+      },
+      date:{
+        type: String,
+      },
+      time: {
+        type: String,
+      },
+      seats: {
         type: String,
         required: true,
       },
@@ -51,18 +38,23 @@ const orderSchema = new mongoose.Schema({
         type: String,
         required: true,
       },
-      product: {
+      ticket: {
         type: mongoose.Schema.ObjectId,
-        ref: "Product",
+        ref: "ReleasedTime",
         required: true,
       },
     },
   ],
-  user: {
+  userId: {
     type: mongoose.Schema.ObjectId,
     ref: "User",
     required: true,
   },
+userName:{
+  type: String,
+    ref: "User",
+    required: true,
+},
   paymentInfo: {
     id: {
       type: String,
@@ -78,16 +70,6 @@ const orderSchema = new mongoose.Schema({
     required: true,
   },
   itemsPrice: {
-    type: Number,
-    required: true,
-    default: 0,
-  },
-  taxPrice: {
-    type: Number,
-    required: true,
-    default: 0,
-  },
-  shippingPrice: {
     type: Number,
     required: true,
     default: 0,

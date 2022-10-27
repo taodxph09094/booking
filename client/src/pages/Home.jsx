@@ -1,128 +1,53 @@
-import React, { useState } from "react";
-import { Card, Row, Radio, Avatar, Col, Button } from "antd";
+import React, { useEffect, useRef, useState } from "react";
 import Films from "../components/Films/Films";
 import Feture from "../components/Films/Feture";
-
+import "../assets/css/home.css";
+import AppBar from "@material-ui/core/AppBar";
+import Tabs from "@material-ui/core/Tabs";
+import Tab from "@material-ui/core/Tab";
 const Home = () => {
-  const [size, setSize] = useState("large");
-  const { Meta } = Card;
+  const [value, setValue] = useState({ value: 0, fade: true, notDelay: 0 });
+
+  const timeout = useRef(null);
+  useEffect(() => {
+    return () => {
+      clearTimeout(timeout.current);
+    };
+  }, []);
+  const handleChange = (e, newValue) => {
+    setValue((value) => ({ ...value, notDelay: newValue, fade: false }));
+    timeout.current = setTimeout(() => {
+      setValue((value) => ({ ...value, value: newValue, fade: true }));
+    }, 100);
+  };
   return (
     <>
-      {/* <Feture />
-      <Films /> */}
-
-      <div className="headerHome">
-        <Row>
-          <Col span={24}>
-            <Radio.Group value={size} onChange={(e) => setSize(e.target.value)}>
-              <Radio.Button
-                className="buttonHeaderHome"
-                size="large"
-                value="large"
-              >
-                <span className="textGrBtn">Phim đang chiếu</span>
-              </Radio.Button>
-              <Radio.Button value="small" size="large" ghost={true}>
-                <span className="textGrBtn">Phim sắp chiếu</span>
-              </Radio.Button>
-            </Radio.Group>
-          </Col>
-        </Row>
-      </div>
-
-      <div className="listFilm">
-        <Row>
-          <Col span={6}>
-            <Card
-              className="cardFilm"
-              style={{ width: 250 }}
-              cover={
-                <img
-                  alt="example"
-                  src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
-                />
-              }
-              actions={["125 phút | 20/10/2022"]}
-            >
-              <Meta
-                avatar={<Avatar src="https://joeschmoe.io/api/v1/random" />}
-                title="Card title"
-                description="This is the description"
-              />
-              <a class="buttonView" href="/jane/">
-                View Jane's Profile
-              </a>
-            </Card>
-          </Col>
-          <Col span={6}>
-            <Card
-              className="cardFilm"
-              style={{ width: 250 }}
-              cover={
-                <img
-                  alt="example"
-                  src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
-                />
-              }
-              actions={["125 phút | 20/10/2022"]}
-            >
-              <Meta
-                avatar={<Avatar src="https://joeschmoe.io/api/v1/random" />}
-                title="Card title"
-                description="This is the description"
-              />
-              <a class="buttonView" href="/jane/">
-                View Jane's Profile
-              </a>
-            </Card>
-          </Col>
-          <Col span={6}>
-            <Card
-              className="cardFilm"
-              style={{ width: 250 }}
-              cover={
-                <img
-                  alt="example"
-                  src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
-                />
-              }
-              actions={["125 phút | 20/10/2022"]}
-            >
-              <Meta
-                avatar={<Avatar src="https://joeschmoe.io/api/v1/random" />}
-                title="Card title"
-                description="This is the description"
-              />
-              <a class="buttonView" href="/jane/">
-                View Jane's Profile
-              </a>
-            </Card>
-          </Col>
-          <Col span={6}>
-            <Card
-              className="cardFilm"
-              style={{ width: 250 }}
-              cover={
-                <img
-                  //   className="ImageMovie"
-                  alt="example"
-                  src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png"
-                />
-              }
-              actions={["125 phút | 20/10/2022"]}
-            >
-              <Meta
-                avatar={<Avatar src="https://joeschmoe.io/api/v1/random" />}
-                title="Card title"
-                description="This is the description"
-              />
-
-              <a class="buttonView" href="/jane/">
-                View Jane's Profile
-              </a>
-            </Card>
-          </Col>
-        </Row>
+      <div style={{ paddingTop: "80px" }} id="lichchieu">
+        <AppBar className="appBar" position="static">
+          <Tabs
+            classes="appBar indicator flexContainer"
+            value={value.value}
+            onChange={handleChange}
+          >
+            <Tab
+              disableRipple
+              className="tabButton tabDangChieu"
+              label="Phim đang chiếu"
+            />
+            <Tab
+              disableRipple
+              className="tabButton tabSapChieu"
+              label="Phim sắp chiếu"
+            />
+          </Tabs>
+        </AppBar>
+        <div className="listMovie">
+          <div className="listFilm">
+            <div className="px-1 align-top">
+              <Films />
+            </div>
+          </div>
+        </div>
       </div>
     </>
   );

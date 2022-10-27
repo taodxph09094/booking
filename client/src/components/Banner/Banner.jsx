@@ -1,81 +1,68 @@
-import React, { useState } from "react";
+import React from "react";
 import "./banner.css";
-import { Select, Carousel, DatePicker, Button } from "antd";
-import { SearchOutlined } from "@ant-design/icons";
+import { RightOutlined, LeftOutlined } from "@ant-design/icons";
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+import Search from "./Search";
+import bannerData from "../../fakeData/banner";
+import RenderBanner from "./RenderBanner";
 
 const Banner = () => {
-  const { Option } = Select;
-  const provinceData = [
-    "Black Adam",
-    "Cô gái từ quá khứ",
-    "Bỗng dưng trúng số",
-  ];
-  const cityData = {
-    "Black Adam": ["Hà Nội", "Hồ Chí Minh", "Đà Nẵng"],
-    "Cô gái từ quá khứ": ["Hà Nội", "Suzhou", "Zhenjiang"],
-    "Bỗng dưng trúng số": ["Không có"],
+  const settings = {
+    dots: true,
+    infinite: true,
+    autoplaySpeed: 5000, //speed per sence
+    autoplay: false,
+    speed: 500,
+    swipeToSlide: true,
+    nextArrow: <NextArrow />,
+    prevArrow: <PrevArrow />,
+    dotsClass: "slickdotsbanner",
   };
-  const [cities, setCities] = useState(cityData[provinceData[0]]);
-  const [secondCity, setSecondCity] = useState(cityData[provinceData[0]][0]);
-  const handleProvinceChange = (value) => {
-    setCities(cityData[value]);
-    setSecondCity(cityData[value][0]);
-  };
-  const onSecondCityChange = (value) => {
-    setSecondCity(value);
-  };
-  const onChange = (date, dateString) => {
-    console.log(date, dateString);
-  };
+  function NextArrow(props) {
+    const { onClick } = props;
+    return (
+      <RightOutlined
+        style={{ right: "15px" }}
+        onClick={onClick}
+        className="BtnArrow"
+      />
+    );
+  }
+
+  function PrevArrow(props) {
+    const { onClick } = props;
+    return (
+      <LeftOutlined
+        style={{ left: "15px" }}
+        onClick={onClick}
+        className="BtnArrow"
+      />
+    );
+  }
   return (
     <>
-      <div className="bannerFilm">
-        <Carousel autoplay>
-          <div>
-            <h3 className="bannerStyle">1</h3>
-          </div>
-          <div>
-            <h3 className="bannerStyle">2</h3>
-          </div>
-          <div>
-            <h3 className="bannerStyle">3</h3>
-          </div>
-          <div>
-            <h3 className="bannerStyle">4</h3>
-          </div>
-        </Carousel>
-        <div className="formFindFilm">
-          <div className="selectFilmAndDate">
-            <p className="selectAndFilter">Filter</p>
-            <Select
-              defaultValue={provinceData[0]}
-              style={{
-                width: 350,
-              }}
-              onChange={handleProvinceChange}
-            >
-              {provinceData.map((province) => (
-                <Option key={province}>{province}</Option>
-              ))}
-            </Select>
-            <Select
-              style={{
-                width: 120,
-              }}
-              value={secondCity}
-              onChange={onSecondCityChange}
-            >
-              {cities.map((city) => (
-                <Option key={city}>{city}</Option>
-              ))}
-            </Select>
-            <DatePicker onChange={onChange} />
-            <Button type="primary" icon={<SearchOutlined />}>
-              Tìm kiếm
-            </Button>
-            <br />
-          </div>
-        </div>
+      <div id="carousel" className="bannerFilm">
+        <Slider {...settings}>
+          {bannerData?.map((banner) => {
+            // <RenderBanner key={banner.id} banner={banner} />;
+            return (
+              <div key={banner.maPhim} className="bannerStyle">
+                <img
+                  src={banner?.hinhAnh}
+                  alt="banner"
+                  className="bannerImage"
+                />
+                <div
+                  className="backgroundLinear"
+                  // onClick={() => history.push(`/phim/${banner.maPhim}`)}
+                />
+              </div>
+            );
+          })}
+        </Slider>
+        <Search />
       </div>
     </>
   );
