@@ -41,7 +41,7 @@ const NewReleasedTime = ({ history }) => {
   const [price, setPrice] = useState("");
   const [date, setDate] = useState("");
   const [time, setTime] = useState("");
-
+  // const [time, setTime] = useState("");
   const { cinemas } = useSelector((state) => state.cinemas);
   const { films } = useSelector((state) => state.films);
   const cinemaName = [];

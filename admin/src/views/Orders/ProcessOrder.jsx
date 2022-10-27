@@ -116,8 +116,7 @@ const ProcessOrder = ({ history, match }) => {
                     <div>
                       <p
                         className={
-                          order.orderStatus &&
-                          order.orderStatus === "Đã giao hàng"
+                          order.orderStatus && order.orderStatus === "Đã xong"
                             ? "greenColor"
                             : "redColor"
                         }

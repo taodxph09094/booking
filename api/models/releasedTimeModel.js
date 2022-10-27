@@ -11,7 +11,6 @@ const releasedTimeSchema = new mongoose.Schema({
   price: {
     type: String,
     required: [true, "Nhập giá"],
-    maxLength: [20, "Giá tối đa 8 ký tự"],
   },
   promotion: {
     type: String,

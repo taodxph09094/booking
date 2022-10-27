@@ -1,4 +1,4 @@
-import React, {useState, useEffect, Fragment } from "react";
+import React, { useState, useEffect, Fragment } from "react";
 import { useAlert } from "react-alert";
 import { DataGrid } from "@material-ui/data-grid";
 import { useDispatch, useSelector } from "react-redux";
@@ -15,12 +15,13 @@ import {
   getOrderDetails,
 } from "../../actions/orderAction";
 import { DELETE_ORDER_RESET } from "../../constants/orderConstants";
+import { formatDateTimeToString } from "../../utils/helper";
 
 const OrderList = ({ history }) => {
   const dispatch = useDispatch();
 
   const alert = useAlert();
-const [saveId, setSaveId] = useState([]);
+  const [saveId, setSaveId] = useState([]);
   const { error, orders } = useSelector((state) => state.allOrders);
   const { error: deleteError, isDeleted } = useSelector((state) => state.order);
 
@@ -29,7 +30,7 @@ const [saveId, setSaveId] = useState([]);
   };
 
   useEffect(() => {
-    setSaveId(orders.orderItems)
+    setSaveId(orders.orderItems);
     if (error) {
       alert.error(error);
       dispatch(clearErrors());
@@ -80,7 +81,6 @@ const [saveId, setSaveId] = useState([]);
       headerName: "Ngày đặt",
       minWidth: 150,
       flex: 0.5,
-
     },
     {
       field: "actions",
@@ -92,9 +92,9 @@ const [saveId, setSaveId] = useState([]);
       renderCell: (params) => {
         return (
           <Fragment>
-            <Link to={`/admin/orderDetail/${params.getValue(params.id, "id")}`}>
+            {/* <Link to={`/admin/orderDetail/${params.getValue(params.id, "id")}`}>
               <EditIcon />
-            </Link>
+            </Link> */}
 
             <Button
               onClick={() =>
@@ -111,19 +111,18 @@ const [saveId, setSaveId] = useState([]);
 
   const rows = [];
 
-console.log(saveId)
+  console.log(saveId);
   orders &&
     orders.forEach((item) => {
       // setSaveId(item._id);
       rows.push({
         id: item._id,
         cusName: item.userName,
-        amount: item.totalPrice ,
+        amount: item.totalPrice,
         status: item.orderStatus,
-        date: item.createdAt,
+        date: formatDateTimeToString(item.createdAt),
       });
     });
-
 
   return (
     <>

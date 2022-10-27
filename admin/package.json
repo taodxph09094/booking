@@ -77,5 +77,5 @@
       "last 1 safari version"
     ]
   },
-  "proxy": "http://192.168.1.25:4000"
+  "proxy": "https://api-cinema-td.herokuapp.com"
 }
