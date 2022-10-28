@@ -1,7 +1,6 @@
 const mongoose = require("mongoose");
 
 const orderSchema = new mongoose.Schema({
-
   orderItems: [
     {
       nameFilm: {
@@ -12,7 +11,7 @@ const orderSchema = new mongoose.Schema({
         type: String,
         required: true,
       },
-      date:{
+      date: {
         type: String,
       },
       time: {
@@ -50,11 +49,11 @@ const orderSchema = new mongoose.Schema({
     ref: "User",
     required: true,
   },
-userName:{
-  type: String,
+  userName: {
+    type: String,
     ref: "User",
     required: true,
-},
+  },
   paymentInfo: {
     id: {
       type: String,

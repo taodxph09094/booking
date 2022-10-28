@@ -1,13 +1,30 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useAlert } from "react-alert";
+import { useSelector, useDispatch } from "react-redux";
 import { PlayCircleOutlined } from "@ant-design/icons";
 import { Link, useHistory } from "react-router-dom";
+import { clearErrors, getFilm } from "../../actions/filmAction";
+import CardFilm from "./components/CardFilm";
 import { Rate, Space } from "antd";
 const Films = () => {
+  const alert = useAlert();
+  const dispatch = useDispatch();
+  const { loading, error, films } = useSelector((state) => state.films);
+
+  useEffect(() => {
+    if (error) {
+      alert.error(error);
+      dispatch(clearErrors());
+    }
+    dispatch(getFilm());
+  }, [dispatch, error, alert]);
+  console.log(films);
   return (
     <>
       <div className="filmLayout">
+        {films && films.map((film) => <CardFilm key={film._id} film={film} />)}
         <Space size={10}>
-          <div
+          {/* <div
             style={{
               marginRight: "10px",
               marginLeft: "10px",
@@ -20,14 +37,14 @@ const Films = () => {
                 <div className="film__poster poster1">
                   <div
                     className="film__overlay"
-                    // onClick={() =>
-                    // }
+                    onClick={() =>
+                    }
                   />
                   <div className="play__trailer">
                     <PlayCircleOutlined className="btnPlay" />
                   </div>
                 </div>
-                {/* <BlockRating danhGia={movie.danhGia} /> */}
+                <BlockRating danhGia={movie.danhGia} />
               </div>
               <Rate disabled defaultValue={5} />
               <div className="film__content">
@@ -44,10 +61,11 @@ const Films = () => {
                 </div>
               </div>
             </div>
-          </div>
+          </div> */}
+
           {/* //// */}
 
-          <div
+          {/* <div
             style={{
               padding: "7px",
               cursor: "pointer",
@@ -58,14 +76,12 @@ const Films = () => {
                 <div className="film__poster poster2">
                   <div
                     className="film__overlay"
-                    // onClick={() =>
-                    // }
+
                   />
                   <div className="play__trailer">
                     <PlayCircleOutlined className="btnPlay" />
                   </div>
                 </div>
-                {/* <BlockRating danhGia={movie.danhGia} /> */}
               </div>
               <Rate disabled defaultValue={5} />
               <div className="film__content">
@@ -84,7 +100,7 @@ const Films = () => {
             </div>
           </div>
 
-          {/* ////// */}
+
           <div
             style={{
               padding: "7px",
@@ -96,14 +112,11 @@ const Films = () => {
                 <div className="film__poster poster3">
                   <div
                     className="film__overlay"
-                    // onClick={() =>
-                    // }
                   />
                   <div className="play__trailer">
                     <PlayCircleOutlined className="btnPlay" />
                   </div>
                 </div>
-                {/* <BlockRating danhGia={movie.danhGia} /> */}
               </div>
               <Rate disabled defaultValue={5} />
               <div className="film__content">
@@ -121,7 +134,7 @@ const Films = () => {
               </div>
             </div>
           </div>
-          {/* ////// */}
+
           <div
             style={{
               padding: "7px",
@@ -133,14 +146,11 @@ const Films = () => {
                 <div className="film__poster poster3">
                   <div
                     className="film__overlay"
-                    // onClick={() =>
-                    // }
                   />
                   <div className="play__trailer">
                     <PlayCircleOutlined className="btnPlay" />
                   </div>
                 </div>
-                {/* <BlockRating danhGia={movie.danhGia} /> */}
               </div>
               <Rate disabled defaultValue={5} />
               <div className="film__content">
@@ -157,7 +167,7 @@ const Films = () => {
                 </div>
               </div>
             </div>
-          </div>
+          </div> */}
         </Space>
       </div>
     </>

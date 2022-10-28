@@ -153,7 +153,7 @@
 }
 .poster1{
   /* backgroundImage: props => `url(${props.bg})`, */
-  background-image: url("https://i.imgur.com/llauEPX.png");
+  /* background-image: url("https://i.imgur.com/llauEPX.png"); */
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;

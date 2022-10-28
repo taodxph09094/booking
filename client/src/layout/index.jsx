@@ -7,6 +7,7 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Home from "../pages/Home";
 import BookingTicket from "../components/Booking/BookingTicket";
 import Films from "../components/Films/Films";
+import FilmDetail from "../pages/Film/FilmDetail";
 const { Header, Footer, Content } = Layout;
 const LayoutMain = () => {
   return (
@@ -20,6 +21,7 @@ const LayoutMain = () => {
               <Route exact path="/" component={Home} />
               <Route exact path="/booking" component={TabsCate} />
               <Route exact path="/booking-ticket" component={BookingTicket} />
+              <Route exact path="/film/:id" component={FilmDetail} />
               {/* <TabsCate /> */}
             </Switch>
           </Router>
