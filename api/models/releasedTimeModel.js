@@ -6,7 +6,15 @@ const releasedTimeSchema = new mongoose.Schema({
   },
   cinema: {
     type: String,
+    required: [true, "Chọn cụm rạp"],
+  },
+  brand: {
+    type: String,
     required: [true, "Chọn rạp"],
+  },
+  address: {
+    type: String,
+    required: [true, "Nhập địa chỉ"],
   },
   price: {
     type: String,
@@ -24,6 +32,10 @@ const releasedTimeSchema = new mongoose.Schema({
   time: {
     type: String,
     required: [true, "Nhập thời gian"],
+  },
+  seats: {
+    type: String,
+    // required: true,
   },
   // seats: [
   //   {

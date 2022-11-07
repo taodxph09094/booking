@@ -1,0 +1,26 @@
+.BookingMainTicked{
+    display: flex;
+}
+.BookingMainLeft{
+    flex: 75%;
+}
+.BookingMainRight{
+    flex: 25%;
+}
+.CheckRoot{
+    width: 100%;
+    box-shadow:0 0 15px rgb(0 0 0 / 30%);
+    display: flex;
+    justify-content: space-between;
+    padding: 10;
+    height: 100;
+}
+.CheckAccount{
+
+}
+.CheckAvatar{
+
+}
+.hoTen{
+
+}

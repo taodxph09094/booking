@@ -1,38 +1,54 @@
-.FilmDetailMain{
-    background-color: "rgb(10, 32, 41)"
-}
-.FilmDetailTop{
+
+
+  .MovieDetailFilm{
+    background-color: rgb(10, 32, 41);
+  }
+  .MovieDetailTop{
     width: 100%;
     height: 41vw;
     position: relative;
-}
-.FilmDetailGradient{
+  }
+  .MovieGradient{
     position: absolute;
     top: 0;
     left: 0;
     bottom: 0;
     right: 0;
     background: linear-gradient(to top, rgb(10, 32, 41), transparent 100%);
-}
-.BannerBlur{
+  }
+  .MovieBannerBlur{
     position: absolute;
     top: 0;
     left: 0;
     bottom: 0;
     right: 0;
-   background-image: url("https://preview.redd.it/6osikpalawp91.jpg?auto=webp&s=9440231fa70c4cba6f7fda7ac7d22646a9c7f25c");
+    background-image: url('https://cdn.pixabay.com/photo/2017/02/20/18/03/cat-2083492_960_720.jpg');
     background-repeat: no-repeat;
     background-size: cover;
-    background-position: center;
-    filter: blur(15px);
-}
-.imageFilmDetail{
-    width: 100%; border-radius: 4;
-}
-.TopDetailInfo{
-    position: absolute;
-    top: 50%;
-    left: 50%;
+    background-position:center;
+    filter:blur(15px);
+  }
+  .withOutImage{
+    border-radius: 4;
+    width: 100%; height: 100%;
+    animation-name: myEffect;
+    animation-duration: 3s;
+    animation-timing-function: ease-in-out;
+    animation-iteration-count: infinite;
+    background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+    background-size: 400% 400%;
+  }
+  @keyframes myEffect {
+    0%   {top: 0px;}
+    25%  {top: 200px;}
+    50%  {top: 100px;}
+    75%  {top: 200px;}
+    100% {top: 0px;}
+  }
+  .MovieDetailTopInfo{
+    position:absolute;
+    top:50%;
+    left: 40%;
     transform: translate(-50%,-50%);
     width: 100%;
     height: 320;
@@ -41,33 +57,42 @@
     align-items: center;
     justify-content: center;
     color: #e9e9e9;
-}
-.ImgTrailer{
+  }
+  .MovieImgTrailer{
     width: 25%;
     height: 100%;
     position: relative;
-   background-image: url("https://preview.redd.it/6osikpalawp91.jpg?auto=webp&s=9440231fa70c4cba6f7fda7ac7d22646a9c7f25c");
-    /* backgroundImage: props => `url(${props.bannerImg})`, */
+    /* background-image: url('https://cdn.pixabay.com/photo/2017/02/20/18/03/cat-2083492_960_720.jpg'); */
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
-    /* '&:hover > div ': { opacity: 1 }, */
-}
-.ImgTrailer:hover > div{
+  }
+  .MovieImgTrailer:hover> div{
     opacity: 1;
-    /* '&:hover > div ': { opacity: 1 }, */
-}
-.ShortInfo{
+  }
+  .MovieShortInfo{
     width: 59%;
     padding: 0px 15px;
-}
-.FilmName{
+  }
+  .MovieDetailName{
     font-size: 24,
-}
-.btnMuaVe{
+  }
+  .c18{
+    margin-right: 6px;
+    vertical-align: 13%;
+    background-color: #fb4226;
+    color: #fff;
     font-size: 16px;
     border-radius: 4px;
-    background: 0 0;
+    padding: 0 5px;
+    display: inline-block;
+    text-align: center;
+    min-width: 33px;
+  }
+  .btnMuaVe{
+    font-size: 16px;
+    border-radius: 4px;
+    background:0 0;
     padding: 11px 25px;
     transition: all .2s;
     margin-top: 25px;
@@ -75,14 +100,20 @@
     background-color: #fb4226;
     border: none;
     color: #fff;
-    /* "&:hover": {
-        backgroundColor: "#b42a14",
-      } */
-}
-.btnMuaVe:hover{
-    background-color:#b42a14;
-}
-.RateFilm{
+  }
+  .btnMuaVe:hover{
+
+    background-color: #b42a14;
+  }
+  .imageMovie{
+    width: 150px;
+    height: 150px;
+  }
+  .imagesMovie{
+    width: 100%;
+    height: 100%;
+  }
+  .rateMovieDetail{
     width: 16%;
     height: 100%;
     text-align: center;
@@ -90,36 +121,31 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-}
-.CircularFilm{
+  }
+  .circularMovieDetail{
     position: relative;
     height: 126;
     width: 126;
-}
-.RateStart{
+  }
+  .danhGiaMovie{
     font-size: 53;
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%,-50%);
-}
-.fabProgress{
-    color: #7ed321;
+  }
+  .MovieDetailBehined{
+    color: #829869;
     position: absolute;
     top: 0;
     left: 0;
-}
-.rateStar{
+  }
+  .MovieFabProgress{
+    color: #7ed321;
+    /* position: absolute; */
+    top: 0;
+    left: 0;
+  }
+  .rateStarMovie{
     width: fit-content;
-}
-.withOutImage{
-    border-radius: 4;
-    width: 100%;
-    height: 100%;
-    /* animationName: `$myEffect`, */
-    /* animationDuration: "3s", */
-    /* animationTimingFunction: `${theme.transitions.easing.easeInOut}`, */
-    animation-iteration-count: infinite;
-    background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
-    background-size: 400% 400%;
   }

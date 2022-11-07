@@ -28,6 +28,7 @@ import {
 import { UPDATE_RELEASEDTIME_RESET } from "../../constants/releasedTimeConstants";
 import { getAdminCinema } from "../../actions/cinemaAction";
 import { getAdminFilm } from "../../actions/filmAction";
+const brands = ["BHD", "Lotte", "CGV", "Galaxy"];
 const UpdateReleasedTime = ({ history, match }) => {
   const [startDate, setStartDate] = useState(new Date());
   const dispatch = useDispatch();
@@ -45,7 +46,7 @@ const UpdateReleasedTime = ({ history, match }) => {
   const [price, setPrice] = useState("");
   const [date, setDate] = useState("");
   const [time, setTime] = useState("");
-
+  const [brand, setBrand] = useState("");
   const { cinemas } = useSelector((state) => state.cinemas);
   const { films } = useSelector((state) => state.films);
   const cinemaName = [];
@@ -53,13 +54,13 @@ const UpdateReleasedTime = ({ history, match }) => {
     cinemas.forEach((item) => {
       cinemaName.push(item.name);
     });
-  console.log(cinemaName);
+
   const filmName = [];
   films &&
     films.forEach((item) => {
       filmName.push(item.name);
     });
-  console.log(filmName);
+
   const [value, onChange] = useState();
   useEffect(() => {
     setDate(splitText(formatDateTimeToString(startDate), 10));
@@ -113,6 +114,7 @@ const UpdateReleasedTime = ({ history, match }) => {
 
     // myForm.set("film", film);
     // myForm.set("cinema", cinema);
+    myForm.set("brand", brand);
     myForm.set("price", price);
     myForm.set("date", date);
     myForm.set("time", time);

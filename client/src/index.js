@@ -11,6 +11,7 @@ import "antd/dist/antd.css";
 import "./index.css";
 import "./assets/js/scripts";
 import "./assets/css/filmCard.css";
+
 const options = {
   timeout: 5000,
   position: positions.BOTTOM_CENTER,

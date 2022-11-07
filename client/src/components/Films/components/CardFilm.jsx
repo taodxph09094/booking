@@ -44,9 +44,6 @@ const CardFilm = ({ film }) => {
         </div>
       </div>
     </div>
-    // <div className="d">
-    //   <p>{film.name}</p>
-    // </div>
   );
 };
 

@@ -1,49 +1,47 @@
 const mongoose = require("mongoose");
 
 const orderSchema = new mongoose.Schema({
-  orderItems: [
+  nameFilm: {
+    type: String,
+  },
+  nameCinema: {
+    type: String,
+  },
+  address: {
+    type: String,
+  },
+  date: {
+    type: String,
+  },
+  time: {
+    type: String,
+  },
+  // seats: {
+  //   type: String,
+  // },
+  seats: [
     {
-      nameFilm: {
-        type: String,
-        required: true,
-      },
-      nameCinema: {
-        type: String,
-        required: true,
-      },
-      date: {
+      id: {
         type: String,
       },
-      time: {
+      number: {
         type: String,
-      },
-      seats: {
-        type: String,
-        required: true,
-      },
-      price: {
-        type: Number,
-        required: true,
-      },
-      promotion: {
-        type: Number,
-        required: true,
-      },
-      quantity: {
-        type: Number,
-        required: true,
-      },
-      image: {
-        type: String,
-        required: true,
-      },
-      ticket: {
-        type: mongoose.Schema.ObjectId,
-        ref: "ReleasedTime",
-        required: true,
       },
     },
   ],
+  price: {
+    type: Number,
+    required: true,
+  },
+  promotion: {
+    type: Number,
+  },
+
+  ticket: {
+    type: mongoose.Schema.ObjectId,
+    ref: "ReleasedTime",
+    required: true,
+  },
   userId: {
     type: mongoose.Schema.ObjectId,
     ref: "User",

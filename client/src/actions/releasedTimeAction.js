@@ -22,19 +22,12 @@ import {
 } from "../constants/releasedTimeConstants";
 // Get All ReleasedTimes
 export const getReleasedTime =
-  (keyword = "", currentPage = 1, category, tag) =>
+  (keyword = "", currentPage = 1) =>
   async (dispatch) => {
     try {
       dispatch({ type: ALL_RELEASEDTIMETIME_REQUEST });
 
       let link = `/api/v1/releasedTimes?keyword=${keyword}&page=${currentPage}`;
-
-      if (category) {
-        link = `/api/v1/releasedTimes?keyword=${keyword}&page=${currentPage}&category=${category}&tag=${tag}`;
-      }
-      if (tag) {
-        link = `/api/v1/releasedTimes?keyword=${keyword}&page=${currentPage}&category=${category}&tag=${tag}`;
-      }
 
       const { data } = await axios.get(link);
 
@@ -49,7 +42,27 @@ export const getReleasedTime =
       });
     }
   };
+export const getReleasedTimeByFilm =
+  (keyword = "", currentPage = 1) =>
+  async (dispatch) => {
+    try {
+      dispatch({ type: ALL_RELEASEDTIMETIME_REQUEST });
 
+      let link = `/api/v1/releasedTimes?film=${keyword}&page=${currentPage}`;
+
+      const { data } = await axios.get(link);
+
+      dispatch({
+        type: ALL_RELEASEDTIME_SUCCESS,
+        payload: data,
+      });
+    } catch (error) {
+      dispatch({
+        type: ALL_RELEASEDTIME_FAIL,
+        payload: error.response.data.message,
+      });
+    }
+  };
 // Get All ReleasedTimes For Admin
 export const getAdminReleasedTime = () => async (dispatch) => {
   try {

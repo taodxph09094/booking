@@ -19,7 +19,7 @@ exports.getReleasedTime = catchAsyncErrors(async (req, res, next) => {
   const releasedTimesCount = await ReleasedTime.countDocuments();
 
   const apiFeature = new ApiFeatures(ReleasedTime.find(), req.query)
-    .search()
+    .searchByFilm()
     .filter();
 
   let releasedTimes = await apiFeature.query;

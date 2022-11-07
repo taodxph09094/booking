@@ -37,7 +37,10 @@ exports.loginUser = catchAsyncErrors(async (req, res, next) => {
 
   // checking if user has given password and email both
 
-  if (!email || !password) {
+  if (!email) {
+    return next(new ErrorHander("Nhập email tài khoản", 400));
+  }
+  if (!password) {
     return next(new ErrorHander("Nhập mật khẩu", 400));
   }
 

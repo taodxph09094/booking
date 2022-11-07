@@ -1,10 +1,46 @@
 import React, { useEffect, useRef, useState } from "react";
 import Films from "../components/Films/Films";
+import Slider from "react-slick";
+import { RightOutlined, LeftOutlined } from "@ant-design/icons";
 import Feture from "../components/Films/Feture";
 import "../assets/css/home.css";
+import "../components/Banner/banner.css";
 import AppBar from "@material-ui/core/AppBar";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
+import Banner from "../components/Banner/Banner";
+
+function NextArrow(props) {
+  const { onClick } = props;
+  return (
+    <RightOutlined
+      style={{ right: "15px" }}
+      onClick={onClick}
+      className="BtnArrow"
+    />
+  );
+}
+
+function PrevArrow(props) {
+  const { onClick } = props;
+  return (
+    <LeftOutlined
+      style={{ left: "15px" }}
+      onClick={onClick}
+      className="BtnArrow"
+    />
+  );
+}
+const settings = {
+  className: "center",
+  centerPadding: "60px",
+  slidesToShow: 1,
+  speed: 500,
+  rows: 2,
+  slidesPerRow: 4,
+  nextArrow: <NextArrow />,
+  prevArrow: <PrevArrow />,
+};
 const Home = () => {
   const [value, setValue] = useState({ value: 0, fade: true, notDelay: 0 });
 
@@ -22,6 +58,7 @@ const Home = () => {
   };
   return (
     <>
+      <Banner />
       <div style={{ paddingTop: "80px" }} id="lichchieu">
         <AppBar className="appBar" position="static">
           <Tabs
@@ -44,7 +81,9 @@ const Home = () => {
         <div className="listMovie">
           <div className="listFilm">
             <div className="px-1 align-top">
-              <Films />
+              <Slider {...settings}>
+                <Films />
+              </Slider>
             </div>
           </div>
         </div>

@@ -17,6 +17,19 @@ class ApiFeatures {
     this.query = this.query.find({ ...keyword });
     return this;
   }
+  searchByFilm() {
+    const keyword = this.queryStr.keyword
+      ? {
+          film: {
+            $regex: this.queryStr.keyword,
+            $options: "i",
+          },
+        }
+      : {};
+
+    this.query = this.query.find({ ...keyword });
+    return this;
+  }
   searchId() {
     const code = this.queryStr.code
       ? {

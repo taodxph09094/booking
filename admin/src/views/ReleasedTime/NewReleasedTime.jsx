@@ -28,6 +28,8 @@ import { getAdminFilm } from "../../actions/filmAction";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { formatDateTimeToString, splitText } from "../../utils/helper";
+
+const brands = ["BHD", "Lotte", "CGV", "Galaxy"];
 const NewReleasedTime = ({ history }) => {
   const [startDate, setStartDate] = useState(new Date());
   const dispatch = useDispatch();
@@ -41,7 +43,7 @@ const NewReleasedTime = ({ history }) => {
   const [price, setPrice] = useState("");
   const [date, setDate] = useState("");
   const [time, setTime] = useState("");
-  // const [time, setTime] = useState("");
+  const [brand, setBrand] = useState("");
   const { cinemas } = useSelector((state) => state.cinemas);
   const { films } = useSelector((state) => state.films);
   const cinemaName = [];
@@ -49,15 +51,15 @@ const NewReleasedTime = ({ history }) => {
     cinemas.forEach((item) => {
       cinemaName.push(item.name);
     });
-  console.log(cinemaName);
   const filmName = [];
   films &&
     films.forEach((item) => {
       filmName.push(item.name);
     });
-  console.log(filmName);
+
   useEffect(() => {
-    setDate(splitText(formatDateTimeToString(startDate), 10));
+    // setDate(splitText(formatDateTimeToString(startDate), 10));
+    setDate(startDate);
     setTime(value);
   });
   useEffect(() => {
@@ -82,6 +84,7 @@ const NewReleasedTime = ({ history }) => {
 
     myForm.set("film", film);
     myForm.set("cinema", cinema);
+    myForm.set("brand", brand);
     myForm.set("price", price);
     myForm.set("date", date);
     myForm.set("time", time);
@@ -105,27 +108,38 @@ const NewReleasedTime = ({ history }) => {
                 >
                   <Row>
                     <Col className="pr-1" md="12">
-                      {/* <Form.Group>
-                        <label>Tên rạp</label> */}
+                      <Form.Select
+                        className="select-category"
+                        aria-label="Default select example"
+                        onChange={(e) => setBrand(e.target.value)}
+                      >
+                        <option value="">Chọn rạp</option>
+                        {brands.map((cineV) => (
+                          <option key={cineV} value={cineV}>
+                            {cineV}
+                          </option>
+                        ))}
+                      </Form.Select>
+                    </Col>
+                  </Row>
+                  <Row>
+                    <Col className="pr-1" md="12">
                       <Form.Select
                         className="select-category"
                         aria-label="Default select example"
                         onChange={(e) => setCinema(e.target.value)}
                       >
-                        <option value="">Chọn tên rạp</option>
+                        <option value="">Chọn cụm rạp</option>
                         {cinemaName.map((cine) => (
                           <option key={cine} value={cine}>
                             {cine}
                           </option>
                         ))}
                       </Form.Select>
-                      {/* </Form.Group> */}
                     </Col>
                   </Row>
                   <Row>
                     <Col className="pr-1" md="12">
-                      {/* <Form.Group>
-                        <label>Tên phim</label> */}
                       <Form.Select
                         className="select-category"
                         aria-label="Default select example"
@@ -138,7 +152,6 @@ const NewReleasedTime = ({ history }) => {
                           </option>
                         ))}
                       </Form.Select>
-                      {/* </Form.Group> */}
                     </Col>
                   </Row>
                   <Row>

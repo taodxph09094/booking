@@ -14,6 +14,7 @@ import {
   getAdminReleasedTime,
 } from "../../actions/releasedTimeAction";
 import { DELETE_RELEASEDTIME_RESET } from "../../constants/releasedTimeConstants";
+import { formatDateTimeToString, splitText } from "../../utils/helper";
 const ReleasedTime = ({ history }) => {
   const dispatch = useDispatch();
 
@@ -133,10 +134,11 @@ const ReleasedTime = ({ history }) => {
       rows.push({
         id: item._id,
         film: item.film,
-        date: item.date,
+        cinema: item.cinema,
+        date: splitText(formatDateTimeToString(item.date), 10),
         time: item.time,
         price: item.price,
-        seat: item.Stock +"/"+ 100,
+        seat: item.Stock + "/" + 100,
       });
     });
   return (

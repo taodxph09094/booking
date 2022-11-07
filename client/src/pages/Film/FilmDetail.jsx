@@ -4,22 +4,35 @@ import { useSelector, useDispatch } from "react-redux";
 import { useParams, useLocation } from "react-router-dom";
 import { Progress, Rate } from "antd";
 import { useAlert } from "react-alert";
+import CircularProgress from "@material-ui/core/CircularProgress";
 import { clearErrors, getFilmDetails } from "../../actions/filmAction";
 import { CLEAR_ERRORS, NEW_REVIEW_RESET } from "../../constants/filmConstants";
+import useStyles from "./style";
+import BonusDetail from "./BonusDetail/BonusDetail";
+import { getReleasedTimeByFilm } from "../../actions/releasedTimeAction";
 const FilmDetail = ({ match }) => {
-  const dispatch = useDispatch();
-  const [imageNotFound, setImageNotFound] = useState(false);
-  let location = useLocation();
-
-  const alert = useAlert();
   const { film, loading, error } = useSelector((state) => state.filmDetails);
   const { success, error: reviewError } = useSelector(
     (state) => state.newReview
   );
-  const { films } = useSelector((state) => state.films);
-
-  const keyword = film.filmLine;
-
+  const dispatch = useDispatch();
+  const [onClickBtnMuave, setOnClickBtnMuave] = useState(0);
+  const param = useParams();
+  const [quantityComment, setQuantityComment] = useState(0);
+  const [imageNotFound, setImageNotFound] = useState(false);
+  const classes = useStyles({
+    bannerImg:
+      "https://cdn.pixabay.com/photo/2017/02/20/18/03/cat-2083492_960_720.jpg",
+  });
+  let location = useLocation();
+  const alert = useAlert();
+  const keyword = film.name;
+  const handleBtnMuaVe = () => {
+    setOnClickBtnMuave(Date.now());
+  };
+  const onIncreaseQuantityComment = (value) => {
+    setQuantityComment(value);
+  };
   useEffect(() => {
     if (error) {
       alert.error(error);
@@ -35,121 +48,72 @@ const FilmDetail = ({ match }) => {
       alert.success("Đánh giá thành công");
       dispatch({ type: NEW_REVIEW_RESET });
     }
+
     dispatch(getFilmDetails(match.params.id));
-    // dispatch(getFilmByName(keyword));
+    dispatch(getReleasedTimeByFilm(keyword));
   }, [dispatch, match.params.id, error, alert, reviewError, success, keyword]);
-
-  // const options = {
-  //   size: "large",
-  //   value: film.ratings,
-  //   readOnly: true,
-  //   precision: 0.5,
-  // };
-
   return (
-    <div className="FilmDetailMain">
-      <div className="FilmDetailTop">
-        <div className="FilmDetailGradient"></div>
-        <div
-          className="BannerBlur"
-          style={
-            {
-              // backgroundImage: `url(${film.images[0].url})`,
-            }
-          }
-        >
-          {/* <div className="WithOutImage"></div> */}
-          {imageNotFound && <div className="WithOutImage"></div>}
+    <div className={classes.desktop}>
+      <div className={classes.top}>
+        <div className={classes.gradient}></div>
+        <div className={classes.bannerBlur}>
+          {imageNotFound && <div className={classes.withOutImage}></div>}
         </div>
-        <div className="TopDetailInfo">
-          <div className="ImgTrailer">
+        <div className={classes.topInfo}>
+          <div className={classes.imgTrailer}>
             {/* <BtnPlay urlYoutube={data?.trailer} /> */}
             {/* xử lý khi url hình bị lỗi */}
-            {film.images &&
-              film.images.map((item, i) => (
-                <img
-                  style={{ display: "none" }}
-                  className="imageFilmDetail"
-                  key={i}
-                  src={item.url}
-                  alt="poster"
-                  onError={(e) => {
-                    e.target.onerror = null;
-                    setImageNotFound(true);
-                  }}
-                />
-              ))}
-            {imageNotFound && <div className="WithOutImage"></div>}
-
-            {/* <img
-              src="https://docs.zalopay.vn/images/logo-zalopay.svg"
+            <img
+              src="https://cdn.pixabay.com/photo/2014/11/30/14/11/cat-551554_960_720.jpg"
               alt="poster"
-              style={{ display: "none", width: "100%", borderRadius: 4 }}
-              //  onError={(e) => { e.target.onerror = null; setImageNotFound(true) }}
-            /> */}
+              style={{ display: "none" }}
+              onError={(e) => {
+                e.target.onerror = null;
+                setImageNotFound(true);
+              }}
+            />
+            {imageNotFound && <div className={classes.withOutImage}></div>}
           </div>
-          <div className="ShortInfo">
-            <p>
-              {film.released}
-              {/* {formatDate(data.ngayKhoiChieu?.slice(0, 10)).YyMmDd} */}
+          <div className={classes.shortInfo}>
+            <p>{film.released}</p>
+            <p className={classes.movieName}>
+              <span className={classes.c18}>C18</span>
+              {film.name}
             </p>
-            <p className="FilmName">
-              {/* <span className={classes.c18}>C18</span> */}
-              {/* {data.tenPhim} */} {film.name}
-            </p>
-            <p>
-              {/* {`${thoiLuong ?? "120"} phút - ${danhGia} Tix`}  */} 120p -
-              2D/Digital
-            </p>
-            <button
-              className="btnMuaVe"
-              // onClick={handleBtnMuaVe}
-            >
-              {/* Thông tin vé */}
+            <p>{`120 phút - ${film.ratings} Tix`} - 2D/Digital</p>
+            <button className={classes.btnMuaVe} onClick={handleBtnMuaVe}>
               {film.category === "Phim đang chiếu"
                 ? "Mua vé"
                 : "Thông tin phim"}
             </button>
           </div>
-          <div className="RateFilm">
-            <div className="CircularFilm">
-              <span className="RateStart"> </span>
-              {/* <CircularProgress
+          <div className={classes.rate}>
+            <div className={classes.circular}>
+              <span className={classes.danhGia}>{film.numOfReviews}</span>
+              <CircularProgress
                 variant="determinate"
                 size="100%"
                 value={100}
                 className={classes.behined}
                 color="secondary"
-              /> */}
-              {/* <Progress type="circle" percent={100} className="behinedCir" /> */}
-              {/* <CircularProgress
+              />
+              <CircularProgress
                 variant="determinate"
                 size="100%"
-                value={danhGia * 10}
+                value={film.numOfReviews * 10}
                 className={classes.fabProgress}
                 color="secondary"
-              /> */}
-              <Progress
-                type="circle"
-                percent={film.ratings}
-                // format={(percent) => "10đ"}
-                className="fabProgress"
               />
             </div>
-            <div className="rateStar">
-              <Rate allowHalf disabled defaultValue={film.ratings} />
-              {/* <Rating value={(danhGia * 5) / 10} precision={0.5} readOnly /> */}
+            <div className={classes.rateStar}>
+              <Rate defaultValue={film.ratings} />
             </div>
-            <span>{film.reviews.length}đánh giá</span>
+            <span>0 người đánh giá</span>
           </div>
         </div>
       </div>
-      {/* <Tap
-        data={data}
-        onClickBtnMuave={onClickBtnMuave}
-        onIncreaseQuantityComment={onIncreaseQuantityComment}
-        isMobile={isMobile}
-      /> */}
+      <BonusDetail />
+      {/* <Tap data={data} onClickBtnMuave={onClickBtnMuave} onIncreaseQuantityComment={onIncreaseQuantityComment} isMobile={isMobile} /> */}
     </div>
   );
 };
