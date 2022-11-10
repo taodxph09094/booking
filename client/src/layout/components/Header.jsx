@@ -43,7 +43,9 @@ const HeaderUtil = () => {
                   <a className="nav-link">Portfolio</a>
                 </li>
                 <li className="nav-item">
-                  <a className="nav-link">Contact</a>
+                  <a className="nav-link" href="/orders">
+                    Lịch sử đặt vé
+                  </a>
                 </li>
               </ul>
             </div>

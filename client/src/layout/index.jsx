@@ -4,7 +4,7 @@ import Banner from "../components/Banner/Banner";
 import TabsCate from "../components/Tabs/TabsCate";
 import HeaderUtil from "./components/Header";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import Home from "../pages/Home";
+import Home from "../pages/HomePage/Home";
 import BookingTicket from "../components/Booking/BookingTicket";
 import Films from "../components/Films/Films";
 import FilmDetail from "../pages/Film/FilmDetail";
@@ -19,6 +19,7 @@ import { loadStripe } from "@stripe/stripe-js";
 import { loadUser } from "../actions/userAction";
 import ProtectedRoute from "./AuthLayout/ProtectedRoute";
 import Payment from "../pages/Payment/Payment";
+import Orders from "../pages/Order/Orders";
 const { Header, Footer, Content } = Layout;
 const LayoutMain = () => {
   const [stripeApiKey, setStripeApiKey] = useState("");
@@ -58,6 +59,7 @@ const LayoutMain = () => {
                 path="/booking-ticket/:id"
                 component={BookingView}
               />
+              <ProtectedRoute exact path="/orders" component={Orders} />
               <Route exact path="/film/:id" component={FilmDetail} />
               {/* <TabsCate /> */}
               <Route exact path={["/login", "/register"]}>

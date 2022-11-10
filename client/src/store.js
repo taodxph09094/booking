@@ -56,6 +56,9 @@ import {
   releasedTimesReducer,
   newReleasedTimeReducer,
 } from "./reducers/releasedTimeReducer";
+import modalTrailerReducer from "./reducers/ModalTrailer";
+import lazyReducer from "./reducers/Lazy";
+
 const reducer = combineReducers({
   user: userReducer,
   profile: profileReducer,
@@ -95,6 +98,8 @@ const reducer = combineReducers({
   releasedTimeDetails: releasedTimeDetailsReducer,
   releasedTime: releasedTimeReducer,
   releasedTimes: releasedTimesReducer,
+  modalTrailerReducer,
+  lazyReducer,
 });
 
 let initialState = {

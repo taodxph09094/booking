@@ -42,7 +42,7 @@ const orderSchema = new mongoose.Schema({
     ref: "ReleasedTime",
     required: true,
   },
-  userId: {
+  user: {
     type: mongoose.Schema.ObjectId,
     ref: "User",
     required: true,

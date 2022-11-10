@@ -1,14 +1,23 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./banner.css";
 import { RightOutlined, LeftOutlined } from "@ant-design/icons";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Search from "./Search";
+import { useHistory } from "react-router-dom";
 import bannerData from "../../fakeData/banner";
-import RenderBanner from "./RenderBanner";
-
+import BtnPlay from "../Customs/Button/BtnPlay";
+import useMediaQuery from "@material-ui/core/useMediaQuery";
+import { useTheme } from "@material-ui/core/styles";
+import { useDispatch } from "react-redux";
+import { LOADING_BACKTO_HOME_COMPLETED } from "../../constants/Lazy";
+import SearchStickets from "./SearchTickets";
 const Banner = () => {
+  const dispatch = useDispatch();
+  const theme = useTheme();
+  const isDesktop = useMediaQuery(theme.breakpoints.up("md"));
+  const history = useHistory();
   const settings = {
     dots: true,
     infinite: true,
@@ -20,6 +29,9 @@ const Banner = () => {
     prevArrow: <PrevArrow />,
     dotsClass: "slickdotsbanner",
   };
+  useEffect(() => {
+    dispatch({ type: LOADING_BACKTO_HOME_COMPLETED });
+  }, []);
   function NextArrow(props) {
     const { onClick } = props;
     return (
@@ -58,11 +70,15 @@ const Banner = () => {
                   className="backgroundLinear"
                   // onClick={() => history.push(`/phim/${banner.maPhim}`)}
                 />
+                {isDesktop && (
+                  <BtnPlay cssRoot={"play"} urlYoutube={banner.trailer} />
+                )}
               </div>
             );
           })}
         </Slider>
-        <Search />
+        {/* <Search /> */}
+        <SearchStickets />
       </div>
     </>
   );

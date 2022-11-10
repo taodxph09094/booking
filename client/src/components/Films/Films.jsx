@@ -9,7 +9,7 @@ const Films = () => {
   const alert = useAlert();
   const dispatch = useDispatch();
   const { loading, error, films } = useSelector((state) => state.films);
-
+  console.log(films);
   useEffect(() => {
     if (error) {
       alert.error(error);

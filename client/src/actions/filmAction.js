@@ -51,6 +51,27 @@ export const getFilm =
       });
     }
   };
+export const getFilmByCate =
+  (category = "", currentPage = 1) =>
+  async (dispatch) => {
+    try {
+      dispatch({ type: ALL_FILM_REQUEST });
+
+      let link = `/api/v1/films?category=${category}&page=${currentPage}`;
+
+      const { data } = await axios.get(link);
+
+      dispatch({
+        type: ALL_FILM_SUCCESS,
+        payload: data,
+      });
+    } catch (error) {
+      dispatch({
+        type: ALL_FILM_FAIL,
+        payload: error.response.data.message,
+      });
+    }
+  };
 
 // Get All FILMs For Admin
 export const getAdminFilm = () => async (dispatch) => {

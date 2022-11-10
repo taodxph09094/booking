@@ -14,6 +14,9 @@ const filmSchema = new mongoose.Schema({
     type: String,
     required: [true, "Nhập thông tin phim"],
   },
+  trailer: {
+    type: String,
+  },
   nation: {
     type: String,
     required: [true, "Quốc gia"],

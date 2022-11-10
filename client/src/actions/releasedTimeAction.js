@@ -42,6 +42,27 @@ export const getReleasedTime =
       });
     }
   };
+export const getReleasedTimeByCinema =
+  (brand = "", currentPage = 1) =>
+  async (dispatch) => {
+    try {
+      dispatch({ type: ALL_RELEASEDTIMETIME_REQUEST });
+
+      let link = `/api/v1/releasedTimes?brand=${brand}&page=${currentPage}`;
+
+      const { data } = await axios.get(link);
+
+      dispatch({
+        type: ALL_RELEASEDTIME_SUCCESS,
+        payload: data,
+      });
+    } catch (error) {
+      dispatch({
+        type: ALL_RELEASEDTIME_FAIL,
+        payload: error.response.data.message,
+      });
+    }
+  };
 export const getReleasedTimeByFilm =
   (keyword = "", currentPage = 1) =>
   async (dispatch) => {
