@@ -138,7 +138,7 @@ const useStyles = makeStyles({
     },
   },
   btnDiscount: {
-    backgroundColor: "#afafaf",
+    backgroundColor: "green",
     color: "#fff",
     border: "none",
     borderRadius: "6px",

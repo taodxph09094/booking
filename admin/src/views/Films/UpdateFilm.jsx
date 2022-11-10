@@ -40,9 +40,8 @@ const UpdateFilm = ({ history, match }) => {
   const [type, setType] = useState("");
   const [nation, setNation] = useState("");
   const [director, setDirector] = useState("");
-  const [images, setImages] = useState([]);
-  const [oldImages, setOldImages] = useState([]);
-  const [imagesPreview, setImagesPreview] = useState([]);
+  const [images, setImages] = useState("");
+  const [trailer, setTrailer] = useState("");
   const [category, setCategory] = useState("");
   const [released, setReleased] = useState("");
   const categories = ["Phim đang chiếu", "Sắp ra mắt "];
@@ -64,8 +63,8 @@ const UpdateFilm = ({ history, match }) => {
       setNation(film.nation);
       setDirector(film.director);
       setCategory(film.category);
-      //   setReleased(film.released);
-      setOldImages(film.images);
+      setTrailer(film.trailer);
+      setImages(film.images);
     }
     if (error) {
       alert.error(error);
@@ -97,36 +96,13 @@ const UpdateFilm = ({ history, match }) => {
     myForm.set("nation", nation);
     myForm.set("director", director);
     myForm.set("released", released);
-    images.forEach((image) => {
-      myForm.append("images", image);
-    });
+    myForm.set("images", images);
+    myForm.set("trailer", trailer);
 
-    images.forEach((image) => {
-      myForm.append("images", image);
-    });
     dispatch(updateFilm(filmId, myForm));
   };
   console.log(released);
-  const updateFilmImagesChange = (e) => {
-    const files = Array.from(e.target.files);
 
-    setImages([]);
-    setImagesPreview([]);
-    setOldImages([]);
-
-    files.forEach((file) => {
-      const reader = new FileReader();
-
-      reader.onload = () => {
-        if (reader.readyState === 2) {
-          setImagesPreview((old) => [...old, reader.result]);
-          setImages((old) => [...old, reader.result]);
-        }
-      };
-
-      reader.readAsDataURL(file);
-    });
-  };
   return (
     <>
       <Container fluid>
@@ -142,7 +118,7 @@ const UpdateFilm = ({ history, match }) => {
                   onSubmit={updateFilmSubmitHandler}
                 >
                   <Row>
-                    <Col className="pr-1" md="12">
+                    <Col className="pr-1" md="6">
                       <Form.Group>
                         <label>Tên phim</label>
                         <Form.Control
@@ -151,6 +127,32 @@ const UpdateFilm = ({ history, match }) => {
                           placeholder="Nhập tên phim "
                           type="text"
                           onChange={(e) => setName(e.target.value)}
+                        ></Form.Control>
+                      </Form.Group>
+                    </Col>
+                    <Col className="pr-1" md="6">
+                      <Form.Group>
+                        <label>Nhập link ảnh</label>
+                        <Form.Control
+                          // defaultValue={name}
+                          defaultValue={images}
+                          placeholder="Nhập link ảnh"
+                          type="text"
+                          onChange={(e) => setImages(e.target.value)}
+                        ></Form.Control>
+                      </Form.Group>
+                    </Col>
+                  </Row>
+                  <Row>
+                    <Col className="pr-1" md="6">
+                      <Form.Group>
+                        <label>Trailer</label>
+                        <Form.Control
+                          // defaultValue={name}
+                          defaultValue={trailer}
+                          placeholder="Nhập link trailer "
+                          type="text"
+                          onChange={(e) => setTrailer(e.target.value)}
                         ></Form.Control>
                       </Form.Group>
                     </Col>
@@ -311,7 +313,7 @@ const UpdateFilm = ({ history, match }) => {
               </Card.Body>
             </Card>
           </Col>
-          <Col md="4">
+          {/* <Col md="4">
             <Card className="card-user">
               <label>Ảnh cũ</label>
               <div className="card-imageProduct">
@@ -346,7 +348,7 @@ const UpdateFilm = ({ history, match }) => {
                 />
               </div>
             </Card>
-          </Col>
+          </Col> */}
         </Row>
       </Container>
     </>

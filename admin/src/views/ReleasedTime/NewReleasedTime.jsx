@@ -44,6 +44,9 @@ const NewReleasedTime = ({ history }) => {
   const [date, setDate] = useState("");
   const [time, setTime] = useState("");
   const [brand, setBrand] = useState("");
+  const [address, setAddress] = useState("");
+  const [poster, setPoster] = useState("");
+  const [logoCinema, setLogoCinema] = useState("");
   const { cinemas } = useSelector((state) => state.cinemas);
   const { films } = useSelector((state) => state.films);
   const cinemaName = [];
@@ -88,6 +91,9 @@ const NewReleasedTime = ({ history }) => {
     myForm.set("price", price);
     myForm.set("date", date);
     myForm.set("time", time);
+    myForm.set("address", address);
+    myForm.set("poster", poster);
+    myForm.set("logoCinema", logoCinema);
     dispatch(createReleasedTime(myForm));
   };
   const [value, onChange] = useState("10:00");
@@ -155,7 +161,7 @@ const NewReleasedTime = ({ history }) => {
                     </Col>
                   </Row>
                   <Row>
-                    <Col className="pr-1" md="12">
+                    <Col className="pr-1" md="6">
                       <Form.Group>
                         <label>Giá vé</label>
                         <Form.Control
@@ -164,6 +170,44 @@ const NewReleasedTime = ({ history }) => {
                           placeholder="Nhập giá vé"
                           type="text"
                           onChange={(e) => setPrice(e.target.value)}
+                        ></Form.Control>
+                      </Form.Group>
+                    </Col>
+                    <Col className="pr-1" md="6">
+                      <Form.Group>
+                        <label>Nhập link ảnh cụm rạp</label>
+                        <Form.Control
+                          // defaultValue={name}
+                          // value={price}
+                          placeholder="Nhập ảnh cụm rạp"
+                          type="text"
+                          onChange={(e) => setLogoCinema(e.target.value)}
+                        ></Form.Control>
+                      </Form.Group>
+                    </Col>
+                  </Row>
+                  <Row>
+                    <Col className="pr-1" md="6">
+                      <Form.Group>
+                        <label>Ảnh phim</label>
+                        <Form.Control
+                          // defaultValue={name}
+                          // value={price}
+                          placeholder="Nhập link ảnh phim"
+                          type="text"
+                          onChange={(e) => setPoster(e.target.value)}
+                        ></Form.Control>
+                      </Form.Group>
+                    </Col>
+                    <Col className="pr-1" md="6">
+                      <Form.Group>
+                        <label>Nhập địa chỉ rạp</label>
+                        <Form.Control
+                          // defaultValue={name}
+                          // value={price}
+                          placeholder="Nhập địa chỉ"
+                          type="text"
+                          onChange={(e) => setAddress(e.target.value)}
                         ></Form.Control>
                       </Form.Group>
                     </Col>

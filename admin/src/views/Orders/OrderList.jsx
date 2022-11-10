@@ -51,7 +51,7 @@ const OrderList = ({ history }) => {
   }, [dispatch, alert, error, deleteError, history, isDeleted]);
 
   const columns = [
-    { field: "id", headerName: " ID", minWidth: 300, flex: 1 },
+    { field: "id", headerName: " ID", minWidth: 50, flex: 0.5 },
     {
       field: "cusName",
       headerName: "Tên khách hàng",
@@ -59,10 +59,22 @@ const OrderList = ({ history }) => {
       flex: 0.5,
     },
     {
+      field: "nameFilm",
+      headerName: "Tên phim",
+      minWidth: 150,
+      flex: 0.5,
+    },
+    {
+      field: "nameCinema",
+      headerName: "Tên rạp",
+      minWidth: 150,
+      flex: 0.5,
+    },
+    {
       field: "amount",
       headerName: "Giá  ",
       type: "number",
-      minWidth: 270,
+      minWidth: 150,
       flex: 0.5,
     },
     {
@@ -82,42 +94,19 @@ const OrderList = ({ history }) => {
       minWidth: 150,
       flex: 0.5,
     },
-    {
-      field: "actions",
-      flex: 0.3,
-      headerName: "Actions",
-      minWidth: 150,
-      type: "number",
-      sortable: false,
-      renderCell: (params) => {
-        return (
-          <Fragment>
-            {/* <Link to={`/admin/orderDetail/${params.getValue(params.id, "id")}`}>
-              <EditIcon />
-            </Link> */}
-
-            <Button
-              onClick={() =>
-                deleteOrderHandler(params.getValue(params.id, "id"))
-              }
-            >
-              <DeleteIcon />
-            </Button>
-          </Fragment>
-        );
-      },
-    },
   ];
 
   const rows = [];
 
-  console.log(saveId);
+  console.log(rows);
   orders &&
     orders.forEach((item) => {
       // setSaveId(item._id);
       rows.push({
         id: item._id,
         cusName: item.userName,
+        nameFilm: item.nameFilm,
+        nameCinema: item.nameCinema,
         amount: item.totalPrice,
         status: item.orderStatus,
         date: formatDateTimeToString(item.createdAt),

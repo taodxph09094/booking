@@ -33,8 +33,9 @@ const AddFilm = ({ history }) => {
   const [type, setType] = useState("");
   const [nation, setNation] = useState("");
   const [director, setDirector] = useState("");
-  const [images, setImages] = useState([]);
-  const [imagesPreview, setImagesPreview] = useState([]);
+  const [images, setImages] = useState("");
+  const [trailer, setTrailer] = useState("");
+  // const [imagesPreview, setImagesPreview] = useState([]);
   const [category, setCategory] = useState("");
   const [released, setReleased] = useState("");
   const categories = ["Phim đang chiếu", "Sắp ra mắt "];
@@ -71,31 +72,33 @@ const AddFilm = ({ history }) => {
     myForm.set("nation", nation);
     myForm.set("director", director);
     myForm.set("released", released);
-    images.forEach((image) => {
-      myForm.append("images", image);
-    });
+    myForm.set("images", images);
+    myForm.set("trailer", trailer);
+    // images.forEach((image) => {
+    //   myForm.append("images", image);
+    // });
     dispatch(createFilm(myForm));
   };
-  console.log(released + "he");
-  const createFilmImagesChange = (e) => {
-    const files = Array.from(e.target.files);
 
-    setImages([]);
-    setImagesPreview([]);
+  // const createFilmImagesChange = (e) => {
+  //   const files = Array.from(e.target.files);
 
-    files.forEach((file) => {
-      const reader = new FileReader();
+  //   setImages([]);
+  //   setImagesPreview([]);
 
-      reader.onload = () => {
-        if (reader.readyState === 2) {
-          setImagesPreview((old) => [...old, reader.result]);
-          setImages((old) => [...old, reader.result]);
-        }
-      };
+  //   files.forEach((file) => {
+  //     const reader = new FileReader();
 
-      reader.readAsDataURL(file);
-    });
-  };
+  //     reader.onload = () => {
+  //       if (reader.readyState === 2) {
+  //         setImagesPreview((old) => [...old, reader.result]);
+  //         setImages((old) => [...old, reader.result]);
+  //       }
+  //     };
+
+  //     reader.readAsDataURL(file);
+  //   });
+  // };
   return (
     <>
       <Container fluid>
@@ -111,7 +114,7 @@ const AddFilm = ({ history }) => {
                   onSubmit={createFilmSubmitHandler}
                 >
                   <Row>
-                    <Col className="pr-1" md="12">
+                    <Col className="pr-1" md="6">
                       <Form.Group>
                         <label>Tên phim</label>
                         <Form.Control
@@ -120,6 +123,32 @@ const AddFilm = ({ history }) => {
                           placeholder="Nhập tên phim "
                           type="text"
                           onChange={(e) => setName(e.target.value)}
+                        ></Form.Control>
+                      </Form.Group>
+                    </Col>
+                    <Col className="pr-1" md="6">
+                      <Form.Group>
+                        <label>Nhập link ảnh</label>
+                        <Form.Control
+                          // defaultValue={name}
+                          value={images}
+                          placeholder="Nhập link ảnh"
+                          type="text"
+                          onChange={(e) => setImages(e.target.value)}
+                        ></Form.Control>
+                      </Form.Group>
+                    </Col>
+                  </Row>
+                  <Row>
+                    <Col className="pr-1" md="6">
+                      <Form.Group>
+                        <label>Trailer</label>
+                        <Form.Control
+                          // defaultValue={name}
+                          value={trailer}
+                          placeholder="Nhập link trailer "
+                          type="text"
+                          onChange={(e) => setTrailer(e.target.value)}
                         ></Form.Control>
                       </Form.Group>
                     </Col>
@@ -267,7 +296,7 @@ const AddFilm = ({ history }) => {
               </Card.Body>
             </Card>
           </Col>
-          <Col md="4">
+          {/* <Col md="4">
             <Card className="card-user">
               <div className="card-imageProduct">
                 {imagesPreview.map((image, index) => (
@@ -287,7 +316,7 @@ const AddFilm = ({ history }) => {
                 />
               </div>
             </Card>
-          </Col>
+          </Col> */}
         </Row>
       </Container>
     </>

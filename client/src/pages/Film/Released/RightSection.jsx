@@ -9,7 +9,9 @@ import {
 } from "../../../utils/helper";
 import useStyles from "./style";
 const RightSection = ({ currentSelectedCinema }) => {
+  console.log(currentSelectedCinema);
   const [indexSelected, setindexSelected] = useState(0);
+
   const classes = useStyles();
   const handleSelectDay = (i) => {
     setindexSelected(i);
@@ -44,16 +46,6 @@ const RightSection = ({ currentSelectedCinema }) => {
         style={{ display: "block" }}
         // key={i}
       >
-        {/* {arrayCumRapChieuFilterByDay.map((item) => (
-            <ItemCumRap
-              key={item.tenCumRap}
-              tenCumRap={item.tenCumRap}
-              maLichChieu={item.maLichChieu}
-              lichChieuPhim={item.lichChieuPhim}
-              defaultExpanded={true}
-            />
-
-           ))} */}
         <TimeMovie
           cinema={currentSelectedCinema.cinema}
           idReleased={currentSelectedCinema._id}

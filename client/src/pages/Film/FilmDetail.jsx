@@ -2,9 +2,9 @@ import React, { useEffect, useState } from "react";
 import "../../assets/css/filmDetail.css";
 import { useSelector, useDispatch } from "react-redux";
 import { useParams, useLocation } from "react-router-dom";
-import { Progress, Rate } from "antd";
-import { useAlert } from "react-alert";
+import Rating from "@material-ui/lab/Rating";
 import CircularProgress from "@material-ui/core/CircularProgress";
+import { useAlert } from "react-alert";
 import { clearErrors, getFilmDetails } from "../../actions/filmAction";
 import { CLEAR_ERRORS, NEW_REVIEW_RESET } from "../../constants/filmConstants";
 import useStyles from "./style";
@@ -21,8 +21,7 @@ const FilmDetail = ({ match }) => {
   const [quantityComment, setQuantityComment] = useState(0);
   const [imageNotFound, setImageNotFound] = useState(false);
   const classes = useStyles({
-    bannerImg:
-      "https://cdn.pixabay.com/photo/2017/02/20/18/03/cat-2083492_960_720.jpg",
+    bannerImg: film.images,
   });
   let location = useLocation();
   const alert = useAlert();
@@ -64,7 +63,7 @@ const FilmDetail = ({ match }) => {
             {/* <BtnPlay urlYoutube={data?.trailer} /> */}
             {/* xử lý khi url hình bị lỗi */}
             <img
-              src="https://cdn.pixabay.com/photo/2014/11/30/14/11/cat-551554_960_720.jpg"
+              src={film.images}
               alt="poster"
               style={{ display: "none" }}
               onError={(e) => {
@@ -89,7 +88,7 @@ const FilmDetail = ({ match }) => {
           </div>
           <div className={classes.rate}>
             <div className={classes.circular}>
-              <span className={classes.danhGia}>{film.numOfReviews}</span>
+              <span className={classes.danhGia}>{film.ratings * 2}</span>
               <CircularProgress
                 variant="determinate"
                 size="100%"
@@ -100,20 +99,19 @@ const FilmDetail = ({ match }) => {
               <CircularProgress
                 variant="determinate"
                 size="100%"
-                value={film.numOfReviews * 10}
+                value={film.ratings * 20}
                 className={classes.fabProgress}
                 color="secondary"
               />
             </div>
             <div className={classes.rateStar}>
-              <Rate defaultValue={film.ratings} />
+              <Rating value={film.ratings * 5} precision={0.5} readOnly />
             </div>
-            <span>0 người đánh giá</span>
+            <span>{film.numOfReviews} người đánh giá</span>
           </div>
         </div>
       </div>
-      <BonusDetail />
-      {/* <Tap data={data} onClickBtnMuave={onClickBtnMuave} onIncreaseQuantityComment={onIncreaseQuantityComment} isMobile={isMobile} /> */}
+      <BonusDetail data={film} onClickBtnMuave={onClickBtnMuave} />
     </div>
   );
 };

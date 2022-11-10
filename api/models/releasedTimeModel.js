@@ -8,6 +8,14 @@ const releasedTimeSchema = new mongoose.Schema({
     type: String,
     required: [true, "Chọn cụm rạp"],
   },
+  logoCinema: {
+    type: String,
+    required: [true, "Nhập link ảnh"],
+  },
+  poster: {
+    type: String,
+    required: [true, "Nhập link ảnh"],
+  },
   brand: {
     type: String,
     required: [true, "Chọn rạp"],

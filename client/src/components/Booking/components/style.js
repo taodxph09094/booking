@@ -1,5 +1,5 @@
 import { makeStyles } from "@material-ui/core";
-import { customScrollbar } from "../bonusStyle";
+import { customScrollbar } from "../../../utils/bonusStyle";
 
 const useStyles = makeStyles({
   listSeat: (props) => ({

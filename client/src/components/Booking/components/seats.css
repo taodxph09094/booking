@@ -1,0 +1,120 @@
+
+
+.listSeat{
+  position: relative;
+  padding: 0 10%;
+  margin-left: 10%;
+}
+.info_CountDown {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  padding: 2% 0%;
+}
+.infoTheater{
+  display: flex;
+}
+.text{
+  padding-top: 5;
+  padding-left: 13;
+}
+.textTime{
+  color:#9b9b9b;
+    font-size: 13;
+}
+.countDown {
+  text-align: center;
+}
+.timeTitle {
+  font-size: 12px;
+  color: #9b9b9b;
+}
+.timeCount{
+  font-weight: 500;
+  font-size: 34;
+  color: #fb4226;
+  line-height: 39px;
+}
+.overflowSeat {
+  overflow: auto hidden;
+  background-color: #e8e3e3;
+  border-radius: 5;
+  height: 5px;
+  width: 5px;
+}
+.invariantWidth {
+  min-width: 600px;
+  padding:  0%;
+}
+.screen {
+  width: 100%;
+}
+.seatSelect{
+  padding: 0% 10%;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+.noteSeat{
+  padding: 2% 10% 0;
+  font-size: 13;
+  color: #9b9b9b;
+}
+.typeSeats {
+  display: flex;
+  justify-content: space-evenly;
+  text-align: center;
+  gap: 2px;
+}
+.posiX {
+  position: absolute;
+  top: 35%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 18;
+  color: #fff;
+}
+
+.positionView {
+  text-align: center;
+  margin-top: 5;
+  padding-bottom: 20;
+}
+.line {
+  margin-left: 19,
+}
+.linecenter{
+  display: inline-block;
+  border-bottom: 2px dashed #fa7f6c;
+  width: 28;
+  vertical-align: super;
+  margin-right: 8;
+}
+.linebeautiful {
+  display: inline-block;
+  border-bottom: 2px solid #fa7f6c;
+  width: 28;
+  vertical-align: super;
+  margin-right: 8;
+}
+.modalleft{
+  display: block;
+  left: 0;
+  top: 100;
+  height: calc(100% - 100px);
+  width: 7.5%;
+  position: fixed;
+
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.seatSeat{
+ /* margin-left: 250px; */
+ display: flex;
+ align-items: center;
+ text-align: center;
+ justify-content: center;
+}

@@ -25,11 +25,18 @@ import scroll from "../../../utils/scroll";
 import moment from "moment";
 import "moment/locale/vi";
 import { useAlert } from "react-alert";
-import { clearErrors, getFilmDetails } from "../../../actions/filmAction";
+import {
+  clearErrors,
+  getFilmDetails,
+  newReview,
+} from "../../../actions/filmAction";
 import { NEW_REVIEW_RESET } from "../../../constants/filmConstants";
 import { CloseOutlined } from "@ant-design/icons";
 import ReleasedMovie from "../Released/ReleasedMovie";
 import { getReleasedTimeByFilm } from "../../../actions/releasedTimeAction";
+import CloseIcon from "@material-ui/icons/Close";
+import Rating from "@material-ui/lab/Rating";
+import StarBorderIcon from "@material-ui/icons/StarBorder";
 moment.locale("vi");
 function TabPanel(props) {
   const { isMobile, children, value, index, ...other } = props;
@@ -45,61 +52,30 @@ TabPanel.propTypes = {
   value: PropTypes.any.isRequired,
 };
 
-const BonusDetail = (onClickBtnMuave) => {
+const BonusDetail = (data, onClickBtnMuave) => {
   const params = useParams();
   const dispatch = useDispatch();
-  const { film, loading, error } = useSelector((state) => state.filmDetails);
   const { success, error: reviewError } = useSelector(
     (state) => state.newReview
   );
-  const [nameFilm, setNameFilm] = useState();
-
+  const { releasedTimes, loading, error } = useSelector(
+    (state) => state.releasedTimes
+  );
   const alert = useAlert();
-  // console.log(film.images.url);
-  const keyword = film.name;
-  useEffect(() => {
-    setNameFilm(film.name);
-    if (error) {
-      alert.error(error);
-      dispatch(clearErrors());
-    }
-
-    if (reviewError) {
-      alert.error(reviewError);
-      dispatch(clearErrors());
-    }
-
-    if (success) {
-      alert.success("Đánh giá thành công");
-      dispatch({ type: NEW_REVIEW_RESET });
-    }
-    dispatch(getFilmDetails(params.id));
-    dispatch(getReleasedTimeByFilm(keyword));
-  }, [dispatch, params.id, error, alert, reviewError, success]);
-
+  const [rating, setRating] = useState(0);
+  const [comment, setComment] = useState("");
+  const setData = data.data;
+  const keyword = data.data.name;
   let location = useLocation();
   const history = useHistory();
   const [valueTab, setValueTab] = useState(0);
   const [croll, setCroll] = useState(0);
   const [openComment, setOpenComment] = useState(false);
+  const [open, setOpen] = useState(false);
   const [warningtext, setwarningtext] = useState(false);
-  const [commentListDisplay, setCommentListDisplay] = useState({
-    comment: [],
-    page: 5,
-    hideBtn: false,
-    idScrollTo: "",
-  });
-  const [dataComment, setdataComment] = useState({
-    avtId: "test",
-    username: "hoten",
-    point: 2.5,
-    post: "",
-    likes: 0,
-    maPhim: "maphim",
-    dataTest: false,
-    createdAt: "",
-    userLikeThisComment: [],
-  });
+  const submitReviewToggle = () => {
+    open ? setOpen(false) : setOpen(true);
+  };
   // phục vụ kh nhấp btn mua vé
   useEffect(() => {
     window.scrollTo(0, 0); // ngăn window.history.scrollRestoration = 'auto';
@@ -114,21 +90,35 @@ const BonusDetail = (onClickBtnMuave) => {
     }
   }, [croll]); // khi nhấn muave và đã hoàn thành mở tap 0 thì scroll
 
-  useEffect(() => {
-    if (commentListDisplay.idScrollTo) {
-      scroller.scrollTo(commentListDisplay.idScrollTo, {
-        duration: 800,
-        offset: -79,
-        smooth: "easeInOutQuart",
-      });
-    }
-  }, [commentListDisplay.idScrollTo]);
-
   const handleChange = (event, newValue) => {
     setValueTab(newValue);
   };
 
-  const classes = useStyles({ hideBtn: commentListDisplay.hideBtn });
+  const classes = useStyles({ hideBtn: setData?.reviews?.hideBtn });
+  const reviewSubmitHandler = () => {
+    const myForm = new FormData();
+
+    myForm.set("rating", rating);
+    myForm.set("comment", comment);
+    myForm.set("filmId", params.id);
+
+    dispatch(newReview(myForm));
+
+    openComment(false);
+  };
+  useEffect(() => {
+    if (reviewError) {
+      alert.error(reviewError);
+      dispatch(clearErrors());
+    }
+
+    if (success) {
+      alert.success("Đánh giá thành công");
+      dispatch({ type: NEW_REVIEW_RESET });
+    }
+    dispatch(getReleasedTimeByFilm(keyword));
+  }, [dispatch, params.id, alert, reviewError, success, keyword]);
+  // console.log(releasedTimes);
   return (
     <div className={classes.root} id="TapMovieDetail">
       <AppBar
@@ -143,13 +133,13 @@ const BonusDetail = (onClickBtnMuave) => {
           classes={{ indicator: classes.indicator }}
         >
           {/* ẩn đi Lịch Chiếu nếu nhấn vào chi tiết phim bên tab sắp chiếu, (!location.state.comingMovie ? true : "") > cú pháp này sẽ return "" thay vì undefined > tránh lỗi material-ui */}
-
-          <Tab
-            disableRipple
-            label="Lịch Chiếu"
-            classes={{ selected: classes.selectedTap, root: classes.tapRoot }}
-          />
-
+          {(setData.category === "Phim đang chiếu" ? true : "") && (
+            <Tab
+              disableRipple
+              label="Lịch Chiếu"
+              classes={{ selected: classes.selectedTap, root: classes.tapRoot }}
+            />
+          )}
           <Tab
             disableRipple
             label="Thông Tin"
@@ -162,140 +152,216 @@ const BonusDetail = (onClickBtnMuave) => {
           />
         </Tabs>
       </AppBar>
-
-      <TabPanel
-        value={valueTab}
-        index={film.category === "Sắp ra mắt" ? "hide" : 0}
+      <Fade
+        timeout={400}
+        in={valueTab === (setData.category === "Phim đang chiếu" ? 0 : "hide")}
       >
-        <ReleasedMovie nameFilm={onClickBtnMuave.movieName} />
-        {/* <ReleasedMovie /> */}
-      </TabPanel>
-
-      <TabPanel
-        value={valueTab}
-        index={film.category === "Sắp ra mắt " ? 0 : 1}
-        className={classes.noname}
+        <TabPanel
+          value={valueTab}
+          index={setData.category === "Phim đang chiếu" ? 0 : "hide"}
+        >
+          <ReleasedMovie data={releasedTimes} />
+          {/* <ReleasedMovie /> */}
+        </TabPanel>
+      </Fade>
+      <Fade
+        timeout={400}
+        in={valueTab === (setData.category === "Phim đang chiếu" ? 1 : 0)}
       >
-        <div className={`row text-white ${classes.detailMovie}`}>
-          <div className="col-sm-6 col-xs-12">
-            <div className="row mb-2">
-              <p className={`float-left ${classes.contentTitle}`}>
-                Ngày công chiếu
-              </p>
-              <p className={`float-left ${classes.contentInfo}`}>
-                {film.released}
-              </p>
+        <TabPanel
+          value={valueTab}
+          index={setData.category === "Phim đang chiếu" ? 1 : 0}
+          className={classes.noname}
+        >
+          <div className={`row text-white ${classes.detailMovie}`}>
+            <div className="col-sm-6 col-xs-12">
+              <div className="row mb-2">
+                <p className={`float-left ${classes.contentTitle}`}>
+                  Ngày công chiếu
+                </p>
+                <p className={`float-left ${classes.contentInfo}`}>
+                  {setData.released}
+                </p>
+              </div>
+              <div className="row mb-2">
+                <p className={`float-left ${classes.contentTitle}`}>Đạo diễn</p>
+                <p className={`float-left ${classes.contentInfo}`}>
+                  {" "}
+                  {setData.director}{" "}
+                </p>
+              </div>
+              <div className="row mb-2">
+                <p className={`float-left ${classes.contentTitle}`}>
+                  Diễn viên
+                </p>
+                <p className={`float-left ${classes.contentInfo}`}>
+                  Kyle Chandler, Rebecca Hall, Eiza González, Millie Bobby Brown
+                </p>
+              </div>
+              <div className="row mb-2">
+                <p className={`float-left ${classes.contentTitle}`}>Thể Loại</p>
+                <p className={`float-left ${classes.contentInfo}`}>
+                  {setData.type}
+                </p>
+              </div>
+              <div className="row mb-2">
+                <p className={`float-left ${classes.contentTitle}`}>
+                  Định dạng
+                </p>
+                <p className={`float-left ${classes.contentInfo}`}>
+                  2D/Digital
+                </p>
+              </div>
+              <div className="row mb-2">
+                <p className={`float-left ${classes.contentTitle}`}>
+                  Quốc Gia SX
+                </p>
+                <p className={`float-left ${classes.contentInfo}`}>
+                  {setData.nation}
+                </p>
+              </div>
             </div>
-            <div className="row mb-2">
-              <p className={`float-left ${classes.contentTitle}`}>Đạo diễn</p>
-              <p className={`float-left ${classes.contentInfo}`}>
-                {" "}
-                {film.director}{" "}
-              </p>
-            </div>
-            <div className="row mb-2">
-              <p className={`float-left ${classes.contentTitle}`}>Diễn viên</p>
-              <p className={`float-left ${classes.contentInfo}`}>
-                Kyle Chandler, Rebecca Hall, Eiza González, Millie Bobby Brown
-              </p>
-            </div>
-            <div className="row mb-2">
-              <p className={`float-left ${classes.contentTitle}`}>Thể Loại</p>
-              <p className={`float-left ${classes.contentInfo}`}>{film.type}</p>
-            </div>
-            <div className="row mb-2">
-              <p className={`float-left ${classes.contentTitle}`}>Định dạng</p>
-              <p className={`float-left ${classes.contentInfo}`}>2D/Digital</p>
-            </div>
-            <div className="row mb-2">
-              <p className={`float-left ${classes.contentTitle}`}>
-                Quốc Gia SX
-              </p>
-              <p className={`float-left ${classes.contentInfo}`}>
-                {film.nation}
-              </p>
+            <div className="col-sm-6 col-xs-12">
+              <div className="row mb-2">
+                <p className={`float-left ${classes.contentTitle}`}>Nội dung</p>
+              </div>
+              <div className="row mb-2">
+                <p>{setData.description}</p>
+              </div>
             </div>
           </div>
-          <div className="col-sm-6 col-xs-12">
-            <div className="row mb-2">
-              <p className={`float-left ${classes.contentTitle}`}>Nội dung</p>
-            </div>
-            <div className="row mb-2">
-              <p>{film.description}</p>
-            </div>
-          </div>
-        </div>
-      </TabPanel>
-
-      <TabPanel
-        value={valueTab}
-        index={film.category === "Sắp ra mắt " ? 1 : 2}
-        className={classes.noname}
+        </TabPanel>
+      </Fade>
+      <Fade
+        timeout={400}
+        in={valueTab === (setData.category === "Phim đang chiếu" ? 2 : 1)}
       >
-        <div className={classes.danhGia}>
-          <div className={classes.inputRoot}>
-            <span className={classes.avatarReviewer}>
-              <img
-                src="https://cdn.pixabay.com/photo/2014/11/30/14/11/cat-551554_960_720.jpg"
-                alt="avatar"
-                className={classes.avatarImg}
+        <TabPanel
+          value={valueTab}
+          index={setData.category === "Phim đang chiếu" ? 2 : 1}
+          className={classes.noname}
+        >
+          <div className={classes.danhGia}>
+            <div className={classes.inputRoot} onClick={submitReviewToggle}>
+              <span className={classes.avatarReviewer}>
+                <img
+                  src="https://cdn.pixabay.com/photo/2014/11/30/14/11/cat-551554_960_720.jpg"
+                  alt="avatar"
+                  className={classes.avatarImg}
+                />
+              </span>
+              <input
+                className={classes.inputReviwer}
+                type="text"
+                placeholder="Bạn nghĩ gì về phim này?"
+                readOnly="readonly"
               />
-            </span>
-            <input
-              className={classes.inputReviwer}
-              type="text"
-              placeholder="Bạn nghĩ gì về phim này?"
-              readOnly="readonly"
-            />
 
-            <span className={classes.imgReviewerStar}>
-              <Rate defaultValue={0} size="medium" readOnly />
-            </span>
-          </div>
-        </div>
-        {commentListDisplay?.comment?.map((item) => (
-          <div
-            key={`${item.createdAt}`}
-            className={classes.itemDis}
-            id={`idComment${item.createdAt}`}
-          >
-            <div className={classes.infoUser}>
-              <div className={classes.left}>
-                <span className={classes.avatar}>
-                  <img
-                    src={`https://i.pravatar.cc/150?u=${item.avtId}`}
-                    alt="avatar"
-                    className={classes.avatarImg}
-                  />
-                </span>
-                <span className={classes.liveUser}>
-                  <p className={classes.userName}>{item.username}</p>
-                  <p className={classes.timePost}>
-                    {moment(item.createdAt).fromNow()}
-                  </p>
-                </span>
-              </div>
-              <div className={classes.right}>
-                <p className="text-success">{item.point}</p>
+              <span className={classes.imgReviewerStar}>
                 <Rate defaultValue={0} size="medium" readOnly />
-              </div>
-              <div className="clearfix"></div>
-            </div>
-            <div className="py-3 mb-3 border-bottom">
-              <p className="text-break">{item.post}</p>
+              </span>
             </div>
           </div>
-        ))}
-        <div className={classes.moreMovie}>
-          <Button
-            variant="outlined"
-            // onClick={() => setopenMore()}
-            className={classes.moreMovieButton}
+          {setData?.reviews?.map((item) => (
+            <div
+              key={`${item.createdAt}`}
+              className={classes.itemDis}
+              id={`idComment${item.createdAt}`}
+            >
+              <div className={classes.infoUser}>
+                <div className={classes.left}>
+                  <span className={classes.avatar}>
+                    <img
+                      src={`https://cdn-icons-png.flaticon.com/512/1946/1946429.png`}
+                      alt="avatar"
+                      className={classes.avatarImg}
+                    />
+                  </span>
+                  <span className={classes.liveUser}>
+                    <p className={classes.userName}>{item.name}</p>
+                    <p className={classes.timePost}>
+                      {moment(item.createdAt).fromNow()}
+                    </p>
+                  </span>
+                </div>
+                <div className={classes.right}>
+                  <p className="text-success">{item.rating * 2}</p>
+                  <Rate defaultValue={item.rating} size="medium" disabled />
+                </div>
+                <div className="clearfix"></div>
+              </div>
+              <div className="py-3 mb-3 border-bottom">
+                <p className="text-break">{item.comment}</p>
+              </div>
+            </div>
+          ))}
+          <div className={classes.moreMovie}>
+            <Button
+              variant="outlined"
+              // onClick={() => setopenMore()}
+              className={classes.moreMovieButton}
+            >
+              XEM THÊM
+            </Button>
+          </div>
+        </TabPanel>
+      </Fade>
+      <Dialog
+        open={open}
+        onClose={submitReviewToggle}
+        maxWidth="sm"
+        fullWidth
+        className={classes.dialog}
+      >
+        <MuiDialogTitle disableTypography className={classes.rootcloseButton}>
+          <IconButton
+            aria-label="close"
+            className={classes.closeButton}
+            onClick={submitReviewToggle}
           >
-            XEM THÊM
+            <CloseIcon />
+          </IconButton>
+        </MuiDialogTitle>
+        <Grid container direction="column" justify="center" alignItems="center">
+          <span className={classes.pointPopup}>{rating * 2}</span>
+          <Rating
+            name="customStar"
+            size="large"
+            precision={0.5}
+            className={classes.starPopup}
+            emptyIcon={<StarBorderIcon fontSize="inherit" />}
+            onChange={(e) => setRating(e.target.value)}
+            value={rating}
+          />
+        </Grid>
+        <DialogContent className={classes.dialogContent}>
+          <TextField
+            className={classes.textField}
+            fullWidth
+            value={comment}
+            onChange={(e) => setComment(e.target.value)}
+            variant="outlined"
+            label={
+              comment ? "" : "Nói cho mọi người biết bạn nghĩ gì về phim này..."
+            }
+          />
+        </DialogContent>
+        <DialogActions className="justify-content-center flex-column px-4">
+          {warningtext && (
+            <DialogContentText className="text-danger">
+              Phim đem đến cảm xúc tuyệt vời cho bạn chứ? Chia sẻ thêm nữa đi
+              bạn ơi và nhớ gõ trên 60 kí tự nhé.
+            </DialogContentText>
+          )}
+          <Button
+            onClick={reviewSubmitHandler}
+            variant="contained"
+            className={classes.btnDang}
+          >
+            Đăng
           </Button>
-        </div>
-      </TabPanel>
+        </DialogActions>
+      </Dialog>
     </div>
   );
 };

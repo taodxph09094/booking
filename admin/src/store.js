@@ -42,6 +42,12 @@ import {
   newCinemaReducer,
 } from "./reducers/cinemaReducer";
 import {
+  bannerDetailsReducer,
+  bannerReducer,
+  bannersReducer,
+  newBannerReducer,
+} from "./reducers/bannerReducer";
+import {
   filmDetailsReducer,
   filmReducer,
   filmsReducer,
@@ -95,6 +101,10 @@ const reducer = combineReducers({
   releasedTimeDetails: releasedTimeDetailsReducer,
   releasedTime: releasedTimeReducer,
   releasedTimes: releasedTimesReducer,
+  newBanner: newBannerReducer,
+  bannerDetails: bannerDetailsReducer,
+  banner: bannerReducer,
+  banners: bannersReducer,
 });
 
 let initialState = {

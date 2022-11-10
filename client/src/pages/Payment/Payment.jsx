@@ -38,32 +38,8 @@ const Payment = ({ history }) => {
   const paymentData = {
     amount: Math.round(orderInfo.totalPrice * 100),
   };
-  //   const itemsOrder = [];
-  //   orderInfo &&
-  //     orderInfo.forEach((item) => {
-  //       // setPrice(item.price);
-  //       itemsOrder.push({
-  //         ticket: item.ticket,
-  //         nameFilm: item.nameFilm,
-  //         nameCinema: item.nameCinema,
-  //         stock: item.Stock,
-  //         price: item.price,
-  //         seats: item.seats,
-  //         price: item.price,
-  //         promotion: item.promotion,
-  //         date: item.date,
-  //         time: item.time,
-  //         address: item.address,
-  //         quantity: item.quantity,
-  //       });
-  //     });
-  //   //   console.log(itemsOrder);
-  const order = {
-    // orderItems: [
-    //   {
 
-    //   },
-    // ],
+  const order = {
     ticket: orderInfo.ticket,
     nameFilm: orderInfo.nameFilm,
     nameCinema: orderInfo.nameCinema,
@@ -76,18 +52,6 @@ const Payment = ({ history }) => {
     quantity: orderInfo.quantity,
     itemsPrice: orderInfo.subtotal,
     totalPrice: orderInfo.totalPrice,
-    // ticket: "6363db6e5312a23ca843da0d",
-    // nameFilm: "Black Adam",
-    // nameCinema: "BHD Star Discovery Cầu Giấy",
-    // price: 86000,
-    // seats: seatList,
-    // promotion: 0,
-    // date: "20/11/2022",
-    // time: "10:00",
-    // address: " Hà nội",
-    // quantity: orderInfo.quantity,
-    // itemsPrice: 100000,
-    // totalPrice: 100000,
   };
   console.log(order);
 
@@ -135,7 +99,7 @@ const Payment = ({ history }) => {
           dispatch({ type: CREATE_ORDER_SUCCESS });
           dispatch(createOrder(order));
 
-          history.push("/");
+          history.push("/orders");
         } else {
           alert.error("There's some issue while processing payment ");
         }
@@ -174,7 +138,7 @@ const Payment = ({ history }) => {
 
           <input
             type="submit"
-            value={`Thanh toán - $${orderInfo && orderInfo.totalPrice}`}
+            value={`Thanh toán - ${orderInfo && orderInfo.totalPrice}`}
             ref={payBtn}
             className="paymentFormBtn"
           />

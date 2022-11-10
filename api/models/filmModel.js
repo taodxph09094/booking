@@ -16,6 +16,7 @@ const filmSchema = new mongoose.Schema({
   },
   trailer: {
     type: String,
+    required: [true, "Nhập trailer"],
   },
   nation: {
     type: String,
@@ -33,18 +34,10 @@ const filmSchema = new mongoose.Schema({
     type: Number,
     default: 0,
   },
-  images: [
-    {
-      public_id: {
-        type: String,
-        required: true,
-      },
-      url: {
-        type: String,
-        required: true,
-      },
-    },
-  ],
+  images: {
+    type: String,
+    required: ["Nhập link ảnh phim"],
+  },
   category: {
     type: String,
     required: [true, "Nhập danh mục phim"],

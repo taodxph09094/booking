@@ -6,28 +6,28 @@ const cloudinary = require("cloudinary");
 
 // Create Film -- Admin
 exports.createFilm = catchAsyncErrors(async (req, res, next) => {
-  let images = [];
+  // let images = [];
 
-  if (typeof req.body.images === "string") {
-    images.push(req.body.images);
-  } else {
-    images = req.body.images;
-  }
+  // if (typeof req.body.images === "string") {
+  //   images.push(req.body.images);
+  // } else {
+  //   images = req.body.images;
+  // }
 
-  const imagesLinks = [];
+  // const imagesLinks = [];
 
-  for (let i = 0; i < images.length; i++) {
-    const result = await cloudinary.v2.uploader.upload(images[i], {
-      folder: "films",
-    });
+  // for (let i = 0; i < images.length; i++) {
+  //   const result = await cloudinary.v2.uploader.upload(images[i], {
+  //     folder: "films",
+  //   });
 
-    imagesLinks.push({
-      public_id: result.public_id,
-      url: result.secure_url,
-    });
-  }
+  //   imagesLinks.push({
+  //     public_id: result.public_id,
+  //     url: result.secure_url,
+  //   });
+  // }
 
-  req.body.images = imagesLinks;
+  // req.body.images = imagesLinks;
   req.body.user = req.user.id;
 
   const film = await Film.create(req.body);
@@ -92,39 +92,39 @@ exports.updateFilm = catchAsyncErrors(async (req, res, next) => {
   let film = await Film.findById(req.params.id);
 
   if (!film) {
-    return next(new ErrorHander("Không tìm thấy sản phẩm", 404));
+    return next(new ErrorHander("Không tìm thấy phim", 404));
   }
 
   // Images Start Here
-  let images = [];
+  // let images = [];
 
-  if (typeof req.body.images === "string") {
-    images.push(req.body.images);
-  } else {
-    images = req.body.images;
-  }
+  // if (typeof req.body.images === "string") {
+  //   images.push(req.body.images);
+  // } else {
+  //   images = req.body.images;
+  // }
 
-  if (images !== undefined) {
-    // Deleting Images From Cloudinary
-    for (let i = 0; i < film.images.length; i++) {
-      await cloudinary.v2.uploader.destroy(film.images[i].public_id);
-    }
+  // if (images !== undefined) {
+  //   // Deleting Images From Cloudinary
+  //   for (let i = 0; i < film.images.length; i++) {
+  //     await cloudinary.v2.uploader.destroy(film.images[i].public_id);
+  //   }
 
-    const imagesLinks = [];
+  //   const imagesLinks = [];
 
-    for (let i = 0; i < images.length; i++) {
-      const result = await cloudinary.v2.uploader.upload(images[i], {
-        folder: "films",
-      });
+  //   for (let i = 0; i < images.length; i++) {
+  //     const result = await cloudinary.v2.uploader.upload(images[i], {
+  //       folder: "films",
+  //     });
 
-      imagesLinks.push({
-        public_id: result.public_id,
-        url: result.secure_url,
-      });
-    }
+  //     imagesLinks.push({
+  //       public_id: result.public_id,
+  //       url: result.secure_url,
+  //     });
+  //   }
 
-    req.body.images = imagesLinks;
-  }
+  //   req.body.images = imagesLinks;
+  // }
 
   film = await Film.findByIdAndUpdate(req.params.id, req.body, {
     new: true,
@@ -144,13 +144,13 @@ exports.deleteFilm = catchAsyncErrors(async (req, res, next) => {
   const film = await Film.findById(req.params.id);
 
   if (!film) {
-    return next(new ErrorHander("Không tìm thấy sản phẩm", 404));
+    return next(new ErrorHander("Không tìm thấy phim", 404));
   }
 
   // Deleting Images From Cloudinary
-  for (let i = 0; i < film.images.length; i++) {
-    await cloudinary.v2.uploader.destroy(film.images[i].public_id);
-  }
+  // for (let i = 0; i < film.images.length; i++) {
+  //   await cloudinary.v2.uploader.destroy(film.images[i].public_id);
+  // }
 
   await film.remove();
 
@@ -167,6 +167,7 @@ exports.createFilmReview = catchAsyncErrors(async (req, res, next) => {
   const review = {
     user: req.user._id,
     name: req.user.name,
+    userImage: req.user.avatar.url,
     rating: Number(rating),
     comment,
   };
@@ -207,7 +208,7 @@ exports.getFilmReviews = catchAsyncErrors(async (req, res, next) => {
   const film = await Film.findById(req.query.id);
 
   if (!film) {
-    return next(new ErrorHander("Không tìm thấy sản phẩm", 404));
+    return next(new ErrorHander("Không tìm thấy phim", 404));
   }
 
   res.status(200).json({

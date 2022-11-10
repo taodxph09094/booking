@@ -4,6 +4,7 @@ const {
   getBanner,
   updateBanner,
   deleteBanner,
+  getAdminBanner,
 } = require("../controllers/bannerController");
 const { isAuthenticatedUser, authorizeRoles } = require("../middleware/auth");
 
@@ -12,7 +13,10 @@ router
   .route("/admin/banner/create")
   .post(isAuthenticatedUser, authorizeRoles("admin", "manager"), createBanner);
 router
-  .route("/admin/banner")
+  .route("/admin/banners")
+  .get(isAuthenticatedUser, authorizeRoles("admin"), getAdminBanner);
+router
+  .route("/admin/banners")
   .get(isAuthenticatedUser, authorizeRoles("admin", "manager"), getBanner);
 router
   .route("/admin/banner/:id")

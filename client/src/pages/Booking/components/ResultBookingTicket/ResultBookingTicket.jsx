@@ -126,8 +126,6 @@ const ResultBookingTicket = (seat) => {
         >
           Thanh toán
         </Button>
-
-        <Button classes={{ root: classes.btnResult }}>Quay về trang chủ</Button>
       </div>
     </>
   );

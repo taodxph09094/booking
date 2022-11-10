@@ -33,7 +33,7 @@ const dashboardRoutes = [
     layout: "/admin",
   },
   {
-    path: "/banner",
+    path: "/banners",
     name: "Quản lý banner",
     icon: "nc-icon nc-album-2",
     layout: "/admin",

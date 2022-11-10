@@ -10,7 +10,7 @@ const BookingView = () => {
   const dispatch = useDispatch();
 
   return (
-    <div>
+    <div style={{ display: "block" }}>
       <MainBooking />
       {/* <ModalTicket /> */}
     </div>

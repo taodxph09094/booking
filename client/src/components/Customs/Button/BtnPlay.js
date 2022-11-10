@@ -63,7 +63,7 @@ export default function BtnPlay({ cssRoot, width, height, urlYoutube }) {
         <img
           src={play}
           className={classes.imgPlay}
-          onClick={() => openModal()}
+          onClick={openModal}
           alt="play"
         />
         {/* {isModalOpen && (

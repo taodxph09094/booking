@@ -6,7 +6,17 @@ import {
   SettingOutlined,
 } from "@ant-design/icons";
 import "../components/style.css";
+import { useDispatch, useSelector } from "react-redux";
+import { logout } from "../../actions/userAction";
+import { useAlert } from "react-alert";
 const HeaderUtil = () => {
+  const alert = useAlert();
+  const dispatch = useDispatch();
+  const { isAuthenticated, user } = useSelector((state) => state.user);
+  const handleLogout = () => {
+    dispatch(logout());
+    alert.success("Đăng xuất thành công");
+  };
   return (
     <>
       <div className="headerView">
@@ -47,6 +57,22 @@ const HeaderUtil = () => {
                     Lịch sử đặt vé
                   </a>
                 </li>
+                {user && (
+                  <li className="nav-item">
+                    <a className="nav-link" onClick={handleLogout}>
+                      Đăng xuất
+                    </a>
+                  </li>
+                )}
+                {user ? (
+                  <p></p>
+                ) : (
+                  <li className="nav-item">
+                    <a className="nav-link" href="/login">
+                      Đăng nhập
+                    </a>
+                  </li>
+                )}
               </ul>
             </div>
           </div>

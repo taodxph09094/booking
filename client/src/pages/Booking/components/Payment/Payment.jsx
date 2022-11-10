@@ -8,30 +8,46 @@ import {
   clearErrors,
   getReleasedTimeDetails,
 } from "../../../../actions/releasedTimeAction";
-import { formatDateTimeToString, splitText } from "../../../../utils/helper";
+import {
+  formatCurrency,
+  formatDateTimeToString,
+  splitText,
+} from "../../../../utils/helper";
 import { Space } from "antd";
 import ResultBookingTicket from "../ResultBookingTicket/ResultBookingTicket";
 
 const Payment = (seat) => {
   const { user } = useSelector((state) => state.user);
   const dispatch = useDispatch();
+  const [coupon, setCoupon] = useState();
+  const [valueCoupon, setValueCoupon] = useState(0);
   const params = useParams();
   const seats = seat.dataFromMain;
 
   const { releasedTime, loading, error } = useSelector(
     (state) => state.releasedTimeDetails
   );
-  const subTotal = seat.dataFromMain.length * releasedTime.price;
+  const subTotal = seat.dataFromMain.length * releasedTime.price - valueCoupon;
+
+  const onSubmit = () => {
+    if (coupon === "giamgia1") {
+      setValueCoupon(10000);
+    } else if (coupon === "giamgia2") {
+      setValueCoupon(50000);
+    } else if (coupon === "giamgia3") {
+      setValueCoupon(100000);
+    } else {
+      setValueCoupon(0);
+    }
+  };
   useEffect(() => {
     if (error) {
       alert.error(error);
       dispatch(clearErrors());
     }
-
     dispatch(getReleasedTimeDetails(params.id));
   }, [dispatch, params.id, error, alert]);
   const classes = useStyles();
-
   const onChange = (e) => {};
   //// modal
   const [loadingBtn, setLoadingBtn] = useState(false);
@@ -49,6 +65,7 @@ const Payment = (seat) => {
   const handleCancel = () => {
     setOpen(false);
   };
+  console.log(coupon);
   return (
     <aside className={classes.payMent}>
       <div>
@@ -71,7 +88,9 @@ const Payment = (seat) => {
             </Space>
           </span>
 
-          <p className={classes.amountLittle}>{releasedTime.price}</p>
+          <p className={classes.amountLittle}>
+            {formatCurrency(releasedTime.price)} đ
+          </p>
         </div>
 
         {/* email */}
@@ -89,11 +108,12 @@ const Payment = (seat) => {
           <label className={classes.label}>Mã giảm giá</label>
           <input
             type="text"
-            value="Tạm thời không hỗ trợ..."
-            readOnly
+            placeholder="Nhập mã giảm giá nếu có."
+            value={coupon}
+            onChange={(e) => setCoupon(e.target.value)}
             className={classes.fillIn}
           />
-          <button className={classes.btnDiscount} disabled>
+          <button className={classes.btnDiscount} onClick={onSubmit}>
             Áp dụng
           </button>
         </div>
@@ -162,22 +182,9 @@ const Payment = (seat) => {
       </div>
       <Modal
         open={open}
+        onOk={handleOk}
+        onCancel={handleCancel}
         title="Thông tin thanh toán"
-        // onOk={handleOk}
-        // onCancel={handleCancel}
-        // footer={[
-        //   <Button key="back" onClick={handleCancel}>
-        //     Trở lại
-        //   </Button>,
-        //   <Button
-        //     key="submit"
-        //     type="primary"
-        //     loading={loadingBtn}
-        //     onClick={handleOk}
-        //   >
-        //     Thanh toán
-        //   </Button>,
-        // ]}
       >
         <ResultBookingTicket seatNumber={seats} />
       </Modal>

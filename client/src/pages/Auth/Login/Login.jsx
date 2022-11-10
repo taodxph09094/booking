@@ -58,7 +58,9 @@ const Login = ({ history, location }) => {
   const handleDangKy = () => {
     history.push("/register", location.state);
   };
-
+  const handleForgot = () => {
+    history.push("/password/forgot", location.state);
+  };
   const loginSubmit = (e) => {
     e.preventDefault();
     dispatch(login(loginEmail, loginPassword));
@@ -105,6 +107,13 @@ const Login = ({ history, location }) => {
             onClick={handleDangKy}
           >
             * Đăng ký
+          </p>
+          <p
+            className="text-success"
+            style={{ cursor: "pointer" }}
+            onClick={handleForgot}
+          >
+            * Quên mật khẩu ?
           </p>
           <button
             style={{

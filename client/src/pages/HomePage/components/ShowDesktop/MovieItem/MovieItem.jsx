@@ -7,7 +7,7 @@ import useStyles from "./styles";
 import { Rate, Space } from "antd";
 import "./movie.scss";
 const MovieItem = ({ movie, comingMovie }) => {
-  const classes = useStyles({ bg: movie.images[0].url, comingMovie });
+  const classes = useStyles({ bg: movie.images, comingMovie });
   const history = useHistory();
   const thoiLuong = "120 phút";
   return (
@@ -32,7 +32,7 @@ const MovieItem = ({ movie, comingMovie }) => {
                 cssRoot={"play"}
                 width={48}
                 height={48}
-                urlYoutube={"https://youtu.be/ipCvSkh15cE"}
+                urlYoutube={movie.trailer}
               />
             </div>
           </div>

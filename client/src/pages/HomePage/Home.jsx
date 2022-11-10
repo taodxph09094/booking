@@ -15,6 +15,8 @@ import ShowDesktop from "./components/ShowDesktop/ShowDesktop";
 import { useAlert } from "react-alert";
 import { clearErrors, getFilm, getFilmByCate } from "../../actions/filmAction";
 import Theaters from "../Theaters/Theaters";
+import News from "../../components/News/News";
+import HomeApp from "../../components/HomeApp";
 export function SampleNextArrow(props) {
   const classes = useStyles();
   const { onClick } = props;
@@ -143,7 +145,9 @@ const Home = () => {
           )}
         </div>
       </div>
-      <Theaters />
+      {/* <Theaters /> */}
+      <News />
+      <HomeApp />
     </>
   );
 };

@@ -6,11 +6,11 @@ const bannerSchema = new mongoose.Schema({
   },
   bannerBonusLeft: {
     type: String,
-    required: [true, "Chọn ảnh"],
+    required: ["Chọn ảnh"],
   },
   bannerBonusRight: {
     type: String,
-    required: [true, "Chọn ảnh"],
+    required: ["Chọn ảnh"],
   },
   user: {
     type: mongoose.Schema.ObjectId,

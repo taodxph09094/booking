@@ -46,6 +46,8 @@ import UpdateFilm from "./views/Films/UpdateFilm";
 import ReleasedTime from "./views/ReleasedTime/ReleasedTime";
 import NewReleasedTime from "./views/ReleasedTime/NewReleasedTime";
 import UpdateReleasedTime from "./views/ReleasedTime/UpdateReleasedTime";
+import Banner from "./views/Banner/Banner";
+import AddBanner from "./views/Banner/AddBanner";
 const App = () => {
   const { isAuthenticated, user } = useSelector((state) => state.user);
   const [color, setColor] = React.useState("black");
@@ -107,6 +109,18 @@ const App = () => {
                 path="/admin/ticket-orders"
                 isAdmin={true}
                 component={OrderList}
+              />
+              <ProtectedRoute
+                exact
+                path="/admin/banners"
+                isAdmin={true}
+                component={Banner}
+              />
+              <ProtectedRoute
+                exact
+                path="/admin/addBanner"
+                isAdmin={true}
+                component={AddBanner}
               />
               <ProtectedRoute
                 exact

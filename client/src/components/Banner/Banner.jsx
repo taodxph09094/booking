@@ -58,7 +58,6 @@ const Banner = () => {
       <div id="carousel" className="bannerFilm">
         <Slider {...settings}>
           {bannerData?.map((banner) => {
-            // <RenderBanner key={banner.id} banner={banner} />;
             return (
               <div key={banner.maPhim} className="bannerStyle">
                 <img

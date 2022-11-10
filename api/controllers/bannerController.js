@@ -15,11 +15,34 @@ exports.createBanner = catchAsyncErrors(async (req, res, next) => {
 
 // Get All
 exports.getBanner = catchAsyncErrors(async (req, res, next) => {
-  const banner = await Banner.find();
+  const resultPerPage = 8;
+  const bannersCount = await Banner.countDocuments();
+
+  const apiFeature = new ApiFeatures(Banner.find(), req.query)
+    .search()
+    .filter();
+
+  let banners = await apiFeature.query;
+
+  let filteredBannersCount = banners.length;
+
+  apiFeature.pagination(resultPerPage);
+
+  banners = await apiFeature.query;
 
   res.status(200).json({
     success: true,
-    banner,
+    banners,
+    bannersCount,
+    resultPerPage,
+    filteredBannersCount,
+  });
+});
+exports.getAdminBanner = catchAsyncErrors(async (req, res, next) => {
+  const banners = await Banner.find();
+  res.status(200).json({
+    success: true,
+    banners,
   });
 });
 // update

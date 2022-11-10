@@ -68,6 +68,7 @@ const AuthLayout = (props) => {
       history.push("/");
     }, 50);
   };
+
   return (
     <div className={classes.backgroundImage}>
       <div className={classes.bgBlueColor}>

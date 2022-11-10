@@ -5,8 +5,6 @@ import TabsCate from "../components/Tabs/TabsCate";
 import HeaderUtil from "./components/Header";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Home from "../pages/HomePage/Home";
-import BookingTicket from "../components/Booking/BookingTicket";
-import Films from "../components/Films/Films";
 import FilmDetail from "../pages/Film/FilmDetail";
 import BookingView from "../pages/Booking/BookingView";
 import AuthLayout from "./AuthLayout/AuthLayout";
@@ -20,6 +18,9 @@ import { loadUser } from "../actions/userAction";
 import ProtectedRoute from "./AuthLayout/ProtectedRoute";
 import Payment from "../pages/Payment/Payment";
 import Orders from "../pages/Order/Orders";
+import FooterLayout from "./components/FooterLayout";
+import ForgotPass from "../pages/Auth/ForgotPass/ForgotPass";
+import ResetPass from "../pages/Auth/ResetPass/ResetPass";
 const { Header, Footer, Content } = Layout;
 const LayoutMain = () => {
   const [stripeApiKey, setStripeApiKey] = useState("");
@@ -61,6 +62,12 @@ const LayoutMain = () => {
               />
               <ProtectedRoute exact path="/orders" component={Orders} />
               <Route exact path="/film/:id" component={FilmDetail} />
+              <Route exact path="/password/forgot" component={ForgotPass} />
+              <Route
+                exact
+                path="/password/reset/:token"
+                component={ResetPass}
+              />
               {/* <TabsCate /> */}
               <Route exact path={["/login", "/register"]}>
                 <AuthLayout>
@@ -71,8 +78,8 @@ const LayoutMain = () => {
             </Switch>
           </Router>
         </Content>
-        <Footer>Footer</Footer>
       </Layout>
+      <FooterLayout />
     </>
   );
 };
