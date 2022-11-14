@@ -21,20 +21,21 @@ import {
   CLEAR_ERRORS,
   NEW_BANNER_RESET,
 } from "../../constants/bannerConstants";
-import { createBanner } from "../../actions/bannerAction";
+import { clearErrors, createBanner } from "../../actions/bannerAction";
 const AddBanner = ({ history }) => {
   const dispatch = useDispatch();
   const alert = useAlert();
 
-  const { loading, error, success } = useSelector((state) => state.newCinema);
+  const { loading, error, success } = useSelector((state) => state.newBanner);
   const [imageBanner, setImageBanner] = useState("");
   const [bannerBonusLeft, setBannerBonusLeft] = useState("");
   const [bannerBonusRight, setBannerBonusRight] = useState("");
+  const [trailer, setTrailer] = useState("");
 
   useEffect(() => {
     if (error) {
       alert.error(error);
-      dispatch(CLEAR_ERRORS());
+      dispatch(clearErrors());
     }
 
     if (success) {
@@ -52,6 +53,7 @@ const AddBanner = ({ history }) => {
     myForm.set("imageBanner", imageBanner);
     myForm.set("bannerBonusLeft", bannerBonusLeft);
     myForm.set("bannerBonusRight", bannerBonusRight);
+    myForm.set("trailer", trailer);
     dispatch(createBanner(myForm));
   };
   return (
@@ -106,6 +108,20 @@ const AddBanner = ({ history }) => {
                           placeholder="Nhập link ảnh rạp phim"
                           type="text"
                           onChange={(e) => setBannerBonusRight(e.target.value)}
+                        ></Form.Control>
+                      </Form.Group>
+                    </Col>
+                  </Row>
+                  <Row>
+                    <Col className="pr-1" md="12">
+                      <Form.Group>
+                        <label>Trailer</label>
+                        <Form.Control
+                          // defaultValue={name}
+                          value={trailer}
+                          placeholder="Nhập link trailer"
+                          type="text"
+                          onChange={(e) => setTrailer(e.target.value)}
                         ></Form.Control>
                       </Form.Group>
                     </Col>

@@ -146,37 +146,6 @@ exports.updateFilm = catchAsyncErrors(async (req, res, next) => {
     return next(new ErrorHander("Không tìm thấy phim", 404));
   }
 
-  // Images Start Here
-  // let images = [];
-
-  // if (typeof req.body.images === "string") {
-  //   images.push(req.body.images);
-  // } else {
-  //   images = req.body.images;
-  // }
-
-  // if (images !== undefined) {
-  //   // Deleting Images From Cloudinary
-  //   for (let i = 0; i < film.images.length; i++) {
-  //     await cloudinary.v2.uploader.destroy(film.images[i].public_id);
-  //   }
-
-  //   const imagesLinks = [];
-
-  //   for (let i = 0; i < images.length; i++) {
-  //     const result = await cloudinary.v2.uploader.upload(images[i], {
-  //       folder: "films",
-  //     });
-
-  //     imagesLinks.push({
-  //       public_id: result.public_id,
-  //       url: result.secure_url,
-  //     });
-  //   }
-
-  //   req.body.images = imagesLinks;
-  // }
-
   film = await Film.findByIdAndUpdate(req.params.id, req.body, {
     new: true,
     runValidators: true,

@@ -92,13 +92,13 @@ const ReleasedTime = ({ history }) => {
       headerAlign: "center",
       align: "center",
     },
-    {
-      field: "seat",
-      headerName: "Ghế",
-      flex: 0.5,
-      headerAlign: "center",
-      align: "center",
-    },
+    // {
+    //   field: "seat",
+    //   headerName: "Ghế",
+    //   flex: 0.5,
+    //   headerAlign: "center",
+    //   align: "center",
+    // },
     {
       field: "actions",
       headerName: "Hành động",
@@ -138,7 +138,7 @@ const ReleasedTime = ({ history }) => {
         date: splitText(formatDateTimeToString(item.date), 10),
         time: item.time,
         price: item.price,
-        seat: item.Stock + "/" + 100,
+        // seat: item.Stock + "/" + 100,
       });
     });
   return (

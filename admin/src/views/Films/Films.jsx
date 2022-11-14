@@ -7,6 +7,7 @@ import { Button } from "@material-ui/core";
 import AddIcon from "@material-ui/icons/Add";
 import EditIcon from "@material-ui/icons/Edit";
 import DeleteIcon from "@material-ui/icons/Delete";
+import { AiFillEyeInvisible, AiFillEye } from "react-icons/ai";
 import {
   clearErrors,
   deleteFilm,
@@ -67,13 +68,7 @@ const Films = ({ history }) => {
       headerAlign: "center",
       align: "center",
     },
-    {
-      field: "director",
-      headerName: "Đạo diễn",
-      flex: 0.5,
-      headerAlign: "center",
-      align: "center",
-    },
+
     {
       field: "type",
       headerName: "Thể loại",
@@ -88,6 +83,26 @@ const Films = ({ history }) => {
       headerAlign: "center",
       align: "center",
     },
+    {
+      field: "status",
+      headerName: "Trạng thái",
+      flex: 0.5,
+      headerAlign: "center",
+      align: "center",
+      renderCell: (params) => {
+        // console.log(params);
+        return (
+          <Fragment>
+            {params.value === "hiện" ? (
+              <AiFillEye style={{ fontSize: 24 }} />
+            ) : (
+              <AiFillEyeInvisible style={{ fontSize: 24, color: "red" }} />
+            )}
+          </Fragment>
+        );
+      },
+    },
+
     {
       field: "actions",
       headerName: "Hành động",
@@ -117,14 +132,20 @@ const Films = ({ history }) => {
   ];
 
   const rows = [];
-
+  const show = () => {
+    return (
+      <>
+        <div>đang Hiện</div>
+      </>
+    );
+  };
   films &&
     films.forEach((item) => {
       rows.push({
         id: item._id,
         name: item.name,
         released: item.released,
-        director: item.director,
+        status: item.hideFilm,
         type: item.type,
         category: item.category,
       });

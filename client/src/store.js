@@ -30,6 +30,12 @@ import {
   couponsReducer,
 } from "./reducers/couponReducer";
 import {
+  bannerDetailsReducer,
+  bannerReducer,
+  bannersReducer,
+  newBannerReducer,
+} from "./reducers/bannerReducer";
+import {
   allFeedbackReducer,
   newFeedbackReducer,
   feedbackReducer,
@@ -103,6 +109,10 @@ const reducer = combineReducers({
   releasedTime: releasedTimeReducer,
   releasedTimes: releasedTimesReducer,
   modalTrailer: modalTrailerReducer,
+  newBanner: newBannerReducer,
+  bannerDetails: bannerDetailsReducer,
+  banner: bannerReducer,
+  banners: bannersReducer,
   lazyReducer,
 });
 

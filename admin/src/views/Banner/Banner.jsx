@@ -9,7 +9,11 @@ import AddIcon from "@material-ui/icons/Add";
 import EditIcon from "@material-ui/icons/Edit";
 import DeleteIcon from "@material-ui/icons/Delete";
 import { DELETE_BANNER_RESET } from "../../constants/bannerConstants";
-import { clearErrors, getAdminBanner } from "../../actions/bannerAction";
+import {
+  clearErrors,
+  deleteBanner,
+  getAdminBanner,
+} from "../../actions/bannerAction";
 
 const Banner = ({ history }) => {
   const dispatch = useDispatch();
@@ -22,7 +26,7 @@ const Banner = ({ history }) => {
     (state) => state.banner
   );
   const deleteCinemaHandler = (id) => {
-    dispatch(deleteCinema(id));
+    dispatch(deleteBanner(id));
   };
 
   useEffect(() => {

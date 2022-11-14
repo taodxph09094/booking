@@ -9,14 +9,16 @@ import StepCheckOut from "../StepCheckOut";
 import { useHistory } from "react-router-dom";
 const ResultBookingTicket = (seat) => {
   const dispatch = useDispatch();
-  const { releasedTime, loading, error } = useSelector(
-    (state) => state.releasedTimeDetails
-  );
+  const {
+    releasedTime,
+    releasedTime: { poster },
+    loading,
+    error,
+  } = useSelector((state) => state.releasedTimeDetails);
   const history = useHistory();
   const { user } = useSelector((state) => state.user);
-
   const classes = useStyles({
-    releasedTime,
+    poster,
     color: colorTheater[splitText(releasedTime.cinema, 3).toUpperCase()],
   });
   const subtotal = seat.seatNumber.length * releasedTime.price;
@@ -44,7 +46,7 @@ const ResultBookingTicket = (seat) => {
       seats,
       price,
       promotion,
-      // quantity,
+      quantity,
       ticket,
     };
 
@@ -79,6 +81,10 @@ const ResultBookingTicket = (seat) => {
                 <tr>
                   <td valign="top">Phòng:</td>
                   <td>{releasedTime?.cinema}</td>
+                </tr>
+                <tr>
+                  <td valign="top">Số ghế:</td>
+                  <td>{seat.seatNumber.length}</td>
                 </tr>
                 <tr>
                   <td valign="top">Ghế:</td>

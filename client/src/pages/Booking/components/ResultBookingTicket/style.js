@@ -14,7 +14,7 @@ const useStyles = makeStyles({
   },
   infoTicked__img: (props) => ({
     flex: "30%",
-    backgroundImage: `url(https://m.media-amazon.com/images/M/MV5BYzZkOGUwMzMtMTgyNS00YjFlLTg5NzYtZTE3Y2E5YTA5NWIyXkEyXkFqcGdeQXVyMjkwOTAyMDU@._V1_.jpg)`,
+    backgroundImage: `url(${props.poster})`,
     borderRadius: "4px",
     backgroundPosition: "center",
     backgroundRepeat: "no-repeat",

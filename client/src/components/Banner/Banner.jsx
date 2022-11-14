@@ -10,14 +10,19 @@ import bannerData from "../../fakeData/banner";
 import BtnPlay from "../Customs/Button/BtnPlay";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import { useTheme } from "@material-ui/core/styles";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { LOADING_BACKTO_HOME_COMPLETED } from "../../constants/Lazy";
 import SearchStickets from "./SearchTickets";
+import { useAlert } from "react-alert";
+import { clearErrors, getBanner } from "../../actions/bannerAction";
 const Banner = () => {
   const dispatch = useDispatch();
   const theme = useTheme();
+  const alert = useAlert();
+  const { loading, error, banners } = useSelector((state) => state.banners);
   const isDesktop = useMediaQuery(theme.breakpoints.up("md"));
   const history = useHistory();
+  console.log(banners);
   const settings = {
     dots: true,
     infinite: true,
@@ -29,9 +34,16 @@ const Banner = () => {
     prevArrow: <PrevArrow />,
     dotsClass: "slickdotsbanner",
   };
+  // useEffect(() => {
+  //   dispatch({ type: LOADING_BACKTO_HOME_COMPLETED });
+  // }, []);
   useEffect(() => {
-    dispatch({ type: LOADING_BACKTO_HOME_COMPLETED });
-  }, []);
+    if (error) {
+      alert.error(error);
+      dispatch(clearErrors());
+    }
+    dispatch(getBanner());
+  }, [dispatch, error, alert]);
   function NextArrow(props) {
     const { onClick } = props;
     return (
@@ -57,11 +69,11 @@ const Banner = () => {
     <>
       <div id="carousel" className="bannerFilm">
         <Slider {...settings}>
-          {bannerData?.map((banner) => {
+          {banners?.map((banner) => {
             return (
-              <div key={banner.maPhim} className="bannerStyle">
+              <div key={banner._id} className="bannerStyle">
                 <img
-                  src={banner?.hinhAnh}
+                  src={banner?.imageBanner}
                   alt="banner"
                   className="bannerImage"
                 />

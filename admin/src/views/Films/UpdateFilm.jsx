@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { BiUpload } from "react-icons/bi";
 import DatePicker from "react-datepicker";
+import Switch from "react-switch";
 import "react-datepicker/dist/react-datepicker.css";
 import {
-  Badge,
   Button,
   Card,
   Form,
@@ -44,12 +44,20 @@ const UpdateFilm = ({ history, match }) => {
   const [trailer, setTrailer] = useState("");
   const [category, setCategory] = useState("");
   const [released, setReleased] = useState("");
+  const [show, setShow] = useState("");
   const categories = ["Phim đang chiếu", "Sắp ra mắt "];
   const typeFilm = ["Hành động", "Tình cảm", "Hài hước", "Hoạt hình"];
+  const hideFilm = ["hiện", "ẩn"];
   const [startDate, setStartDate] = useState(new Date());
 
   const filmId = match.params.id;
+  const [hide, setHide] = useState(true);
   useEffect(() => {
+    // if (film.hideFilm === "hiện") {
+    //   setHide(true);
+    // } else if (film.hideFilm === "ẩn") {
+    //   setHide(false);
+    // }
     setReleased(splitText(formatDateTimeToString(startDate), 10));
   });
   useEffect(() => {
@@ -65,6 +73,7 @@ const UpdateFilm = ({ history, match }) => {
       setCategory(film.category);
       setTrailer(film.trailer);
       setImages(film.images);
+      setShow(film.hideFilm);
     }
     if (error) {
       alert.error(error);
@@ -98,11 +107,19 @@ const UpdateFilm = ({ history, match }) => {
     myForm.set("released", released);
     myForm.set("images", images);
     myForm.set("trailer", trailer);
-
+    myForm.set("hideFilm", show);
     dispatch(updateFilm(filmId, myForm));
   };
-  console.log(released);
 
+  // const handleShow = () => {
+  //   setHide(!hide);
+  //   if (hide == false) {
+  //     setShow("ẩn");
+  //   } else if (hide == true) {
+  //     setShow("hiện");
+  //   }
+  // };
+  console.log(show);
   return (
     <>
       <Container fluid>
@@ -156,6 +173,25 @@ const UpdateFilm = ({ history, match }) => {
                         ></Form.Control>
                       </Form.Group>
                     </Col>
+                    <Col className="pr-1" md="6">
+                      <label> Ẩn/Hiện</label>
+                      <Row>
+                        <Form.Group>
+                          <Form.Select
+                            className="select-category titleHide"
+                            aria-label="Default select example"
+                            onChange={(e) => setShow(e.target.value)}
+                          >
+                            <option value="">{show}</option>
+                            {hideFilm.map((hd) => (
+                              <option key={hd} value={hd}>
+                                {hd}
+                              </option>
+                            ))}
+                          </Form.Select>
+                        </Form.Group>
+                      </Row>
+                    </Col>
                   </Row>
                   <Row>
                     <Col className="pr-1" md="3">
@@ -203,13 +239,6 @@ const UpdateFilm = ({ history, match }) => {
                   <Row>
                     <Col className="pr-1" md="4">
                       <Form.Group>
-                        {/* <label>Danh mục</label> */}
-                        {/* <Form.Control
-                      value={type}
-                      placeholder="Ngày chiếu phim"
-                      type="text"
-                      onChange={(e) => setType(e.target.value)}
-                    ></Form.Control> */}
                         <Form.Select
                           className="select-category"
                           aria-label="Default select example"
@@ -257,7 +286,7 @@ const UpdateFilm = ({ history, match }) => {
                           cols="80"
                           //   rows="5"
                           editor={ClassicEditor}
-                          //   value={info}
+                          defaultValue={info}
                           data={info}
                           onChange={(event, editor) => {
                             const data = editor.getData();
@@ -283,7 +312,7 @@ const UpdateFilm = ({ history, match }) => {
                           cols="80"
                           rows="5"
                           editor={ClassicEditor}
-                          //   defaultValue={description}
+                          defaultValue={description}
                           data={description}
                           onChange={(event, editor) => {
                             const data = editor.getData();

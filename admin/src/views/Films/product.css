@@ -32,6 +32,9 @@
 .oldImagesProduct{
     height: 100%;
 }
+.titleHide{
+    margin-left: 20px;
+}
 /* .card-imageProduct image{
     width: 100%;
     /* height: 60px; */

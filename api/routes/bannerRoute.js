@@ -15,16 +15,10 @@ router
 router
   .route("/admin/banners")
   .get(isAuthenticatedUser, authorizeRoles("admin"), getAdminBanner);
-router
-  .route("/admin/banners")
-  .get(isAuthenticatedUser, authorizeRoles("admin", "manager"), getBanner);
+router.route("/banners").get(getBanner);
 router
   .route("/admin/banner/:id")
-  .put(isAuthenticatedUser, authorizeRoles("admin", "manager"), updateBanner)
-  .delete(
-    isAuthenticatedUser,
-    authorizeRoles("admin", "manager"),
-    deleteBanner
-  );
+  .put(isAuthenticatedUser, authorizeRoles("admin"), updateBanner)
+  .delete(isAuthenticatedUser, authorizeRoles("admin"), deleteBanner);
 
 module.exports = router;

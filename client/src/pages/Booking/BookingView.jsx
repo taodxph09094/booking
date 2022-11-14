@@ -12,7 +12,6 @@ const BookingView = () => {
   return (
     <div style={{ display: "block" }}>
       <MainBooking />
-      {/* <ModalTicket /> */}
     </div>
   );
 };

@@ -12,6 +12,10 @@ const bannerSchema = new mongoose.Schema({
     type: String,
     required: ["Chọn ảnh"],
   },
+  trailer: {
+    type: String,
+    required: [true, "Nhập link trailer"],
+  },
   user: {
     type: mongoose.Schema.ObjectId,
     ref: "User",

@@ -226,7 +226,11 @@ const BonusDetail = (data, onClickBtnMuave) => {
                 <p className={`float-left ${classes.contentTitle}`}>Nội dung</p>
               </div>
               <div className="row mb-2">
-                <p>{setData.description}</p>
+                <p
+                  dangerouslySetInnerHTML={{
+                    __html: `${setData.description}`,
+                  }}
+                ></p>
               </div>
             </div>
           </div>

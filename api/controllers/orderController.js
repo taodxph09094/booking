@@ -103,7 +103,7 @@ exports.updateOrder = catchAsyncErrors(async (req, res, next) => {
 
   if (req.body.status === "Đã xong") {
     order.forEach(async (o) => {
-      await updateStock(o.releasedTime, o.quantity);
+      await updateStock(o.ticket, o.quantity);
     });
   }
   order.orderStatus = req.body.status;
