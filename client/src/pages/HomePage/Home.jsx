@@ -17,6 +17,9 @@ import { clearErrors, getFilm, getFilmByCate } from "../../actions/filmAction";
 import Theaters from "../Theaters/Theaters";
 import News from "../../components/News/News";
 import HomeApp from "../../components/HomeApp";
+import MovieIsShow from "../MovieIsShow/MovieIsShow";
+import MovieDaily from "../MovieDaily/MovieDaily";
+import MovieComing from "./components/MovieComing/MovieComing";
 export function SampleNextArrow(props) {
   const classes = useStyles();
   const { onClick } = props;
@@ -40,43 +43,21 @@ export function SamplePrevArrow(props) {
     />
   );
 }
-
-const filterByDay = (movieList, tuNgay, denNgay) => {
-  return movieList.filter((item) => {
-    // ms tính từ ngày gốc(1970) tới ngày item
-    const timeItem = new Date(item.ngayKhoiChieu).getTime();
-    // ms tính từ ngày gốc tới ngày lựa chọn
-    const timeTuNgay = new Date(tuNgay).getTime();
-    const timeDenNgay = new Date(denNgay).getTime();
-    if (timeTuNgay <= timeItem && timeItem <= timeDenNgay) {
-      return true;
-    }
-    return false;
-  });
-};
 const Home = () => {
   const theme = useTheme();
   const alert = useAlert();
-  const dispatch = useDispatch();
-  const isDesktop = useMediaQuery(theme.breakpoints.up("md"));
   const [value, setValue] = useState({ value: 0, fade: true, notDelay: 0 });
-  const { loading, error, films } = useSelector((state) => state.films);
-  const timeout = useRef(null);
-
   const classes = useStyles({
     fade: value.fade,
     value: value.value,
     notDelay: value.notDelay,
   });
-
-  const [category, setCategory] = useState("");
+  const dispatch = useDispatch();
+  const { loading, error, films } = useSelector((state) => state.films);
+  const isDesktop = useMediaQuery(theme.breakpoints.up("md"));
+  const timeout = useRef(null);
 
   useEffect(() => {
-    if (value.value == 0) {
-      setCategory("Sắp ra mắt");
-    } else {
-      setCategory("Phim sắp chiếu");
-    }
     return () => {
       clearTimeout(timeout.current);
     };
@@ -92,12 +73,11 @@ const Home = () => {
       dispatch(clearErrors());
     }
     dispatch(getFilm());
-  }, [dispatch, error, alert, category]);
+  }, [dispatch, error, alert]);
   useEffect(() => {
-    // tạm thời chia đôi list danh sách phim ra, một nửa làm phim đang chiếu, một nửa làm phim sắp chiếu
     const halfIndex = films && Math.floor(films.length / 2);
     let dailyMovieList = films;
-    let comingMovieList = films.slice(halfIndex, films.length - 1);
+    let comingMovieList = films;
     setarrayData({ dailyMovieList, comingMovieList });
   }, [films]);
 
@@ -107,15 +87,11 @@ const Home = () => {
       setValue((value) => ({ ...value, value: newValue, fade: true }));
     }, 100);
   };
-
-  if (error) {
-    return <div>{error}</div>;
-  }
   return (
     <>
       <Banner />
       <div style={{ paddingTop: "80px" }} id="lichchieu">
-        <AppBar className={classes.appBar} position="static">
+        {/* <AppBar className={classes.appBar} position="static">
           <Tabs
             classes={{
               root: classes.tabBar,
@@ -136,13 +112,16 @@ const Home = () => {
               label="Sắp chiếu"
             />
           </Tabs>
-        </AppBar>
+        </AppBar> */}
         <div className={classes.listMovie}>
-          {isDesktop ? (
+          {/* {isDesktop ? (
             <ShowDesktop arrayData={arrayData} value={value} />
           ) : (
             <ShowMobile arrayData={arrayData} value={value} />
-          )}
+          )} */}
+
+          <MovieDaily />
+          <MovieComing />
         </div>
       </div>
       {/* <Theaters /> */}

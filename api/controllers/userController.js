@@ -6,6 +6,27 @@ const sendEmail = require("../utils/sendEmail");
 const crypto = require("crypto");
 const cloudinary = require("cloudinary");
 
+// Create user -- Admin
+exports.createUser = catchAsyncErrors(async (req, res, next) => {
+  const { name, email, password, phone, address, role } = req.body;
+
+  const user = await User.create({
+    name,
+    email,
+    password,
+    phone,
+    address,
+    role,
+    avatar: {
+      public_id: "sample id",
+      url: "https://thuvienplus.com/themes/cynoebook/public/images/default-user-image.png",
+    },
+  });
+  res.status(201).json({
+    success: true,
+    user,
+  });
+});
 // Register a User
 exports.registerUser = catchAsyncErrors(async (req, res, next) => {
   const myCloud = await cloudinary.v2.uploader.upload(req.body.avatar, {

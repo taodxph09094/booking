@@ -9,13 +9,16 @@ const {
   getFilmReviews,
   deleteReview,
   getAdminFilms,
+  getDailyFilm,
+  getComingFilm,
 } = require("../controllers/filmController");
 const { isAuthenticatedUser, authorizeRoles } = require("../middleware/auth");
 
 const router = express.Router();
 
 router.route("/films").get(getAllFilms);
-
+router.route("/dailyFilms").get(getDailyFilm);
+router.route("/comingFilms").get(getComingFilm);
 router
   .route("/admin/films")
   .get(isAuthenticatedUser, authorizeRoles("admin"), getAdminFilms);

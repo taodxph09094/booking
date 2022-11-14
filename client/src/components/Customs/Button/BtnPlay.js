@@ -3,10 +3,15 @@ import { makeStyles } from "@material-ui/core";
 import { useDispatch } from "react-redux";
 import PropTypes from "prop-types";
 import { Button, Modal } from "antd";
+// import classNames from "classnames/bind";
 import { OPEN_MODAL } from "../../../constants/ModalTrailer";
 import ReactPlayer from "react-player";
+// import styles from "./VideoBanner.module.scss";
+import "./styel.css";
+import { CaretRightOutlined } from "@ant-design/icons";
 const play = "/img/carousel/play-video.png";
 
+// const cx = classNames.bind(styles);
 BtnPlay.propTypes = {
   urlYoutube: PropTypes.string,
   cssRoot: PropTypes.string,
@@ -42,8 +47,11 @@ const useStyles = makeStyles({
 export default function BtnPlay({ cssRoot, width, height, urlYoutube }) {
   const classes = useStyles({ width, height });
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const showModal = () => {
-    setIsModalOpen(true);
+  // const showModal = () => {
+  //   setIsModalOpen(true);
+  // };
+  const handleSetShow = () => {
+    setIsModalOpen(!isModalOpen);
   };
   const dispatch = useDispatch();
 
@@ -56,20 +64,30 @@ export default function BtnPlay({ cssRoot, width, height, urlYoutube }) {
       },
     });
   };
-
+  console.log(urlYoutube);
   return (
     <>
       <div className={`${classes.button} ${cssRoot}`}>
         <img
           src={play}
           className={classes.imgPlay}
-          onClick={openModal}
+          onClick={() => openModal()}
           alt="play"
         />
-        {/* {isModalOpen && (
-          <ReactPlayer url="https://www.youtube.com/embed/epYvxORKcLg" />
-        )} */}
       </div>
+      {/* <div className={`${classes.button} ${cssRoot}`}>
+        <img
+          src={play}
+          className={classes.imgPlay}
+          onClick={handleSetShow}
+          alt="play"
+        />
+
+        {isModalOpen && (
+          <div className="">
+            <ReactPlayer url="https://www.youtube.com/watch?v=ysz5S6PUM-U" />
+          </div>
+        )} */}
     </>
   );
 }

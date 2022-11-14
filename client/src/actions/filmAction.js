@@ -3,6 +3,12 @@ import {
   ADMIN_FILM_FAIL,
   ADMIN_FILM_REQUEST,
   ADMIN_FILM_SUCCESS,
+  ALL_FILMCOMING_FAIL,
+  ALL_FILMCOMING_REQUEST,
+  ALL_FILMCOMING_SUCCESS,
+  ALL_FILMDAILY_FAIL,
+  ALL_FILMDAILY_REQUEST,
+  ALL_FILMDAILY_SUCCESS,
   ALL_FILM_FAIL,
   ALL_FILM_REQUEST,
   ALL_FILM_SUCCESS,
@@ -51,23 +57,44 @@ export const getFilm =
       });
     }
   };
-export const getFilmByCate =
-  (category = "", currentPage = 1) =>
+export const getFilmByComing =
+  (currentPage = 1) =>
   async (dispatch) => {
     try {
-      dispatch({ type: ALL_FILM_REQUEST });
+      dispatch({ type: ALL_FILMCOMING_REQUEST });
 
-      let link = `/api/v1/films?category=${category}&page=${currentPage}`;
+      let link = `/api/v1/comingFilms?page=${currentPage}`;
 
       const { data } = await axios.get(link);
 
       dispatch({
-        type: ALL_FILM_SUCCESS,
+        type: ALL_FILMCOMING_SUCCESS,
         payload: data,
       });
     } catch (error) {
       dispatch({
-        type: ALL_FILM_FAIL,
+        type: ALL_FILMCOMING_FAIL,
+        payload: error.response.data.message,
+      });
+    }
+  };
+export const getFilmByDaily =
+  (currentPage = 1) =>
+  async (dispatch) => {
+    try {
+      dispatch({ type: ALL_FILMDAILY_REQUEST });
+
+      let link = `/api/v1/dailyFilms?page=${currentPage}`;
+
+      const { data } = await axios.get(link);
+
+      dispatch({
+        type: ALL_FILMDAILY_SUCCESS,
+        payload: data,
+      });
+    } catch (error) {
+      dispatch({
+        type: ALL_FILMDAILY_FAIL,
         payload: error.response.data.message,
       });
     }

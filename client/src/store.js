@@ -45,6 +45,8 @@ import {
   filmDetailsReducer,
   filmReducer,
   filmsReducer,
+  filmsCateReducer,
+  filmsComReducer,
   newFilmReducer,
   newReviewReducer,
   filmReviewsReducer,
@@ -91,6 +93,8 @@ const reducer = combineReducers({
   filmDetails: filmDetailsReducer,
   film: filmReducer,
   films: filmsReducer,
+  filmCate: filmsCateReducer,
+  filmCom: filmsComReducer,
   newReview: newReviewReducer,
   filmReviews: filmReviewsReducer,
   review: reviewReducer,
@@ -98,7 +102,7 @@ const reducer = combineReducers({
   releasedTimeDetails: releasedTimeDetailsReducer,
   releasedTime: releasedTimeReducer,
   releasedTimes: releasedTimesReducer,
-  modalTrailerReducer,
+  modalTrailer: modalTrailerReducer,
   lazyReducer,
 });
 

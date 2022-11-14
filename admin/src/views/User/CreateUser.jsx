@@ -14,13 +14,16 @@ import {
 } from "react-bootstrap";
 import { useDispatch } from "react-redux";
 import { useAlert } from "react-alert";
-import { REGISTER_USER_SUCCESS } from "../../constants/userConstansts";
-import { clearErrors, register } from "../../actions/userAction";
+import {
+  CREATE_USER_SUCCESS,
+  REGISTER_USER_SUCCESS,
+} from "../../constants/userConstansts";
+import { clearErrors, createUser, register } from "../../actions/userAction";
 import { useSelector } from "react-redux";
 const CreateUser = ({ history }) => {
   const dispatch = useDispatch();
   const alert = useAlert();
-  const { loading, error, success } = useSelector((state) => state.user);
+  const { loading, error, success } = useSelector((state) => state.newUser);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -39,7 +42,7 @@ const CreateUser = ({ history }) => {
     if (success) {
       alert.success("Tạo tài khoản thành công");
       history.push("/admin/users");
-      dispatch({ type: REGISTER_USER_SUCCESS });
+      dispatch({ type: CREATE_USER_SUCCESS });
     }
   }, [dispatch, alert, error, history, success]);
   const createUserSubmitHandler = (e) => {
@@ -51,10 +54,8 @@ const CreateUser = ({ history }) => {
     myForm.set("role", role);
     myForm.set("phone", phone);
     myForm.set("address", address);
-    avatar.forEach((image) => {
-      myForm.append("avatar", image);
-    });
-    dispatch(register(myForm));
+
+    dispatch(createUser(myForm));
   };
   const createUserImagesChange = (e) => {
     const files = Array.from(e.target.files);

@@ -2,6 +2,10 @@ import {
   ALL_USERS_FAIL,
   ALL_USERS_REQUEST,
   ALL_USERS_SUCCESS,
+  CREATE_USER_REQUEST,
+  CREATE_USER_SUCCESS,
+  CREATE_USER_RESET,
+  CREATE_USER_FAIL,
   CLEAR_ERRORS,
   DELETE_USER_FAIL,
   DELETE_USER_REQUEST,
@@ -73,7 +77,31 @@ export const register = (userData) => async (dispatch) => {
     });
   }
 };
+export const createUser = (userData) => async (dispatch) => {
+  try {
+    dispatch({ type: CREATE_USER_REQUEST });
 
+    const config = {
+      headers: { "Content-Type": "application/json" },
+    };
+
+    const { data } = await axios.post(
+      `/api/v1/admin/createUser`,
+      userData,
+      config
+    );
+
+    dispatch({
+      type: CREATE_USER_SUCCESS,
+      payload: data,
+    });
+  } catch (error) {
+    dispatch({
+      type: CREATE_USER_FAIL,
+      payload: error.response.data.message,
+    });
+  }
+};
 // Load User
 export const loadUser = () => async (dispatch) => {
   try {

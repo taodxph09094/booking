@@ -2,6 +2,10 @@ import {
   ALL_USERS_FAIL,
   ALL_USERS_REQUEST,
   ALL_USERS_SUCCESS,
+  CREATE_USER_REQUEST,
+  CREATE_USER_SUCCESS,
+  CREATE_USER_RESET,
+  CREATE_USER_FAIL,
   CLEAR_ERRORS,
   DELETE_USER_FAIL,
   DELETE_USER_REQUEST,
@@ -101,7 +105,39 @@ export const userReducer = (state = { user: {} }, action) => {
       return state;
   }
 };
-
+export const newUserReducer = (state = { user: {} }, action) => {
+  switch (action.type) {
+    case CREATE_USER_REQUEST:
+      return {
+        ...state,
+        loading: true,
+      };
+    case CREATE_USER_SUCCESS:
+      return {
+        loading: false,
+        success: action.payload.success,
+        user: action.payload.user,
+      };
+    case CREATE_USER_FAIL:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload,
+      };
+    case CREATE_USER_RESET:
+      return {
+        ...state,
+        success: false,
+      };
+    case CLEAR_ERRORS:
+      return {
+        ...state,
+        error: null,
+      };
+    default:
+      return state;
+  }
+};
 export const profileReducer = (state = {}, action) => {
   switch (action.type) {
     case UPDATE_PROFILE_REQUEST:

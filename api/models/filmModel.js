@@ -42,6 +42,14 @@ const filmSchema = new mongoose.Schema({
     type: String,
     required: [true, "Nhập danh mục phim"],
   },
+  isComing: {
+    type: Boolean,
+    default: false,
+  },
+  hideFilm: {
+    type: String,
+    default: "hiện",
+  },
   numOfReviews: {
     type: Number,
     default: 0,

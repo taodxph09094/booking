@@ -2,6 +2,12 @@ import {
   ADMIN_FILM_FAIL,
   ADMIN_FILM_REQUEST,
   ADMIN_FILM_SUCCESS,
+  ALL_FILMDAILY_REQUEST,
+  ALL_FILMDAILY_SUCCESS,
+  ALL_FILMDAILY_FAIL,
+  ALL_FILMCOMING_REQUEST,
+  ALL_FILMCOMING_SUCCESS,
+  ALL_FILMCOMING_FAIL,
   ALL_FILM_FAIL,
   ALL_FILM_REQUEST,
   ALL_FILM_SUCCESS,
@@ -73,6 +79,82 @@ export const filmsReducer = (state = { films: [] }, action) => {
   }
 };
 
+export const filmsCateReducer = (state = { filmCate: [] }, action) => {
+  switch (action.type) {
+    case ALL_FILMDAILY_REQUEST:
+    case ADMIN_FILM_REQUEST:
+      return {
+        loading: true,
+        filmCate: [],
+      };
+    case ALL_FILMDAILY_SUCCESS:
+      return {
+        loading: false,
+        filmCate: action.payload.films,
+        filmCateCount: action.payload.filmsCount,
+        resultPerPage: action.payload.resultPerPage,
+        filteredFilmCateCount: action.payload.filteredFilmsCount,
+      };
+
+    case ADMIN_FILM_SUCCESS:
+      return {
+        loading: false,
+        filmCate: action.payload,
+      };
+    case ALL_FILMDAILY_FAIL:
+    case ADMIN_FILM_FAIL:
+      return {
+        loading: false,
+        error: action.payload,
+      };
+
+    case CLEAR_ERRORS:
+      return {
+        ...state,
+        error: null,
+      };
+    default:
+      return state;
+  }
+};
+export const filmsComReducer = (state = { filmCom: [] }, action) => {
+  switch (action.type) {
+    case ALL_FILMCOMING_REQUEST:
+    case ADMIN_FILM_REQUEST:
+      return {
+        loading: true,
+        filmCom: [],
+      };
+    case ALL_FILMCOMING_SUCCESS:
+      return {
+        loading: false,
+        filmCom: action.payload.films,
+        filmComCount: action.payload.filmsCount,
+        resultPerPage: action.payload.resultPerPage,
+        filteredFilmComCount: action.payload.filteredFilmsCount,
+      };
+
+    case ADMIN_FILM_SUCCESS:
+      return {
+        loading: false,
+        filmCom: action.payload,
+      };
+    case ALL_FILMCOMING_FAIL:
+    case ADMIN_FILM_FAIL:
+      return {
+        loading: false,
+        error: action.payload,
+      };
+
+    case CLEAR_ERRORS:
+      return {
+        ...state,
+        error: null,
+      };
+    default:
+      return state;
+  }
+};
 export const newFilmReducer = (state = { film: {} }, action) => {
   switch (action.type) {
     case NEW_FILM_REQUEST:

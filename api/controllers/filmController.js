@@ -61,7 +61,58 @@ exports.getAllFilms = catchAsyncErrors(async (req, res, next) => {
     filteredFilmsCount,
   });
 });
+exports.getDailyFilm = catchAsyncErrors(async (req, res, next) => {
+  const resultPerPage = 8;
+  const filmsCount = await Film.countDocuments();
 
+  const apiFeature = new ApiFeatures(
+    Film.find({ category: "Phim đang chiếu", hideFilm: "hiện" }),
+    req.query
+  )
+    .search()
+    .filter();
+
+  let films = await apiFeature.query;
+
+  let filteredFilmsCount = films.length;
+
+  apiFeature.pagination(resultPerPage);
+
+  films = await apiFeature.query;
+
+  res.status(200).json({
+    success: true,
+    films,
+    filmsCount,
+    resultPerPage,
+    filteredFilmsCount,
+  });
+});
+exports.getComingFilm = catchAsyncErrors(async (req, res, next) => {
+  const resultPerPage = 8;
+  const filmsCount = await Film.countDocuments();
+
+  const apiFeature = new ApiFeatures(
+    Film.find({ category: "Sắp ra mắt ", hideFilm: "hiện" }),
+    req.query
+  );
+
+  let films = await apiFeature.query;
+
+  let filteredFilmsCount = films.length;
+
+  apiFeature.pagination(resultPerPage);
+
+  films = await apiFeature.query;
+
+  res.status(200).json({
+    success: true,
+    films,
+    filmsCount,
+    resultPerPage,
+    filteredFilmsCount,
+  });
+});
 // Get All Film (Admin)
 exports.getAdminFilms = catchAsyncErrors(async (req, res, next) => {
   const films = await Film.find();

@@ -14,7 +14,7 @@ exports.newOrder = catchAsyncErrors(async (req, res, next) => {
     seats,
     price,
     promotion,
-    // quantity,
+    quantity,
     ticket,
     paymentInfo,
     itemsPrice,
@@ -30,7 +30,7 @@ exports.newOrder = catchAsyncErrors(async (req, res, next) => {
     seats,
     price,
     promotion,
-    // quantity,
+    quantity,
     ticket,
     paymentInfo,
     itemsPrice,
@@ -97,18 +97,18 @@ exports.updateOrder = catchAsyncErrors(async (req, res, next) => {
     return next(new ErrorHander("Không tìm thấy đơn đặt hàng với Id này", 404));
   }
 
-  if (order.orderStatus === "Đã xong") {
-    return next(new ErrorHander("Đã thanh toán thành công", 400));
+  if (order.orderStatus === "Đang xử lý") {
+    return next(new ErrorHander("Đơn hàng này đã được bạn xử lý", 400));
   }
 
-  if (req.body.status === "Đang xử lý") {
-    order.orderItems.forEach(async (o) => {
+  if (req.body.status === "Đã xong") {
+    order.forEach(async (o) => {
       await updateStock(o.releasedTime, o.quantity);
     });
   }
   order.orderStatus = req.body.status;
 
-  if (req.body.status === "Đã xong") {
+  if (req.body.status === "Đang xử lý") {
     order.deliveredAt = Date.now();
   }
 
@@ -118,11 +118,11 @@ exports.updateOrder = catchAsyncErrors(async (req, res, next) => {
   });
 });
 
-// async function updateStock(id, quantity) {
-//   const releasedTime = await ReleasedTime.findById(id);
-//   releasedTime.Stock -= quantity;
-//   await releasedTime.save({ validateBeforeSave: false });
-// }
+async function updateStock(id, quantity) {
+  const releasedTime = await ReleasedTime.findById(id);
+  releasedTime.Stock -= quantity;
+  await releasedTime.save({ validateBeforeSave: false });
+}
 
 // delete Order -- Admin
 exports.deleteOrder = catchAsyncErrors(async (req, res, next) => {

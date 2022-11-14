@@ -3,7 +3,19 @@ class ApiFeatures {
     this.query = query;
     this.queryStr = queryStr;
   }
+  byDaily() {
+    const keyword = "Phim đang chiếu"
+      ? {
+          name: {
+            $regex: "Phim đang chiếu",
+            $options: "i",
+          },
+        }
+      : {};
 
+    this.query = this.query.find({ ...keyword });
+    return this;
+  }
   search() {
     const keyword = this.queryStr.keyword
       ? {
@@ -67,7 +79,7 @@ class ApiFeatures {
   filter() {
     const queryCopy = { ...this.queryStr };
     //   Removing some fields for category
-    const removeFields = ["keyword", "page", "limit", "code", "staffId"];
+    const removeFields = ["keyword", "page", "limit", "code"];
 
     removeFields.forEach((key) => delete queryCopy[key]);
     let queryStr = JSON.stringify(queryCopy);

@@ -8,6 +8,7 @@ import {
   profileReducer,
   userDetailsReducer,
   userReducer,
+  newUserReducer,
 } from "./reducers/userReducer";
 import { cartReducer } from "./reducers/cartReducer";
 import {
@@ -64,6 +65,7 @@ import {
 } from "./reducers/releasedTimeReducer";
 const reducer = combineReducers({
   user: userReducer,
+  newUser: newUserReducer,
   profile: profileReducer,
   forgotPassword: forgotPasswordReducer,
   allUsers: allUsersReducer,
