@@ -64,18 +64,18 @@ export default function BtnPlay({ cssRoot, width, height, urlYoutube }) {
       },
     });
   };
-  // console.log(urlYoutube);
+  console.log(urlYoutube);
   return (
     <>
-      {/* <div className={`${classes.button} ${cssRoot}`}>
+      <div className={`${classes.button} ${cssRoot}`}>
         <img
           src={play}
           className={classes.imgPlay}
           onClick={() => openModal()}
           alt="play"
         />
-      </div> */}
-      <div className={`${classes.button} ${cssRoot}`}>
+      </div>
+      {/* <div className={`${classes.button} ${cssRoot}`}>
         <img
           src={play}
           className={classes.imgPlay}
@@ -88,7 +88,7 @@ export default function BtnPlay({ cssRoot, width, height, urlYoutube }) {
             <ReactPlayer url="https://www.youtube.com/watch?v=ysz5S6PUM-U" />
           </div>
         )}
-      </div>
+      </div> */}
     </>
   );
 }

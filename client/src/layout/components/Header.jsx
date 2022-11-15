@@ -42,15 +42,19 @@ const HeaderUtil = () => {
             <div className="collapse navbar-collapse" id="navbarResponsive">
               <ul className="navbar-nav ms-auto my-2 my-lg-0">
                 <li className="nav-item">
-                  <a className="nav-link">About</a>
+                  <a className="nav-link" href="/news">
+                    Tin tức
+                  </a>
                 </li>
-                <li className="nav-item">
+                {/* <li className="nav-item">
                   <a className="nav-link" href="/booking">
                     Đặt vé
                   </a>
-                </li>
+                </li> */}
                 <li className="nav-item">
-                  <a className="nav-link">Portfolio</a>
+                  <a className="nav-link" href="/profile">
+                    Portfolio
+                  </a>
                 </li>
                 <li className="nav-item">
                   <a className="nav-link" href="/orders">

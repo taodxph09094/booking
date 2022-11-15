@@ -2,6 +2,7 @@ const Order = require("../models/orderModel");
 const ReleasedTime = require("../models/releasedTimeModel");
 const ErrorHander = require("../utils/errorhander");
 const catchAsyncErrors = require("../middleware/catchAsyncErrors");
+const ApiFeatures = require("../utils/apifeatures");
 
 // Create new Order
 exports.newOrder = catchAsyncErrors(async (req, res, next) => {
@@ -74,6 +75,7 @@ exports.myOrders = catchAsyncErrors(async (req, res, next) => {
 
 // get all Orders -- Admin
 exports.getAllOrders = catchAsyncErrors(async (req, res, next) => {
+  const ordersCount = await Order.countDocuments();
   const orders = await Order.find();
 
   let totalAmount = 0;
@@ -81,14 +83,40 @@ exports.getAllOrders = catchAsyncErrors(async (req, res, next) => {
   orders.forEach((order) => {
     totalAmount += order.totalPrice;
   });
-
+  let filteredOrdersCount = orders.length;
   res.status(200).json({
     success: true,
     totalAmount,
+    filteredOrdersCount,
+    ordersCount,
     orders,
   });
 });
+exports.getAllOrdersAndFil = catchAsyncErrors(async (req, res, next) => {
+  const resultPerPage = 8;
+  const ordersCount = await Order.countDocuments();
 
+  const apiFeature = new ApiFeatures(Order.find(), req.query)
+    .byCinema()
+    .byFilm()
+    .filter();
+
+  let orders = await apiFeature.query;
+
+  let filteredOrdersCount = orders.length;
+
+  apiFeature.pagination(resultPerPage);
+
+  orders = await apiFeature.query;
+
+  res.status(200).json({
+    success: true,
+    orders,
+    ordersCount,
+    resultPerPage,
+    filteredOrdersCount,
+  });
+});
 // update Order Status -- Admin
 exports.updateOrder = catchAsyncErrors(async (req, res, next) => {
   const order = await Order.findById(req.params.id);

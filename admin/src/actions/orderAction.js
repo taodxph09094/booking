@@ -74,7 +74,27 @@ export const getAllOrders = () => async (dispatch) => {
     });
   }
 };
+export const getOrderBy =
+  (keyword = "", currentPage = 1, nameFilm = "") =>
+  async (dispatch) => {
+    try {
+      dispatch({ type: ALL_ORDERS_REQUEST });
 
+      let link = `/api/v1/admin/ordersByMovie?keyword=${keyword}&nameFilm=${nameFilm}&page=${currentPage}`;
+
+      const { data } = await axios.get(link);
+
+      dispatch({
+        type: ALL_ORDERS_SUCCESS,
+        payload: data,
+      });
+    } catch (error) {
+      dispatch({
+        type: ALL_ORDERS_FAIL,
+        payload: error.response.data.message,
+      });
+    }
+  };
 // Update Order
 export const updateOrder = (id, order) => async (dispatch) => {
   try {

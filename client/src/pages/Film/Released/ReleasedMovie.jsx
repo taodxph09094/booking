@@ -14,35 +14,16 @@ import CardTest from "./cardTest";
 import RightSection from "./RightSection";
 const ReleasedMovie = ({ data }) => {
   const params = useParams();
-  // const { releasedTimes, loading, error } = useSelector(
-  //   (state) => state.releasedTimes
-  // );
-
   const dispatch = useDispatch();
   const alert = useAlert();
-  // const keyword = "Black Adam";
-  // useEffect(() => {
-  //   if (error) {
-  //     alert.error(error);
-  //     dispatch(clearErrors());
-  //   }
 
-  //   dispatch(getReleasedTimeByFilm(keyword));
-  // }, [dispatch, error, alert]);
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
 
   const [value, setValue] = React.useState(0);
   const classes = useStyles();
-  // const brands = [];
-  // releasedTimes &&
-  //   releasedTimes.forEach((item) => {
-  //     brands.push({
-  //       name: item.brand,
-  //     });
-  //   });
-
+  console.log(data.length);
   return (
     <div className={classes.root}>
       <Tabs
@@ -71,7 +52,7 @@ const ReleasedMovie = ({ data }) => {
         ))}
       </Tabs>
       <div className={classes.rightSection}>
-        {data?.cinema?.length === 0 && (
+        {data?.length === 0 && (
           <p style={{ padding: 10 }}>
             Hiện tại chưa có lịch chiếu cho phim này
           </p>

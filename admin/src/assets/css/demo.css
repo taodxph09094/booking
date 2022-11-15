@@ -14,9 +14,11 @@
 
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
-*/
+*/.cardCC{
+  height:500px;
+}
 .cardLine{
-  height:800px
+  height:1000px;
 }
 .link{
 

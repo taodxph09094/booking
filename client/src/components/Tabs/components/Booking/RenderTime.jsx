@@ -1,5 +1,5 @@
 import React from "react";
-import { PageHeader, Card, Row } from "antd";
+import { PageHeader, Card, Row, Image } from "antd";
 const RenderTime = () => {
   const { Meta } = Card;
   return (

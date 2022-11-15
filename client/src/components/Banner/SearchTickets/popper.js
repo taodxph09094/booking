@@ -72,7 +72,7 @@ export default function CustomPopper(props) {
     // nếu hình có dạng chữ nhật thì cho rộng ra
     let mounted = true;
     const img = new Image();
-    img.src = phim.hinhAnh;
+    img.src = phim.images;
     img.onload = function () {
       // sau khi phân tích hình ảnh xong
       if (this.width > this.height && mounted) {
@@ -89,12 +89,12 @@ export default function CustomPopper(props) {
 
   useEffect(() => {
     // khi hover vào phim khác thì currentPhimPopup thay đổi > ẩn đi phim hiện tại
-    if (phim.maPhim !== currentPhimPopup && currentPhimPopup) {
+    if (phim._id !== currentPhimPopup && currentPhimPopup) {
       setShowPopper(false);
     }
-  }, [currentPhimPopup, phim.maPhim]);
+  }, [currentPhimPopup, phim._id]);
   const handleMouseEnter = (element) => {
-    setNewPhim(phim.maPhim); // đẩy mã phim đang popup lên component cha, nếu hover vào phim mới thì mới ẩn, còn hover ra ngoài thì không ẩn
+    setNewPhim(phim._id); // đẩy mã phim đang popup lên component cha, nếu hover vào phim mới thì mới ẩn, còn hover ra ngoài thì không ẩn
     setShowPopper(true);
     setAnchorEl(rootElementPopup);
   };
@@ -105,7 +105,7 @@ export default function CustomPopper(props) {
       onMouseEnter={handleMouseEnter}
       ref={temporaryAnchorEl}
     >
-      <p>{phim.tenPhim}</p>
+      <p>{phim.name}</p>
       {showPopper && (
         <Popper
           open={showPopper}
@@ -116,7 +116,7 @@ export default function CustomPopper(props) {
           <div>
             <div style={{ position: "relative" }}>
               <img
-                src={phim.hinhAnh}
+                src={phim.images}
                 alt="poster"
                 className={classes.image}
                 style={{ width: widthImage }}
@@ -128,11 +128,11 @@ export default function CustomPopper(props) {
               />
               {imageNotFound && <div className={classes.withOutImage}></div>}
               <div className={classes.info}>
-                <p>{`120 phút - Điểm Tix ${phim.danhGia}`}</p>
+                <p>{`120 phút - Điểm Tix ${phim.ratings}`}</p>
               </div>
               <button
                 className={classes.btnMovieDetail}
-                onClick={() => history.push(`/phim/${phim.maPhim}`)}
+                onClick={() => history.push(`/film/${phim._id}`)}
               >
                 Chi tiêt phim
               </button>

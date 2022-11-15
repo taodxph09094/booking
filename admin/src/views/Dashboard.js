@@ -26,6 +26,7 @@ import { getFilmByDaily, getFilmByComing } from "../actions/filmAction";
 import { getReleasedTime } from "../actions/releasedTimeAction";
 import { getAllOrders } from "../actions/orderAction";
 import { getAllUsers } from "../actions/userAction";
+import ChartTable from "./DashboardCompo/ChartTable";
 function Dashboard() {
   const dispatch = useDispatch();
   const alert = useAlert();
@@ -41,7 +42,24 @@ function Dashboard() {
     dispatch(getAllOrders());
     dispatch(getAllUsers());
   }, [dispatch, alert]);
-  console.log(orders & orders);
+  console.log(orders.length);
+  let totalAmount = 0;
+  // let totalQuan = 0;
+  orders &&
+    orders.forEach((item) => {
+      totalAmount += item.totalPrice;
+    });
+  const lineState = {
+    labels: ["Doanh thu ban đầu", "Gần nhất"],
+    datasets: [
+      {
+        label: "Tổng",
+        backgroundColor: ["tomato"],
+        hoverBackgroundColor: ["rgb(197, 72, 49)"],
+        data: [0, totalAmount],
+      },
+    ],
+  };
   return (
     <>
       <Container fluid>
@@ -58,8 +76,8 @@ function Dashboard() {
                   </Col>
                   <Col xs="7">
                     <div className="numbers">
-                      <p className="card-category">Số phim đang chiếu</p>
-                      <Card.Title as="h4">{filmCate.length}</Card.Title>
+                      <p className="card-category">Tổng doanh thu</p>
+                      <Card.Title as="h4">{totalAmount}</Card.Title>
                     </div>
                   </Col>
                 </Row>
@@ -87,8 +105,8 @@ function Dashboard() {
                   </Col>
                   <Col xs="7">
                     <div className="numbers">
-                      <p className="card-category">Số phim sắp chiếu</p>
-                      <Card.Title as="h4">{filmCom.length}</Card.Title>
+                      <p className="card-category">Số vé bán ra</p>
+                      <Card.Title as="h4">{orders.length}</Card.Title>
                     </div>
                   </Col>
                 </Row>
@@ -163,54 +181,33 @@ function Dashboard() {
             </Card>
           </Col>
         </Row>
-        <Row>
-          <Col md="8">
-            <Card className="cardLine">
-              <Card.Header>
-                <Card.Title as="h4">Biểu đồ doanh thu (đơn vị: $)</Card.Title>
-                <p className="card-category">24 Hours performance</p>
-              </Card.Header>
+        {/* <Row>
+          <Col md="12">
+            <Card className="cardCC">
+              <Card.Title as="h4">Biểu đồ số vé được bán</Card.Title>
               <Card.Body>
-                <div className="ct-chart" id="chartHours"></div>
-              </Card.Body>
-              <Card.Footer>
-                <div className="legend">
-                  <i className="fas fa-circle text-info"></i>
-                  Open <i className="fas fa-circle text-danger"></i>
-                  Click <i className="fas fa-circle text-warning"></i>
-                  Click Second Time
-                </div>
-                <hr></hr>
-                <div className="stats">
-                  <i className="fas fa-history"></i>
-                  Updated 3 minutes ago
-                </div>
-              </Card.Footer>
-            </Card>
-          </Col>
-          <Col md="4">
-            <Card>
-              <Card.Header>
-                <Card.Title as="h4">Thống kê hàng hóa</Card.Title>
-                <p className="card-category">Hiệu suất bán ra</p>
-              </Card.Header>
-              <Card.Body>
-                <div></div>
-                <div className="legend">
-                  <i className="fas fa-circle text-info"></i>
-                  Open <i className="fas fa-circle text-danger"></i>
-                  Bounce <i className="fas fa-circle text-warning"></i>
-                  Unsubscribe
-                </div>
-                <hr></hr>
-                <div className="stats">
-                  <i className="far fa-clock"></i>
-                  Campaign sent 2 days ago
+                <div className="ct-chart" id="chartHours">
+                  <Line data={lineState} />
+                  <p>Doanh thu rạp: </p>
                 </div>
               </Card.Body>
             </Card>
           </Col>
         </Row>
+        <Row>
+          <Col md="12">
+            <Card className="cardLine">
+              <Card.Header>
+                <Card.Title as="h4">Biểu đồ số vé được bán</Card.Title>
+              </Card.Header>
+              <Card.Body>
+                <div className="ct-chart" id="chartHours">
+                  <ChartTable orderList={orders} />
+                </div>
+              </Card.Body>
+            </Card>
+          </Col>
+        </Row> */}
       </Container>
     </>
   );

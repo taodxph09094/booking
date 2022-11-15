@@ -108,12 +108,12 @@ const reducer = combineReducers({
   releasedTimeDetails: releasedTimeDetailsReducer,
   releasedTime: releasedTimeReducer,
   releasedTimes: releasedTimesReducer,
-  modalTrailer: modalTrailerReducer,
+  // modalTrailer: modalTrailerReducer,
   newBanner: newBannerReducer,
   bannerDetails: bannerDetailsReducer,
   banner: bannerReducer,
   banners: bannersReducer,
-
+  modalTrailerReducer,
   lazyReducer,
 });
 

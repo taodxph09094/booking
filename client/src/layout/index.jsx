@@ -21,6 +21,8 @@ import Orders from "../pages/Order/Orders";
 import FooterLayout from "./components/FooterLayout";
 import ForgotPass from "../pages/Auth/ForgotPass/ForgotPass";
 import ResetPass from "../pages/Auth/ResetPass/ResetPass";
+import ModalTrailer from "../components/ModalTrailer";
+import News from "../pages/News/News";
 const { Header, Footer, Content } = Layout;
 const LayoutMain = () => {
   const [stripeApiKey, setStripeApiKey] = useState("");
@@ -52,9 +54,10 @@ const LayoutMain = () => {
                 />
               </Elements>
             )}
+            <ModalTrailer />
             <Switch>
               <Route exact path="/" component={Home} />
-              <Route exact path="/booking" component={TabsCate} />
+              {/* <Route exact path="/booking" component={TabsCate} /> */}
               <ProtectedRoute
                 exact
                 path="/booking-ticket/:id"
@@ -62,6 +65,7 @@ const LayoutMain = () => {
               />
               <ProtectedRoute exact path="/orders" component={Orders} />
               <Route exact path="/film/:id" component={FilmDetail} />
+              <Route exact path="/news" component={News} />
               <Route exact path="/password/forgot" component={ForgotPass} />
               <Route
                 exact

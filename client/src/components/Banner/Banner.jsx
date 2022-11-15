@@ -4,16 +4,14 @@ import { RightOutlined, LeftOutlined } from "@ant-design/icons";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import Search from "./Search";
 import { useHistory } from "react-router-dom";
-import bannerData from "../../fakeData/banner";
 import BtnPlay from "../Customs/Button/BtnPlay";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
 import { useTheme } from "@material-ui/core/styles";
 import { useDispatch, useSelector } from "react-redux";
-import { LOADING_BACKTO_HOME_COMPLETED } from "../../constants/Lazy";
 import SearchStickets from "./SearchTickets";
 import { useAlert } from "react-alert";
+import useStyles from "./styles";
 import { clearErrors, getBanner } from "../../actions/bannerAction";
 const Banner = () => {
   const dispatch = useDispatch();
@@ -22,7 +20,7 @@ const Banner = () => {
   const { loading, error, banners } = useSelector((state) => state.banners);
   const isDesktop = useMediaQuery(theme.breakpoints.up("md"));
   const history = useHistory();
-  console.log(banners);
+  const classes = useStyles();
   const settings = {
     dots: true,
     infinite: true,
@@ -34,9 +32,6 @@ const Banner = () => {
     prevArrow: <PrevArrow />,
     dotsClass: "slickdotsbanner",
   };
-  // useEffect(() => {
-  //   dispatch({ type: LOADING_BACKTO_HOME_COMPLETED });
-  // }, []);
   useEffect(() => {
     if (error) {
       alert.error(error);
@@ -69,6 +64,8 @@ const Banner = () => {
     <>
       <div id="carousel" className="bannerFilm">
         <Slider {...settings}>
+          {/* <TestShow />
+          <Show /> */}
           {banners?.map((banner) => {
             return (
               <div key={banner._id} className="bannerStyle">
@@ -77,10 +74,7 @@ const Banner = () => {
                   alt="banner"
                   className="bannerImage"
                 />
-                <div
-                  className="backgroundLinear"
-                  // onClick={() => history.push(`/phim/${banner.maPhim}`)}
-                />
+                <div className="backgroundLinear" />
                 {isDesktop && (
                   <BtnPlay cssRoot={"play"} urlYoutube={banner.trailer} />
                 )}
@@ -88,7 +82,6 @@ const Banner = () => {
             );
           })}
         </Slider>
-        {/* <Search /> */}
         <SearchStickets />
       </div>
     </>
