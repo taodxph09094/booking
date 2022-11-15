@@ -23,6 +23,7 @@ import ForgotPass from "../pages/Auth/ForgotPass/ForgotPass";
 import ResetPass from "../pages/Auth/ResetPass/ResetPass";
 import ModalTrailer from "../components/ModalTrailer";
 import News from "../pages/News/News";
+import NewDetail from "../pages/News/NewDetail";
 const { Header, Footer, Content } = Layout;
 const LayoutMain = () => {
   const [stripeApiKey, setStripeApiKey] = useState("");
@@ -65,6 +66,7 @@ const LayoutMain = () => {
               />
               <ProtectedRoute exact path="/orders" component={Orders} />
               <Route exact path="/film/:id" component={FilmDetail} />
+              <Route exact path="/new/:id" component={NewDetail} />
               <Route exact path="/news" component={News} />
               <Route exact path="/password/forgot" component={ForgotPass} />
               <Route
