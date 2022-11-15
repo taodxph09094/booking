@@ -113,6 +113,7 @@ const reducer = combineReducers({
   bannerDetails: bannerDetailsReducer,
   banner: bannerReducer,
   banners: bannersReducer,
+
   lazyReducer,
 });
 

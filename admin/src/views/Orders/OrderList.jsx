@@ -30,7 +30,7 @@ const OrderList = ({ history }) => {
   };
 
   useEffect(() => {
-    setSaveId(orders.orderItems);
+    setSaveId(orders);
     if (error) {
       alert.error(error);
       dispatch(clearErrors());
@@ -98,7 +98,7 @@ const OrderList = ({ history }) => {
 
   const rows = [];
 
-  console.log(rows);
+  console.log(orders);
   orders &&
     orders.forEach((item) => {
       // setSaveId(item._id);

@@ -59,7 +59,6 @@ const MovieComing = () => {
     }
     dispatch(getFilmByComing());
   }, [dispatch, error, alert]);
-  console.log(filmCom);
   return (
     <div className={classes.container}>
       <h2 style={{ textAlign: "center" }}>Phim sắp chiếu</h2>

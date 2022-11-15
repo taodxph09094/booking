@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import ChartistGraph from "react-chartist";
-// react-bootstrap components
+import { BiMoviePlay, BiMovie } from "react-icons/bi";
 import {
   Badge,
   Button,
@@ -21,10 +21,27 @@ import { useDispatch, useSelector } from "react-redux";
 import { formatCurrency } from "../utils/helper";
 import { Link } from "react-router-dom";
 import Chart from "chart.js/auto";
+import { useAlert } from "react-alert";
+import { getFilmByDaily, getFilmByComing } from "../actions/filmAction";
+import { getReleasedTime } from "../actions/releasedTimeAction";
+import { getAllOrders } from "../actions/orderAction";
+import { getAllUsers } from "../actions/userAction";
 function Dashboard() {
   const dispatch = useDispatch();
-  // console.log(orderCashLength);
-
+  const alert = useAlert();
+  const { filmCate } = useSelector((state) => state.filmCate);
+  const { filmCom } = useSelector((state) => state.filmCom);
+  const { releasedTimes } = useSelector((state) => state.releasedTimes);
+  const { orders } = useSelector((state) => state.allOrders);
+  const { users } = useSelector((state) => state.allUsers);
+  useEffect(() => {
+    dispatch(getFilmByDaily());
+    dispatch(getFilmByComing());
+    dispatch(getReleasedTime());
+    dispatch(getAllOrders());
+    dispatch(getAllUsers());
+  }, [dispatch, alert]);
+  console.log(orders & orders);
   return (
     <>
       <Container fluid>
@@ -35,13 +52,14 @@ function Dashboard() {
                 <Row>
                   <Col xs="5">
                     <div className="icon-big text-center icon-warning">
-                      <i className="nc-icon nc-bank text-warning"></i>
+                      {/* <i className="nc-icon nc-bank text-warning"></i> */}
+                      <BiMoviePlay />
                     </div>
                   </Col>
                   <Col xs="7">
                     <div className="numbers">
-                      <p className="card-category">Tổng doanh thu</p>
-                      <Card.Title as="h4"></Card.Title>
+                      <p className="card-category">Số phim đang chiếu</p>
+                      <Card.Title as="h4">{filmCate.length}</Card.Title>
                     </div>
                   </Col>
                 </Row>
@@ -50,7 +68,7 @@ function Dashboard() {
                 <hr></hr>
                 <div className="stats">
                   <i className="fas fa-redo mr-1"></i>
-                  <Link className="stats" to="/admin/orders">
+                  <Link className="stats" to="/admin/films">
                     Xem danh sách
                   </Link>
                 </div>
@@ -63,13 +81,14 @@ function Dashboard() {
                 <Row>
                   <Col xs="5">
                     <div className="icon-big text-center icon-warning">
-                      <i className="nc-icon nc-cart-simple text-success"></i>
+                      <BiMovie />
+                      {/* <i className="nc-icon nc-cart-simple text-success"></i> */}
                     </div>
                   </Col>
                   <Col xs="7">
                     <div className="numbers">
-                      <p className="card-category">Tổng số đơn hàng</p>
-                      <Card.Title as="h4"></Card.Title>
+                      <p className="card-category">Số phim sắp chiếu</p>
+                      <Card.Title as="h4">{filmCom.length}</Card.Title>
                     </div>
                   </Col>
                 </Row>
@@ -78,7 +97,7 @@ function Dashboard() {
                 <hr></hr>
                 <div className="stats">
                   <i className="fas fa-redo mr-1"></i>
-                  <Link className="stats" to="/admin/orders">
+                  <Link className="stats" to="/admin/films">
                     Xem danh sách
                   </Link>
                 </div>
@@ -96,8 +115,8 @@ function Dashboard() {
                   </Col>
                   <Col xs="7">
                     <div className="numbers">
-                      <p className="card-category">Số lượng sản phẩm</p>
-                      <Card.Title as="h4"></Card.Title>
+                      <p className="card-category">Số lịch chiếu đang có</p>
+                      <Card.Title as="h4">{releasedTimes.length}</Card.Title>
                     </div>
                   </Col>
                 </Row>
@@ -106,7 +125,7 @@ function Dashboard() {
                 <hr></hr>
                 <div className="stats">
                   <i className="fas fa-redo mr-1"></i>
-                  <Link className="stats" to="/admin/products">
+                  <Link className="stats" to="/admin/releasedTime">
                     Xem danh sách
                   </Link>
                 </div>
@@ -124,8 +143,10 @@ function Dashboard() {
                   </Col>
                   <Col xs="7">
                     <div className="numbers">
-                      <p className="card-category">Số tài khoản</p>
-                      <Card.Title as="h4"></Card.Title>
+                      <p className="card-category">
+                        Số tài khoản trên hệ thống
+                      </p>
+                      <Card.Title as="h4"> {users && users.length}</Card.Title>
                     </div>
                   </Col>
                 </Row>
