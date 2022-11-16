@@ -48,11 +48,7 @@ export const login = (email, password) => async (dispatch) => {
 
     const config = { headers: { "Content-Type": "application/json" } };
 
-    const { data } = await axios.post(
-      `/api/v1/login`,
-      { email, password },
-      config
-    );
+    const { data } = await axios.post(`/api/v1/login`, { email, password }, config);
 
     dispatch({ type: LOGIN_SUCCESS, payload: data.user });
   } catch (error) {
@@ -85,11 +81,7 @@ export const createUser = (userData) => async (dispatch) => {
       headers: { "Content-Type": "application/json" },
     };
 
-    const { data } = await axios.post(
-      `/api/v1/admin/createUser`,
-      userData,
-      config
-    );
+    const { data } = await axios.post(`/api/v1/admin/createUser`, userData, config);
 
     dispatch({
       type: CREATE_USER_SUCCESS,
@@ -150,11 +142,7 @@ export const updatePassword = (passwords) => async (dispatch) => {
 
     const config = { headers: { "Content-Type": "application/json" } };
 
-    const { data } = await axios.put(
-      `/api/v1/password/update`,
-      passwords,
-      config
-    );
+    const { data } = await axios.put(`/api/v1/password/update`, passwords, config);
 
     dispatch({ type: UPDATE_PASSWORD_SUCCESS, payload: data.success });
   } catch (error) {
@@ -190,11 +178,7 @@ export const resetPassword = (token, passwords) => async (dispatch) => {
 
     const config = { headers: { "Content-Type": "application/json" } };
 
-    const { data } = await axios.put(
-      `/api/v1/password/reset/${token}`,
-      passwords,
-      config
-    );
+    const { data } = await axios.put(`/api/v1/password/reset/${token}`, passwords, config);
 
     dispatch({ type: RESET_PASSWORD_SUCCESS, payload: data.success });
   } catch (error) {
@@ -236,11 +220,7 @@ export const updateUser = (id, userData) => async (dispatch) => {
 
     const config = { headers: { "Content-Type": "application/json" } };
 
-    const { data } = await axios.put(
-      `/api/v1/admin/user/${id}`,
-      userData,
-      config
-    );
+    const { data } = await axios.put(`/api/v1/admin/user/${id}`, userData, config);
 
     dispatch({ type: UPDATE_USER_SUCCESS, payload: data.success });
   } catch (error) {

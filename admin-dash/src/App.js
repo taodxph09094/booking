@@ -1,23 +1,8 @@
-/**
-=========================================================
-* Material Dashboard 2 React - v2.1.0
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/material-dashboard-react
-* Copyright 2022 Creative Tim (https://www.creative-tim.com)
-
-Coded by www.creative-tim.com
-
- =========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-*/
-
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect, useMemo, Fragment } from "react";
 
 // react-router components
-import { Routes, Route, Navigate, useLocation } from "react-router-dom";
-
+import { Routes, Route, Navigate, useLocation, useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 // @mui material components
 import { ThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -52,9 +37,18 @@ import { useMaterialUIController, setMiniSidenav, setOpenConfigurator } from "co
 // Images
 import brandWhite from "assets/images/logo-ct.png";
 import brandDark from "assets/images/logo-ct-dark.png";
-
+import { loadUser } from "./actions/userAction";
+import store from "./store";
+import SignIn from "layouts/authentication/sign-in";
+import ProtectedRoute from "./Route/ProtectedRoute";
 export default function App() {
+  let navigate = useNavigate();
   const [controller, dispatch] = useMaterialUIController();
+  const { loading, isAuthenticated, user } = useSelector((state) => state.user);
+  useEffect(() => {
+    store.dispatch(loadUser());
+  }, []);
+  window.addEventListener("contextmenu", (e) => e.preventDefault());
   const {
     miniSidenav,
     direction,
@@ -114,11 +108,17 @@ export default function App() {
       if (route.collapse) {
         return getRoutes(route.collapse);
       }
-
       if (route.route) {
-        return <Route exact path={route.route} element={route.component} key={route.key} />;
+        return (
+          <Route
+            exact
+            // isAdmin={true}
+            path={route.route}
+            element={route.component}
+            key={route.key}
+          />
+        );
       }
-
       return null;
     });
 
@@ -165,6 +165,7 @@ export default function App() {
           </>
         )}
         {layout === "vr" && <Configurator />}
+
         <Routes>
           {getRoutes(routes)}
           <Route path="*" element={<Navigate to="/dashboard" />} />
@@ -189,6 +190,7 @@ export default function App() {
         </>
       )}
       {layout === "vr" && <Configurator />}
+
       <Routes>
         {getRoutes(routes)}
         <Route path="*" element={<Navigate to="/dashboard" />} />
